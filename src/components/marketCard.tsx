@@ -8,6 +8,7 @@ import { MarketSharesDisplay } from "./marketSharesDisplay";
 import { MarketBuyInterface } from "./marketBuyInterface";
 import { MarketResolved } from "./marketResolved";
 import { MarketPending } from "./marketPending";
+import { useEffect } from "react";
 
 
 // Props for the MarketCard component
@@ -47,7 +48,6 @@ export function MarketCard({ index, filter }: MarketCardProps) {
         params: [BigInt(index)]
     });
 
-    console.log("Market Data:", marketData);
 
     // Parse the market data
     const market: Market | undefined = marketData ? {
@@ -60,8 +60,6 @@ export function MarketCard({ index, filter }: MarketCardProps) {
         totalOptionBShares: marketData[6],
         resolved: marketData[7]
     } : undefined;
-
-    console.log("Processed Market:", market);
 
     // Get the shares balance
     const { data: sharesBalanceData } = useReadContract({
@@ -80,6 +78,19 @@ export function MarketCard({ index, filter }: MarketCardProps) {
     const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
     // Check if the market is resolved
     const isResolved = market?.resolved;
+
+    // Log only when market data changes
+    useEffect(() => {
+        if (market) {
+            console.group(`%c Market ID: ${index}`, "color: teal; font-weight: bold; font-size: 14px;");
+            console.log(`%c Question: %c${market.question}`, "color: green; font-weight: bold;", "color: black;");
+            console.log(`%c Options: %c${market.optionA}(1) or ${market.optionB}(2)`, "color: purple; font-weight: bold;", "color: black;");
+            console.log(`%c Pending Resolution: %c${isExpired && !isResolved ? "Pending" : "Not Pending"}`, "color: orange; font-weight: bold;", "color: black;");
+            console.log(`%c Resolved: %c${isResolved ? "Resolved" : "Not Resolved"}`, "color: blue; font-weight: bold;", "color: black;");
+            console.log(`%c Outcome: %c${isResolved ? (market.outcome === 0 ? market.optionA : market.optionB) : "N/A"}`, "color: purple; font-weight: bold;", "color: black;");
+            console.groupEnd();
+        [market, isExpired, isResolved, index]; // Dependencies ensure it logs only when data changes
+        }});
 
     // Check if the market should be shown
     const shouldShow = () => {
@@ -101,7 +112,7 @@ export function MarketCard({ index, filter }: MarketCardProps) {
     if (!shouldShow()) {
         return null;
     }
-    
+
     console.log("Props passed to MarketResolved:", {
         marketId: index,
         outcome: market?.outcome,

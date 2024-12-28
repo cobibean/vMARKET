@@ -25,10 +25,10 @@ export function Footer() {
                         Terms
                     </Link>
                     <Link
-                        href="/privacy"
+                        href="vdao.online"
                         className="text-white hover:text-gray-200 transition-colors"
                     >
-                        Privacy
+                        Website
                     </Link>
                 </div>
                 <div className="flex items-center gap-4">

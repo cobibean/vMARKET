@@ -47,6 +47,8 @@ export function MarketCard({ index, filter }: MarketCardProps) {
         params: [BigInt(index)]
     });
 
+    console.log("Market Data:", marketData);
+
     // Parse the market data
     const market: Market | undefined = marketData ? {
         question: marketData[0],
@@ -58,6 +60,8 @@ export function MarketCard({ index, filter }: MarketCardProps) {
         totalOptionBShares: marketData[6],
         resolved: marketData[7]
     } : undefined;
+
+    console.log("Processed Market:", market);
 
     // Get the shares balance
     const { data: sharesBalanceData } = useReadContract({
@@ -97,6 +101,13 @@ export function MarketCard({ index, filter }: MarketCardProps) {
     if (!shouldShow()) {
         return null;
     }
+    
+    console.log("Props passed to MarketResolved:", {
+        marketId: index,
+        outcome: market?.outcome,
+        optionA: market?.optionA,
+        optionB: market?.optionB,
+    });
 
     return (
         <Card key={index} className="flex flex-col">
@@ -124,6 +135,7 @@ export function MarketCard({ index, filter }: MarketCardProps) {
                                     outcome={market.outcome}
                                     optionA={market.optionA}
                                     optionB={market.optionB}
+                                
                                 />
                             ) : (
                                 <MarketPending />

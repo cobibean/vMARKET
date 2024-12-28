@@ -89,8 +89,9 @@ export function MarketCard({ index, filter }: MarketCardProps) {
             console.log(`%c Resolved: %c${isResolved ? "Resolved" : "Not Resolved"}`, "color: blue; font-weight: bold;", "color: black;");
             console.log(`%c Outcome: %c${isResolved ? (market.outcome === 0 ? market.optionA : market.optionB) : "N/A"}`, "color: purple; font-weight: bold;", "color: black;");
             console.groupEnd();
-        [market, isExpired, isResolved, index]; // Dependencies ensure it logs only when data changes
-        }});
+                console.groupEnd();
+            }
+        }, [market, isExpired, isResolved, index]); // Dependencies ensure it logs only when data changes
 
     // Check if the market should be shown
     const shouldShow = () => {

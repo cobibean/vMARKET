@@ -19,12 +19,6 @@ export function Footer() {
                         About
                     </Link>
                     <Link
-                        href="/terms"
-                        className="text-white hover:text-gray-200 transition-colors"
-                    >
-                        Terms
-                    </Link>
-                    <Link
                         href="vdao.online"
                         className="text-white hover:text-gray-200 transition-colors"
                     >

@@ -2,6 +2,7 @@ import { Button } from "./ui/button";
 import { prepareContractCall } from "thirdweb";
 import { useSendAndConfirmTransaction } from "thirdweb/react";
 import { contract } from "@/constants/contracts";
+import { toast } from "./ui/useToast";
 
 interface MarketResolvedProps {
     marketId: number;
@@ -27,8 +28,22 @@ export function MarketResolved({
             });
 
             await mutateTransaction(tx);
+
+            toast({
+                title: "Rewards Claimed",
+                description: `Your winnings for market ID ${marketId} have been successfully claimed.`,
+            });
+
         } catch (error) {
             console.error(error);
+
+            if (error instanceof Error) {
+            toast({
+                title: "Transaction Error",
+                description: error.message || "No winnings to claim.",
+                variant: "destructive",
+                });
+            }
         }
     };
 

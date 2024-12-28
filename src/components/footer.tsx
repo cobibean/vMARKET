@@ -41,12 +41,16 @@ export function Footer() {
                         <Github className="h-5 w-5 text-white hover:text-gray-200 transition-colors" />
                     </Link>
                     <Link
-                        href="https://twitter.com/vmarket"
+                        href="https://twitter.com/vestadao"
                         target="_blank"
                         rel="noreferrer"
                         aria-label="Twitter"
                     >
-                        <Twitter className="h-5 w-5 text-white hover:text-gray-200 transition-colors" />
+                        <img
+                            src="/vMARKETbuild/vmarket/public/twitterLogo.svg"
+                            alt="twitter/x logo for predictions market vMARKET"
+                            className="h-5 w-5 text-white hover:text-gray-200 transition-colors"
+                        />
                     </Link>
                 </div>
             </div>

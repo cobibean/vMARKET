@@ -48,14 +48,6 @@ export function Footer() {
                     >
                         <Twitter className="h-5 w-5 text-white hover:text-gray-200 transition-colors" />
                     </Link>
-                    <Link
-                        href="https://linkedin.com/company/vmarket"
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label="LinkedIn"
-                    >
-                        <Linkedin className="h-5 w-5 text-white hover:text-gray-200 transition-colors" />
-                    </Link>
                 </div>
             </div>
         </footer>

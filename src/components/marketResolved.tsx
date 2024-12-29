@@ -36,6 +36,11 @@ export function MarketResolved({
             });
 
         } catch (error) {
+            console.error("Error caught in catch block:", error); // Log the entire error object
+            if (error instanceof Error) {
+                console.log("Error message from catch block:", error.message); // Log the error message specifically
+            }
+
             console.error(error);
 
             if (error instanceof Error) {

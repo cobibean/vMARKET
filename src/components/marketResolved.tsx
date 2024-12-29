@@ -20,6 +20,7 @@ export function MarketResolved({
     const { mutateAsync: mutateTransaction } = useSendAndConfirmTransaction();
 
     const handleClaimRewards = async () => {
+        console.log("Claim Rewards clicked for Market ID:", marketId);
         try {
             const tx = await prepareContractCall({
                 contract,

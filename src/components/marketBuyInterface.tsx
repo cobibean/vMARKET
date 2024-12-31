@@ -219,7 +219,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                                 <h2 className="text-lg font-bold mb-4">Confirm Transaction</h2>
                                 <p className="mb-4">
                                     You are about to buy <span className="font-bold">
-                                        {amount} "{selectedOption !== null ? market.options[selectedOption] : ''}"
+                                        {amount} &quot;{selectedOption !== null ? market.options[selectedOption] : ''}&quot;
                                     </span> share(s).
                                 </p>
                                 <div className="flex justify-end">

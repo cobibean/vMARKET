@@ -49,26 +49,23 @@ export default function PredictionMarketDashboard() {
                         <>
                             <TabsContent value="active">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                    {Array.from({ length: Number(marketCount) }, (_, index) => {
-                                        console.log("Rendering market at index:", index);
-                                        return (
-                                            <MarketCard 
-                                                key={index} 
-                                                index={index} 
-                                                filter="active"
-                                            />
-                                        );
-                                    })}
+                                {Array.from({ length: Number(marketCount) }, (_, index) => (
+                                    <MarketCard
+                                        key={index}
+                                        index={Number(BigInt(marketCount) - BigInt(1) - BigInt(index))} // Fixes both issues
+                                        filter="active"
+                                    />
+                                ))}
                                 </div>
                             </TabsContent>
                             
                             <TabsContent value="pending">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                    {Array.from({ length: Number(marketCount) }, (_, index) => (
-                                        <MarketCard 
-                                            key={index} 
-                                            index={index}
-                                            filter="pending"
+                                {Array.from({ length: Number(marketCount) }, (_, index) => (
+                                    <MarketCard
+                                        key={index}
+                                        index={Number(BigInt(marketCount) - BigInt(1) - BigInt(index))} 
+                                        filter="pending"
                                         />
                                     ))}
                                 </div>
@@ -76,10 +73,10 @@ export default function PredictionMarketDashboard() {
                             
                             <TabsContent value="resolved">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                    {Array.from({ length: Number(marketCount) }, (_, index) => (
+                                    {Array.from({ length: Number(marketCount) }, (_, index) => ( 
                                         <MarketCard 
                                             key={index} 
-                                            index={index}
+                                            index={Number (BigInt(marketCount) - 1n - BigInt(index))}
                                             filter="resolved"
                                         />
                                     ))}

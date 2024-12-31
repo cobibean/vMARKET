@@ -8,167 +8,137 @@ import { MarketSharesDisplay } from "./marketSharesDisplay";
 import { MarketBuyInterface } from "./marketBuyInterface";
 import { MarketResolved } from "./marketResolved";
 import { MarketPending } from "./marketPending";
-import { useEffect } from "react";
 
-
-// Props for the MarketCard component
-// index is the market id
-// filter is the filter to apply to the market
 interface MarketCardProps {
   index: number;
   filter: 'active' | 'pending' | 'resolved';
 }
 
-// Interface for the market data
 interface Market {
   question: string;
-  optionA: string;
-  optionB: string;
+  options: string[]; // Updated to dynamically handle 2 or 3 options
   endTime: bigint;
   outcome: number;
-  totalOptionAShares: bigint;
-  totalOptionBShares: bigint;
+  totalShares: readonly bigint[];
   resolved: boolean;
 }
 
-// Interface for the shares balance
 interface SharesBalance {
-  optionAShares: bigint;
-  optionBShares: bigint;
+    shares: readonly bigint[]; // Match the readonly type from the contract
 }
 
 export function MarketCard({ index, filter }: MarketCardProps) {
-    // Get the active account
-    const account = useActiveAccount();
+  const account = useActiveAccount();
 
-    // Get the market data
-    const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
-        contract,
-        method: "function getMarketInfo(uint256 _marketId) view returns (string question, string optionA, string optionB, uint256 endTime, uint8 outcome, uint256 totalOptionAShares, uint256 totalOptionBShares, bool resolved)",
-        params: [BigInt(index)]
-    });
+  // Fetch market data
+  const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
+    contract,
+    method: "function getMarketInfo(uint256) view returns (string, string[3], uint256, uint8, uint256[3], bool)",
+    params: [BigInt(index)],
+  });
 
+  console.log(`Market Data for index ${index}:`, marketData);
 
-    // Parse the market data
-    const market: Market | undefined = marketData ? {
+  const market: Market | undefined = marketData
+    ? {
         question: marketData[0],
-        optionA: marketData[1],
-        optionB: marketData[2],
-        endTime: marketData[3],
-        outcome: marketData[4],
-        totalOptionAShares: marketData[5],
-        totalOptionBShares: marketData[6],
-        resolved: marketData[7]
-    } : undefined;
+        options: marketData[1].filter((option: string) => option.length > 0), // Filter empty options
+        endTime: marketData[2],
+        outcome: marketData[3],
+        totalShares: marketData[4],
+        resolved: marketData[5],
+      }
+    : undefined;
 
-    // Get the shares balance
-    const { data: sharesBalanceData } = useReadContract({
-        contract,
-        method: "function getSharesBalance(uint256 _marketId, address _user) view returns (uint256 optionAShares, uint256 optionBShares)",
-        params: [BigInt(index), account?.address as string]
-    });
+  console.log(`Processed Market for index ${index}:`, market);
 
-    // Parse the shares balance
-    const sharesBalance: SharesBalance | undefined = sharesBalanceData ? {
-        optionAShares: sharesBalanceData[0],
-        optionBShares: sharesBalanceData[1]
-    } : undefined;
+  // Fetch user's share balance
+  const { data: sharesBalanceData } = useReadContract({
+    contract,
+    method: "function getSharesBalance(uint256, address) view returns (uint256[3])",
+    params: [BigInt(index), account?.address as string],
+  });
 
-    // Check if the market is expired
-    const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
-    // Check if the market is resolved
-    const isResolved = market?.resolved;
+  console.log(`Shares Balance Data for index ${index}:`, sharesBalanceData);
 
-    // Log only when market data changes
-    useEffect(() => {
-        if (market) {
-            console.group(`%c Market ID: ${index}`, "color: teal; font-weight: bold; font-size: 14px;");
-            console.log(`%c Question: %c${market.question}`, "color: green; font-weight: bold;", "color: black;");
-            console.log(`%c Options: %c${market.optionA}(1) or ${market.optionB}(2)`, "color: purple; font-weight: bold;", "color: black;");
-            console.log(`%c Pending Resolution: %c${isExpired && !isResolved ? "Pending" : "Not Pending"}`, "color: orange; font-weight: bold;", "color: black;");
-            console.log(`%c Resolved: %c${isResolved ? "Resolved" : "Not Resolved"}`, "color: blue; font-weight: bold;", "color: black;");
-            console.log(`%c Outcome: %c${isResolved ? (market.outcome === 0 ? market.optionA : market.optionB) : "N/A"}`, "color: purple; font-weight: bold;", "color: black;");
-            console.groupEnd();
-                console.groupEnd();
-            }
-        }, [market, isExpired, isResolved, index]); // Dependencies ensure it logs only when data changes
+  const sharesBalance: SharesBalance | undefined = sharesBalanceData
+    ? {
+        shares: sharesBalanceData,
+      }
+    : undefined;
 
-    // Check if the market should be shown
-    const shouldShow = () => {
-        if (!market) return false;
-        
-        switch (filter) {
-            case 'active':
-                return !isExpired;
-            case 'pending':
-                return isExpired && !isResolved;
-            case 'resolved':
-                return isExpired && isResolved;
-            default:
-                return true;
-        }
-    };
+  const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
+  const isResolved = market?.resolved;
 
-    // If the market should not be shown, return null
-    if (!shouldShow()) {
-        return null;
+  // Conditional display logic
+  const shouldShow = () => {
+    if (!market) return false;
+
+    switch (filter) {
+      case 'active':
+        return !isExpired;
+      case 'pending':
+        return isExpired && !isResolved;
+      case 'resolved':
+        return isExpired && isResolved;
+      default:
+        return true;
     }
+  };
 
-    console.log("Props passed to MarketResolved:", {
-        marketId: index,
-        outcome: market?.outcome,
-        optionA: market?.optionA,
-        optionB: market?.optionB,
-    });
+  if (!shouldShow()) {
+    return null;
+  }
 
-    return (
-        <Card key={index} className="flex flex-col">
-            {isLoadingMarketData ? (
-                <MarketCardSkeleton />
-            ) : (
-                <>
-                    <CardHeader>
-                        {market && <MarketTime endTime={market.endTime} />}
-                        <CardTitle>{market?.question}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        {market && (
-                            <MarketProgress 
-                                optionA={market.optionA}
-                                optionB={market.optionB}
-                                totalOptionAShares={market.totalOptionAShares}
-                                totalOptionBShares={market.totalOptionBShares}
-                            />
-                        )}
-                        {new Date(Number(market?.endTime) * 1000) < new Date() ? (
-                            market?.resolved ? (
-                                <MarketResolved 
-                                    marketId={index}
-                                    outcome={market.outcome}
-                                    optionA={market.optionA}
-                                    optionB={market.optionB}
-                                
-                                />
-                            ) : (
-                                <MarketPending />
-                            )
-                        ) : (
-                            <MarketBuyInterface 
-                                marketId={index}
-                                market={market!}
-                            />
-                        )}
-                    </CardContent>
-                    <CardFooter>
-                        {market && sharesBalance && (
-                            <MarketSharesDisplay 
-                                market={market}
-                                sharesBalance={sharesBalance}
-                            />
-                        )}
-                    </CardFooter>
-                </>
+  return (
+    <Card key={index} className="flex flex-col">
+      {isLoadingMarketData ? (
+        <MarketCardSkeleton />
+      ) : (
+        <>
+          <CardHeader>
+            {market && <MarketTime endTime={market.endTime} />}
+            <CardTitle>{market?.question}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {market && (
+              <>
+                <MarketProgress
+                  options={market.options}
+                  totalShares={market.totalShares}
+                />
+                {new Date(Number(market.endTime) * 1000) < new Date() ? (
+                  market.resolved ? (
+                    <MarketResolved
+                      marketId={index}
+                      outcome={market.outcome}
+                      options={market.options}
+                    />
+                  ) : (
+                    <MarketPending />
+                  )
+                ) : (
+                  <MarketBuyInterface
+                    marketId={index}
+                    market={{
+                      question: market.question,
+                      options: market.options,
+                    }}
+                  />
+                )}
+              </>
             )}
-        </Card>
-    )
+          </CardContent>
+          <CardFooter>
+            {market && sharesBalance && (
+              <MarketSharesDisplay
+                market={market}
+                sharesBalance={sharesBalance.shares}
+              />
+            )}
+          </CardFooter>
+        </>
+      )}
+    </Card>
+  );
 }

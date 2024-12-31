@@ -13,15 +13,15 @@ import { useToast } from "@/components/ui/useToast";
 interface MarketBuyInterfaceProps {
     marketId: number;
     market: {
-        optionA: string;
-        optionB: string;
-        question: string;
+      question: string;
+      options: string[]; // Updated for dynamic options
     };
 }
 
 // Type aliases for better readability
 type BuyingStep = 'initial' | 'allowance' | 'confirm';
-type Option = 'A' | 'B' | null;
+
+type Option = number | null; // Changed to match dynamic options
 
 export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps) {
     // Blockchain interactions
@@ -55,11 +55,11 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
     }, [isBuying, buyingStep, isVisible, error]);
 
     // Handlers for user interactions
-    const handleBuy = (option: 'A' | 'B') => {
+    const handleBuy = (optionIndex: number) => {
         setIsVisible(false);
         setTimeout(() => {
             setIsBuying(true);
-            setSelectedOption(option);
+            setSelectedOption(optionIndex);
             setIsVisible(true);
         }, 200); // Match transition duration
     };
@@ -117,7 +117,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
 
     // Handle share purchase transaction
     const handleConfirm = async () => {
-        if (!selectedOption || amount <= 0) {
+        if (selectedOption === null || amount <= 0) {
             setError("Must select an option and enter an amount greater than 0");
             return;
         }
@@ -126,15 +126,15 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
         try {
             const tx = await prepareContractCall({
                 contract: contract,
-                method: "function buyShares(uint256 _marketId, bool _isOptionA, uint256 _amount)",
-                params: [BigInt(marketId), selectedOption === 'A', BigInt(toWei(amount.toString()))]
+                method: "function buyShares(uint256 _marketId, uint256 _optionIndex, uint256 _amount)",
+                params: [BigInt(marketId), BigInt(selectedOption), BigInt(toWei(amount.toString()))]
             });
             await mutateTransaction(tx);
             
             // Show success toast
             toast({
                 title: "Purchase Successful!",
-                description: `You bought ${amount} ${selectedOption === 'A' ? market.optionA : market.optionB} shares`,
+                description: `You bought ${amount} shares for ${market.options[selectedOption]}`,
                 duration: 5000, // 5 seconds
             })
             
@@ -167,23 +167,18 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
             >
                 {!isBuying ? (
                     // Initial option selection buttons
-                    <div className="flex justify-between gap-4 mb-4">
-                        <Button 
-                            className="flex-1" 
-                            onClick={() => handleBuy('A')}
-                            aria-label={`Vote ${market.optionA} for "${market.question}"`}
-                            disabled={!account}
-                        >
-                            {market.optionA}
-                        </Button>
-                        <Button 
-                            className="flex-1"
-                            onClick={() => handleBuy('B')}
-                            aria-label={`Vote ${market.optionB} for "${market.question}"`}
-                            disabled={!account}
-                        >
-                            {market.optionB}
-                        </Button>
+                    <div className="flex flex-wrap gap-4 mb-4">
+                        {market.options.map((option, index) => (
+                            <Button 
+                                key={index}
+                                className="flex-1" 
+                                onClick={() => handleBuy(index)}
+                                aria-label={`Vote ${option} for "${market.question}"`}
+                                disabled={!account}
+                            >
+                                {option}
+                            </Button>
+                        ))}
                     </div>
                 ) : (
                     // Buy interface with different steps
@@ -224,7 +219,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                                 <h2 className="text-lg font-bold mb-4">Confirm Transaction</h2>
                                 <p className="mb-4">
                                     You are about to buy <span className="font-bold">
-                                        {amount} {selectedOption === 'A' ? market.optionA : market.optionB}
+                                        {amount} "{selectedOption !== null ? market.options[selectedOption] : ''}"
                                     </span> share(s).
                                 </p>
                                 <div className="flex justify-end">
@@ -256,7 +251,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                             // Amount input step
                             <div className="flex flex-col">
                                 <span className="text-xs text-gray-500 mb-1">
-                                    {`1 ${selectedOption === 'A' ? market.optionA : market.optionB} = 1 VESTA`}
+                                    {`1 ${selectedOption !== null ? market.options[selectedOption] : ''} = 1 VESTA`}
                                 </span>
                                 <div className="flex flex-col gap-1 mb-4">
                                     <div className="flex items-center gap-2 overflow-visible">
@@ -284,7 +279,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                                             />
                                         </div>
                                         <span className="font-bold whitespace-nowrap">
-                                            {selectedOption === 'A' ? market.optionA : market.optionB}
+                                            {selectedOption !== null ? market.options[selectedOption] : ''}
                                         </span>
                                     </div>
                                     <div className="min-h-[20px]">
@@ -296,17 +291,17 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                                     </div>
                                 </div>
                                 <div className="flex justify-between gap-4">
-                                    <Button onClick={checkApproval} className="flex-1">
-                                        Confirm
-                                    </Button>
-                                    <Button onClick={handleCancel} variant="outline" className="flex-1">
-                                        Cancel
-                                    </Button>
-                                </div>
+                                <Button onClick={checkApproval} className="flex-1">
+                                    Confirm
+                                </Button>
+                                <Button onClick={handleCancel} variant="outline" className="flex-1">
+                                    Cancel
+                                </Button>
                             </div>
-                        )}
-                    </div>
-                )}
+                        </div>
+                    )}
+                </div>
+            )}
             </div>
         </div>
     );

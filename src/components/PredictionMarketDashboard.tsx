@@ -9,16 +9,26 @@ import { MarketCard } from "./marketCard";
 import { Footer } from "./footer";
 
 export default function PredictionMarketDashboard() {
-    const {data: marketCount, isLoading: isLoadingMarketCount} = useReadContract({
+    const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
         contract: contract,
         method: "function marketCount() view returns (uint256)",
         params: []
     });
 
+    console.log("Market Count:", marketCount);
+
+    if (isLoadingMarketCount || marketCount === undefined) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <p>Loading markets...</p>
+            </div>
+        );
+    }
+
     const skeletonCards = Array.from({ length: 6 }, (_, index) => (
         <MarketCardSkeleton key={index} />
     ));
-    
+
     return (
         <div className="min-h-screen flex flex-col">
             <div className="flex-grow container mx-auto p-4">
@@ -39,13 +49,16 @@ export default function PredictionMarketDashboard() {
                         <>
                             <TabsContent value="active">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                    {Array.from({ length: Number(marketCount) }, (_, index) => (
-                                        <MarketCard 
-                                            key={index} 
-                                            index={index} 
-                                            filter="active"
-                                        />
-                                    ))}
+                                    {Array.from({ length: Number(marketCount) }, (_, index) => {
+                                        console.log("Rendering market at index:", index);
+                                        return (
+                                            <MarketCard 
+                                                key={index} 
+                                                index={index} 
+                                                filter="active"
+                                            />
+                                        );
+                                    })}
                                 </div>
                             </TabsContent>
                             

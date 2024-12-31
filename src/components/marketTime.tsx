@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface MarketTimeProps {
     endTime: bigint;
@@ -13,9 +14,41 @@ const formatDate = (dateString: string) => {
     });
 };
 
+const calculateTimeRemaining = (endTime: bigint) => {
+    const now = new Date().getTime();
+    const end = Number(endTime) * 1000;
+    const diff = end - now;
+
+    if (diff <= 0) {
+        return "Ended";
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${days}d ${hours}h ${minutes}m`;
+};
+
 export function MarketTime({ endTime, className }: MarketTimeProps) {
-    const isEnded = new Date(Number(endTime) * 1000) < new Date();
+    const [timeRemaining, setTimeRemaining] = useState(calculateTimeRemaining(endTime));
+    const isEnded = timeRemaining === "Ended";
     const formattedDate = formatDate(new Date(Number(endTime) * 1000).toISOString());
+
+    useEffect(() => {
+        if (isEnded) return;
+
+        const interval = setInterval(() => {
+            const remaining = calculateTimeRemaining(endTime);
+            setTimeRemaining(remaining);
+
+            if (remaining === "Ended") {
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [endTime, isEnded]);
 
     return (
         <div
@@ -28,6 +61,11 @@ export function MarketTime({ endTime, className }: MarketTimeProps) {
             )}
         >
             {isEnded ? "Ended: " : "Ends: "}{formattedDate}
+            {!isEnded && (
+                <div className="mt-1 text-gray-600 text-xs">
+                    Time Remaining: {timeRemaining}
+                </div>
+            )}
         </div>
     );
 }

@@ -7,15 +7,13 @@ import { toast } from "./ui/useToast";
 interface MarketResolvedProps {
     marketId: number;
     outcome: number;
-    optionA: string;
-    optionB: string;
-}
+    options: string[]; // Add this line
+  }
 
 export function MarketResolved({ 
     marketId,
     outcome, 
-    optionA, 
-    optionB
+    options,
 }: MarketResolvedProps) {
     const { mutateAsync: mutateTransaction } = useSendAndConfirmTransaction();
 
@@ -56,10 +54,8 @@ export function MarketResolved({
     return (
         <div className="flex flex-col gap-2">
             <div className="mb-2 bg-green-200 p-2 rounded-md text-center text-xs">
-                {outcome === 1 
-                    ? `Resolved: ${optionA}` 
-                    : outcome === 2 
-                    ? `Resolved: ${optionB}` 
+                {outcome >= 0 && outcome < options.length 
+                    ? `Resolved: ${options[outcome]}` 
                     : "Error: Invalid Outcome"}
             </div>
             <Button 

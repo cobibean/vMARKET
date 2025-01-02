@@ -1,0 +1,74 @@
+[
+  {
+    "home_team": "Detroit Pistons",
+    "away_team": "Orlando Magic",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T00:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Washington Wizards",
+    "away_team": "Chicago Bulls",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T00:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Miami Heat",
+    "away_team": "New Orleans Pelicans",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T00:30:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "New York Knicks",
+    "away_team": "Utah Jazz",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T00:30:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Toronto Raptors",
+    "away_team": "Brooklyn Nets",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T00:30:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Houston Rockets",
+    "away_team": "Dallas Mavericks",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T01:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Denver Nuggets",
+    "away_team": "Atlanta Hawks",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T02:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Sacramento Kings",
+    "away_team": "Philadelphia 76ers",
+    "local_date": "2025-01-01",
+    "start_time": "2025-01-02T03:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  }
+]

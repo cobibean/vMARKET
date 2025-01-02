@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import fetch from 'node-fetch';
 import { writeFile, mkdir } from 'fs/promises';
 import { resolve } from 'path';
@@ -24,7 +25,7 @@ const getAdjacentDates = (date) => {
 };
 
 const myHeaders = {
-  "x-rapidapi-key": "4d745761bff29d3275fffe2114b2d776",
+  "x-rapidapi-key": process.env.RAPIDAPI_KEY, 
   "x-rapidapi-host": "v2.nba.api-sports.io"
 };
 
@@ -88,7 +89,7 @@ const fetchGameData = async (filterDate) => {
 };
 
 // Dates to fetch games for
-const dates = ["2024-12-30", "2024-12-31", "2025-01-01"]; // Local dates in YYYY-MM-DD format
+const dates = ["2025-01-05"]; // Local dates in YYYY-MM-DD format
 
 // Fetch game data for all dates and save to files
 dates.forEach(date => fetchGameData(date));

@@ -1,0 +1,83 @@
+[
+  {
+    "home_team": "Detroit Pistons",
+    "away_team": "Charlotte Hornets",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T00:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Toronto Raptors",
+    "away_team": "Orlando Magic",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T00:30:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Houston Rockets",
+    "away_team": "Boston Celtics",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T01:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "New Orleans Pelicans",
+    "away_team": "Washington Wizards",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T01:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Oklahoma City Thunder",
+    "away_team": "New York Knicks",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T01:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Dallas Mavericks",
+    "away_team": "Cleveland Cavaliers",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T01:30:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Denver Nuggets",
+    "away_team": "San Antonio Spurs",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T02:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Sacramento Kings",
+    "away_team": "Memphis Grizzlies",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T03:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  },
+  {
+    "home_team": "Los Angeles Lakers",
+    "away_team": "Atlanta Hawks",
+    "local_date": "2025-01-03",
+    "start_time": "2025-01-04T03:30:00.000Z",
+    "end_time": "Not available",
+    "home_score": null,
+    "away_score": null
+  }
+]

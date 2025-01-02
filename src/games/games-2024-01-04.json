@@ -1,0 +1,20 @@
+[
+  {
+    "home_team": "San Antonio Spurs",
+    "away_team": "Milwaukee Bucks",
+    "local_date": "2024-01-04",
+    "start_time": "2024-01-05T00:30:00.000Z",
+    "end_time": "Not available",
+    "home_score": 121,
+    "away_score": 125
+  },
+  {
+    "home_team": "Golden State Warriors",
+    "away_team": "Denver Nuggets",
+    "local_date": "2024-01-04",
+    "start_time": "2024-01-05T03:00:00.000Z",
+    "end_time": "Not available",
+    "home_score": 127,
+    "away_score": 130
+  }
+]

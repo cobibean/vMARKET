@@ -1,56 +1,74 @@
 [
   {
+    "game_id": 14601,
     "home_team": "Oklahoma City Thunder",
     "away_team": "Boston Celtics",
     "local_date": "2025-01-05",
     "start_time": "2025-01-05T20:30:00.000Z",
     "end_time": "Not available",
     "home_score": null,
-    "away_score": null
+    "away_score": null,
+    "status_short": 1,
+    "status_long": "Scheduled"
   },
   {
+    "game_id": 14602,
     "home_team": "Cleveland Cavaliers",
     "away_team": "Charlotte Hornets",
     "local_date": "2025-01-05",
     "start_time": "2025-01-05T23:00:00.000Z",
     "end_time": "Not available",
     "home_score": null,
-    "away_score": null
+    "away_score": null,
+    "status_short": 1,
+    "status_long": "Scheduled"
   },
   {
+    "game_id": 14603,
     "home_team": "Washington Wizards",
     "away_team": "New Orleans Pelicans",
     "local_date": "2025-01-05",
     "start_time": "2025-01-05T23:00:00.000Z",
     "end_time": "Not available",
     "home_score": null,
-    "away_score": null
+    "away_score": null,
+    "status_short": 1,
+    "status_long": "Scheduled"
   },
   {
+    "game_id": 14604,
     "home_team": "Orlando Magic",
     "away_team": "Utah Jazz",
     "local_date": "2025-01-05",
     "start_time": "2025-01-05T23:30:00.000Z",
     "end_time": "Not available",
     "home_score": null,
-    "away_score": null
+    "away_score": null,
+    "status_short": 1,
+    "status_long": "Scheduled"
   },
   {
+    "game_id": 14605,
     "home_team": "Houston Rockets",
     "away_team": "Los Angeles Lakers",
     "local_date": "2025-01-05",
     "start_time": "2025-01-06T00:00:00.000Z",
     "end_time": "Not available",
     "home_score": null,
-    "away_score": null
+    "away_score": null,
+    "status_short": 1,
+    "status_long": "Scheduled"
   },
   {
+    "game_id": 14606,
     "home_team": "Golden State Warriors",
     "away_team": "Sacramento Kings",
     "local_date": "2025-01-05",
     "start_time": "2025-01-06T01:30:00.000Z",
     "end_time": "Not available",
     "home_score": null,
-    "away_score": null
+    "away_score": null,
+    "status_short": 1,
+    "status_long": "Scheduled"
   }
 ]

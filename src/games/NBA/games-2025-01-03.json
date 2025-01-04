@@ -1,83 +1,110 @@
 [
   {
+    "game_id": 14583,
     "home_team": "Detroit Pistons",
     "away_team": "Charlotte Hornets",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T00:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 98,
+    "away_score": 94,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14584,
     "home_team": "Toronto Raptors",
     "away_team": "Orlando Magic",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T00:30:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 97,
+    "away_score": 106,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14585,
     "home_team": "Houston Rockets",
     "away_team": "Boston Celtics",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T01:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 86,
+    "away_score": 109,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14586,
     "home_team": "New Orleans Pelicans",
     "away_team": "Washington Wizards",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T01:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 132,
+    "away_score": 120,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14587,
     "home_team": "Oklahoma City Thunder",
     "away_team": "New York Knicks",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T01:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 117,
+    "away_score": 107,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14588,
     "home_team": "Dallas Mavericks",
     "away_team": "Cleveland Cavaliers",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T01:30:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 122,
+    "away_score": 134,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14589,
     "home_team": "Denver Nuggets",
     "away_team": "San Antonio Spurs",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T02:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 110,
+    "away_score": 113,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14590,
     "home_team": "Sacramento Kings",
     "away_team": "Memphis Grizzlies",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T03:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 138,
+    "away_score": 133,
+    "status_short": 3,
+    "status_long": "Finished"
   },
   {
+    "game_id": 14591,
     "home_team": "Los Angeles Lakers",
     "away_team": "Atlanta Hawks",
     "local_date": "2025-01-03",
     "start_time": "2025-01-04T03:30:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null
+    "home_score": 119,
+    "away_score": 102,
+    "status_short": 3,
+    "status_long": "Finished"
   }
 ]

@@ -36,7 +36,7 @@ const requestOptions = {
 };
 
 // Directory for saving the output
-const outputDir = resolve('./src/games');
+const outputDir = resolve('./src/games/NBA');
 const timeZone = 'America/Chicago';
 
 const fetchGameData = async (filterDate) => {
@@ -55,15 +55,21 @@ const fetchGameData = async (filterDate) => {
 
       const games = (data.response || []).map(game => {
         const localDate = convertToLocalDate(game?.date?.start, timeZone);
-        console.log(`Game UTC: ${game?.date?.start}, Local Date: ${localDate}`);
         return {
+          game_id: game?.id || "Unknown",           // <- Add this line
           home_team: game?.teams?.home?.name || "Unknown",
           away_team: game?.teams?.visitors?.name || "Unknown",
           local_date: localDate,
           start_time: game?.date?.start || "Unknown",
           end_time: game?.date?.end || "Not available",
-          home_score: game?.scores?.home?.points !== undefined ? game.scores.home.points : "N/A",
-          away_score: game?.scores?.visitors?.points !== undefined ? game.scores.visitors.points : "N/A",
+          home_score: game?.scores?.home?.points !== undefined 
+            ? game.scores.home.points 
+            : null,
+          away_score: game?.scores?.visitors?.points !== undefined 
+            ? game.scores.visitors.points 
+            : null,
+          status_short: game?.status?.short || null,
+          status_long: game?.status?.long || null
         };
       });
 
@@ -89,7 +95,7 @@ const fetchGameData = async (filterDate) => {
 };
 
 // Dates to fetch games for
-const dates = ["2025-01-05"]; // Local dates in YYYY-MM-DD format
+const dates = ["2025-01-06"]; // Local dates in YYYY-MM-DD format
 
 // Fetch game data for all dates and save to files
 dates.forEach(date => fetchGameData(date));

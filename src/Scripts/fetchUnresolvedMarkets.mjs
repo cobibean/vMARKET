@@ -5,7 +5,7 @@ import { resolve } from 'path';
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const INFURA_URL = process.env.INFURA_URL;
-const CONTRACT_ADDRESS = "0x2A1967EDCD3863d54192B9f08bCd1fD5577b0D4b";
+const CONTRACT_ADDRESS = "0x32ce242630c39A94EC24742025d2BE4D380DB8b5";
 const ABI = [
   {
     "inputs": [],

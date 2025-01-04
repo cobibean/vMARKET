@@ -1,0 +1,146 @@
+{
+  "216": {
+    "game_id": 14592,
+    "away_team": "Philadelphia 76ers",
+    "home_team": "Brooklyn Nets",
+    "local_date": "2025-01-04"
+  },
+  "217": {
+    "game_id": 14593,
+    "away_team": "Minnesota Timberwolves",
+    "home_team": "Detroit Pistons",
+    "local_date": "2025-01-04"
+  },
+  "218": {
+    "game_id": 14594,
+    "away_team": "Phoenix Suns",
+    "home_team": "Indiana Pacers",
+    "local_date": "2025-01-04"
+  },
+  "219": {
+    "game_id": 14595,
+    "away_team": "Utah Jazz",
+    "home_team": "Miami Heat",
+    "local_date": "2025-01-04"
+  },
+  "220": {
+    "game_id": 14596,
+    "away_team": "New York Knicks",
+    "home_team": "Chicago Bulls",
+    "local_date": "2025-01-04"
+  },
+  "221": {
+    "game_id": 14597,
+    "away_team": "Portland Trail Blazers",
+    "home_team": "Milwaukee Bucks",
+    "local_date": "2025-01-04"
+  },
+  "222": {
+    "game_id": 14598,
+    "away_team": "Denver Nuggets",
+    "home_team": "San Antonio Spurs",
+    "local_date": "2025-01-04"
+  },
+  "223": {
+    "game_id": 14599,
+    "away_team": "Memphis Grizzlies",
+    "home_team": "Golden State Warriors",
+    "local_date": "2025-01-04"
+  },
+  "224": {
+    "game_id": 14600,
+    "away_team": "Atlanta Hawks",
+    "home_team": "LA Clippers",
+    "local_date": "2025-01-04"
+  },
+  "225": {
+    "game_id": 14601,
+    "away_team": "Boston Celtics",
+    "home_team": "Oklahoma City Thunder",
+    "local_date": "2025-01-05"
+  },
+  "226": {
+    "game_id": 14602,
+    "away_team": "Charlotte Hornets",
+    "home_team": "Cleveland Cavaliers",
+    "local_date": "2025-01-05"
+  },
+  "227": {
+    "game_id": 14603,
+    "away_team": "New Orleans Pelicans",
+    "home_team": "Washington Wizards",
+    "local_date": "2025-01-05"
+  },
+  "228": {
+    "game_id": 14604,
+    "away_team": "Utah Jazz",
+    "home_team": "Orlando Magic",
+    "local_date": "2025-01-05"
+  },
+  "229": {
+    "game_id": 14605,
+    "away_team": "Los Angeles Lakers",
+    "home_team": "Houston Rockets",
+    "local_date": "2025-01-05"
+  },
+  "230": {
+    "game_id": 14606,
+    "away_team": "Sacramento Kings",
+    "home_team": "Golden State Warriors",
+    "local_date": "2025-01-05"
+  },
+  "231": {
+    "game_id": 14607,
+    "away_team": "Portland Trail Blazers",
+    "home_team": "Detroit Pistons",
+    "local_date": "2025-01-06"
+  },
+  "232": {
+    "game_id": 14608,
+    "away_team": "Phoenix Suns",
+    "home_team": "Philadelphia 76ers",
+    "local_date": "2025-01-06"
+  },
+  "233": {
+    "game_id": 14609,
+    "away_team": "Indiana Pacers",
+    "home_team": "Brooklyn Nets",
+    "local_date": "2025-01-06"
+  },
+  "234": {
+    "game_id": 14610,
+    "away_team": "Orlando Magic",
+    "home_team": "New York Knicks",
+    "local_date": "2025-01-06"
+  },
+  "235": {
+    "game_id": 14611,
+    "away_team": "Milwaukee Bucks",
+    "home_team": "Toronto Raptors",
+    "local_date": "2025-01-06"
+  },
+  "236": {
+    "game_id": 14612,
+    "away_team": "San Antonio Spurs",
+    "home_team": "Chicago Bulls",
+    "local_date": "2025-01-06"
+  },
+  "237": {
+    "game_id": 14613,
+    "away_team": "Dallas Mavericks",
+    "home_team": "Memphis Grizzlies",
+    "local_date": "2025-01-06"
+  },
+  "238": {
+    "game_id": 14614,
+    "away_team": "LA Clippers",
+    "home_team": "Minnesota Timberwolves",
+    "local_date": "2025-01-06"
+  },
+  "239": {
+    "game_id": 14615,
+    "away_team": "Miami Heat",
+    "home_team": "Sacramento Kings",
+    "local_date": "2025-01-06"
+  }
+}

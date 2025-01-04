@@ -47,17 +47,25 @@ export default function PredictionMarketDashboard() {
                         </TabsContent>
                     ) : (
                         <>
-                            <TabsContent value="active">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {Array.from({ length: Number(marketCount) }, (_, index) => (
-                                    <MarketCard
-                                        key={index}
-                                        index={Number(BigInt(marketCount) - BigInt(1) - BigInt(index))} // Fixes both issues
-                                        filter="active"
-                                    />
-                                ))}
-                                </div>
-                            </TabsContent>
+                        <TabsContent value="active">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+    {Array.from({ length: Number(marketCount) }, (_, index) => (
+        <MarketCard
+            key={index}
+            index={Number(BigInt(marketCount) - BigInt(1) - BigInt(index))}
+            filter="active"
+        />
+    ))
+    .sort((a, b) => {
+        const now = new Date().getTime();
+        const aEndTime = Number(a.props.endTime) * 1000; // Convert bigint to milliseconds
+        const bEndTime = Number(b.props.endTime) * 1000;
+        const aRemainingTime = aEndTime - now; // Time until `a` ends
+        const bRemainingTime = bEndTime - now; // Time until `b` ends
+        return aRemainingTime - bRemainingTime; // Shortest time remaining first
+    })}
+    </div>
+</TabsContent>
                             
                             <TabsContent value="pending">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">

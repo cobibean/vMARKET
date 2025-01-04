@@ -4,96 +4,532 @@ import { writeFile, readFile } from 'fs/promises';
 import { resolve } from 'path';
 import { JsonRpcProvider, Wallet } from 'ethers';
 
+// 1) Environment & Contract Setup
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const INFURA_URL = process.env.INFURA_URL;
-const CONTRACT_ADDRESS = "0x2A1967EDCD3863d54192B9f08bCd1fD5577b0D4b";
-const ABI = [
+const CONTRACT_ADDRESS = "0x32ce242630c39A94EC24742025d2BE4D380DB8b5";
+
+// 2) Full ABI (Paste your entire contract ABI here)
+const FULL_ABI = [
   {
     "inputs": [
-      { "internalType": "string", "name": "_question", "type": "string" },
-      { "internalType": "string[]", "name": "_options", "type": "string[]" },
-      { "internalType": "uint256", "name": "_duration", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "_bettingToken",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "OwnableUnauthorized",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "marketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Claimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "marketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string[]",
+        "name": "options",
+        "type": "string[]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "MarketCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "marketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "outcome",
+        "type": "uint8"
+      }
+    ],
+    "name": "MarketResolved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "prevOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnerUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "marketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "buyer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "optionIndex",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "SharesPurchased",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "bettingToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_marketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_optionIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyShares",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_marketId",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimWinnings",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_question",
+        "type": "string"
+      },
+      {
+        "internalType": "string[]",
+        "name": "_options",
+        "type": "string[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_duration",
+        "type": "uint256"
+      }
     ],
     "name": "createMarket",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_marketId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getMarketInfo",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "internalType": "string[3]",
+        "name": "options",
+        "type": "string[3]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "outcome",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256[3]",
+        "name": "totalShares",
+        "type": "uint256[3]"
+      },
+      {
+        "internalType": "bool",
+        "name": "resolved",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "markets",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "outcome",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "resolved",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "refunded",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "marketCount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_marketId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_outcome",
+        "type": "uint8"
+      }
+    ],
+    "name": "resolveMarket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "setOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ];
 
-
+// 3) Create provider & signer (Ethers v6)
 const provider = new JsonRpcProvider(INFURA_URL);
 const wallet = new Wallet(PRIVATE_KEY, provider);
-const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, wallet);
+const contract = new ethers.Contract(CONTRACT_ADDRESS, FULL_ABI, wallet);
 
-const gamesDir = resolve('./src/games');
+// 4) File paths
+const gamesDir = resolve('./src/games/NBA');
+// Here's where we store Market <-> Game mapping
+const mappingFilePath = resolve('./src/mappings/marketMapping.json');
 
-const createMarket = async (question, options, duration) => {
-    try {
-        console.log(`Creating market: ${question}`);
-        const tx = await contract.createMarket(question, options, duration);
-        console.log('Transaction submitted:', tx.hash);
+//-------------------------------------
+// Utility: Load / Save Market Mapping
+//-------------------------------------
+async function loadMarketMapping() {
+  try {
+    const raw = await readFile(mappingFilePath, 'utf-8');
+    return JSON.parse(raw);
+  } catch (err) {
+    // If file doesn't exist or can't parse, return empty object
+    return {};
+  }
+}
 
-        const receipt = await tx.wait();
-        console.log('Transaction confirmed:', receipt.transactionHash);
+async function saveMarketMapping(mappingObject) {
+  // Ensure the directory exists, if needed (optional)
+  // For example, if './src/mappings' might not exist, do:
+  // await mkdir(resolve('./src/mappings'), { recursive: true });
 
-        const marketId = receipt.events.find(event => event.event === 'MarketCreated').args.marketId.toNumber();
-        console.log(`Market created with ID: ${marketId}`);
-        return marketId;
-    } catch (error) {
-        console.error('Error creating market:', error);
-        return null;
-    }
-};
+  await writeFile(mappingFilePath, JSON.stringify(mappingObject, null, 2), 'utf-8');
+  console.log(`marketMapping.json updated. Total markets in file: ${Object.keys(mappingObject).length}`);
+}
 
-const createMarketsForFile = async (filename) => {
-    try {
-        const filePath = resolve(gamesDir, filename);
-        const games = JSON.parse(await readFile(filePath, 'utf-8'));
+//-------------------------------------
+// Helper: Create a market on-chain
+//-------------------------------------
+const createMarketOnChain = async (question, options, duration) => {
+  try {
+    console.log(`Creating market: "${question}"`);
+    const tx = await contract.createMarket(question, options, duration);
+    console.log('Transaction submitted:', tx.hash); // Ethers v6 uses .hash
 
-        for (const game of games) {
-            const { home_team, away_team, local_date, start_time } = game;
+    // Wait for confirmation
+    const receipt = await tx.wait();
+    console.log('Transaction confirmed:', receipt.hash); // Ethers v6 uses .hash
 
-            // Parse and validate start_time
-            if (!start_time || isNaN(Date.parse(start_time))) {
-                console.log(`Skipping market for ${away_team} @ ${home_team}: Invalid start_time.`);
-                continue;
-            }
+    // Debug: see what logs we actually got
+    console.log("Full logs:\n", JSON.stringify(receipt.logs, null, 2));
 
-            const gameStart = new Date(start_time);
+    // Filter logs by the contract's address
+    const relevantLogs = receipt.logs.filter(
+      (log) => log.address?.toLowerCase() === contract.target.toLowerCase()
+    );
 
-            // Calculate the duration in seconds
-            const now = new Date();
-            const duration = Math.floor((gameStart - now) / 1000);
+    let marketId = null;
 
-            if (isNaN(duration) || duration <= 0) {
-                console.log(`Skipping market for ${away_team} @ ${home_team}: Invalid duration or game already started.`);
-                continue;
-            }
-
-            console.log(`Game Start (UTC): ${gameStart}`);
-            console.log(`Now: ${now}`);
-            console.log(`Duration in seconds: ${duration}`);
-
-            const question = `${away_team} @ ${home_team} (${local_date})`;
-            const options = [away_team, home_team];
-
-            console.log(`Processing: ${question}`);
-
-            await createMarket(question, options, duration);
+    // Try parsing each relevant log
+    for (const log of relevantLogs) {
+      try {
+        const parsedLog = contract.interface.parseLog(log);
+        if (parsedLog.name === "MarketCreated") {
+          // event MarketCreated(uint256 marketId, string question, string[] options, uint256 endTime)
+          marketId = Number(parsedLog.args.marketId);
+          console.log(`MarketCreated => marketId = ${marketId}`);
+          break;
         }
-    } catch (error) {
-        console.error(`Error processing file ${filename}:`, error);
+      } catch (err) {
+        // ignore if it's not a recognized event
+      }
     }
+
+    if (marketId === null) {
+      console.error("MarketCreated event not found in logs. Possibly reverted or event signature mismatch.");
+      return null;
+    }
+
+    return marketId;
+  } catch (error) {
+    console.error('Error creating market:', error);
+    return null;
+  }
 };
 
-// Specify the file(s) to process
-const filesToProcess = ["games-2025-01-02.json"]; // Add filenames here
+//-------------------------------------
+// Main function to create markets from a given games JSON file
+//-------------------------------------
+const createMarketsForFile = async (filename) => {
+  try {
+    // Load existing mapping file so we can append new markets
+    const marketMapping = await loadMarketMapping();
+
+    const filePath = resolve(gamesDir, filename);
+    const rawData = await readFile(filePath, 'utf-8');
+    const games = JSON.parse(rawData);
+
+    for (const game of games) {
+      const {
+        game_id,
+        home_team,
+        away_team,
+        local_date,
+        start_time
+      } = game;
+
+      // If start_time is invalid or game has started, skip
+      if (!start_time || isNaN(Date.parse(start_time))) {
+        console.log(`Skipping market for ${away_team} @ ${home_team}: Invalid start_time.`);
+        continue;
+      }
+
+      // Calculate duration from now until gameStart
+      const gameStart = new Date(start_time);
+      const now = new Date();
+      const duration = Math.floor((gameStart - now) / 1000);
+
+      if (duration <= 0) {
+        console.log(`Skipping market for ${away_team} @ ${home_team}: game already started or invalid duration.`);
+        continue;
+      }
+
+      // Also skip if we already have a market for this game_id
+      const alreadyCreated = Object.values(marketMapping).some(
+        (entry) => entry.game_id === game_id
+      );
+      if (alreadyCreated) {
+        console.log(`Skipping game_id=${game_id}, market already exists.`);
+        continue;
+      }
+
+      // Construct question & options
+      const question = `${away_team} @ ${home_team} (${local_date})`;
+      // e.g., "Away" at index 0, "Home" at index 1 if your contract uses that pattern
+      const options = [away_team, home_team];
+
+      // Create market on-chain
+      const marketId = await createMarketOnChain(question, options, duration);
+
+      if (marketId !== null) {
+        console.log(`Market created for game_id=${game_id} | ID: ${marketId}`);
+
+        // Add to local mapping object
+        marketMapping[marketId] = {
+          game_id,
+          away_team,
+          home_team,
+          local_date
+        };
+
+        // Save the updated mapping
+        await saveMarketMapping(marketMapping);
+      }
+    }
+  } catch (error) {
+    console.error(`Error processing file "${filename}":`, error);
+  }
+};
+
+//-------------------------------------
+// Execute script for specific game file(s)
+//-------------------------------------
+const filesToProcess = ["games-2025-01-06.json"];
 filesToProcess.forEach(createMarketsForFile);

@@ -1,0 +1,98 @@
+{
+  "10": {
+    "game_id": 13457,
+    "away_team": "Cleveland Browns",
+    "home_team": "Baltimore Ravens",
+    "local_date": "2025-01-04"
+  },
+  "11": {
+    "game_id": 13455,
+    "away_team": "Cincinnati Bengals",
+    "home_team": "Pittsburgh Steelers",
+    "local_date": "2025-01-04"
+  },
+  "12": {
+    "game_id": 13442,
+    "away_team": "Carolina Panthers",
+    "home_team": "Atlanta Falcons",
+    "local_date": "2025-01-05"
+  },
+  "13": {
+    "game_id": 13443,
+    "away_team": "Washington Commanders",
+    "home_team": "Dallas Cowboys",
+    "local_date": "2025-01-05"
+  },
+  "14": {
+    "game_id": 13446,
+    "away_team": "Chicago Bears",
+    "home_team": "Green Bay Packers",
+    "local_date": "2025-01-05"
+  },
+  "15": {
+    "game_id": 13447,
+    "away_team": "Houston Texans",
+    "home_team": "Tennessee Titans",
+    "local_date": "2025-01-05"
+  },
+  "16": {
+    "game_id": 13448,
+    "away_team": "Jacksonville Jaguars",
+    "home_team": "Indianapolis Colts",
+    "local_date": "2025-01-05"
+  },
+  "17": {
+    "game_id": 13451,
+    "away_team": "Buffalo Bills",
+    "home_team": "New England Patriots",
+    "local_date": "2025-01-05"
+  },
+  "18": {
+    "game_id": 13453,
+    "away_team": "New York Giants",
+    "home_team": "Philadelphia Eagles",
+    "local_date": "2025-01-05"
+  },
+  "19": {
+    "game_id": 13456,
+    "away_team": "New Orleans Saints",
+    "home_team": "Tampa Bay Buccaneers",
+    "local_date": "2025-01-05"
+  },
+  "20": {
+    "game_id": 13444,
+    "away_team": "Kansas City Chiefs",
+    "home_team": "Denver Broncos",
+    "local_date": "2025-01-05"
+  },
+  "21": {
+    "game_id": 13449,
+    "away_team": "Los Angeles Chargers",
+    "home_team": "Las Vegas Raiders",
+    "local_date": "2025-01-05"
+  },
+  "22": {
+    "game_id": 13450,
+    "away_team": "Seattle Seahawks",
+    "home_team": "Los Angeles Rams",
+    "local_date": "2025-01-05"
+  },
+  "23": {
+    "game_id": 13452,
+    "away_team": "Miami Dolphins",
+    "home_team": "New York Jets",
+    "local_date": "2025-01-05"
+  },
+  "24": {
+    "game_id": 13454,
+    "away_team": "San Francisco 49ers",
+    "home_team": "Arizona Cardinals",
+    "local_date": "2025-01-05"
+  },
+  "25": {
+    "game_id": 13445,
+    "away_team": "Minnesota Vikings",
+    "home_team": "Detroit Lions",
+    "local_date": "2025-01-05"
+  }
+}

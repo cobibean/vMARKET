@@ -6,10 +6,10 @@
     "local_date": "2025-01-04",
     "start_time": "2025-01-04T23:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null,
-    "status_short": 1,
-    "status_long": "Scheduled"
+    "home_score": 66,
+    "away_score": 91,
+    "status_short": 2,
+    "status_long": "In Play"
   },
   {
     "game_id": 14593,
@@ -18,10 +18,10 @@
     "local_date": "2025-01-04",
     "start_time": "2025-01-05T00:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null,
-    "status_short": 1,
-    "status_long": "Scheduled"
+    "home_score": 46,
+    "away_score": 31,
+    "status_short": 2,
+    "status_long": "In Play"
   },
   {
     "game_id": 14594,
@@ -30,10 +30,10 @@
     "local_date": "2025-01-04",
     "start_time": "2025-01-05T00:00:00.000Z",
     "end_time": "Not available",
-    "home_score": null,
-    "away_score": null,
-    "status_short": 1,
-    "status_long": "Scheduled"
+    "home_score": 56,
+    "away_score": 54,
+    "status_short": 2,
+    "status_long": "In Play"
   },
   {
     "game_id": 14595,

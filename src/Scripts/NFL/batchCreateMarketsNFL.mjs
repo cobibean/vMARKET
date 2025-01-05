@@ -464,9 +464,9 @@ const wallet = new Wallet(PRIVATE_KEY, provider);
 const contract = new ethers.Contract(CONTRACT_ADDRESS, FULL_ABI, wallet);
 
 // 4) File paths
-const gamesDir = resolve('./src/games/NBA');
+const gamesDir = resolve('./src/games/NFL');
 // Here's where we store Market <-> Game mapping
-const mappingFilePath = resolve('./src/mappings/marketMapping.json');
+const mappingFilePath = resolve('./src/mappings/marketMappingNFL.json');
 
 //-------------------------------------
 // Utility: Load / Save Market Mapping
@@ -487,7 +487,7 @@ async function saveMarketMapping(mappingObject) {
   // await mkdir(resolve('./src/mappings'), { recursive: true });
 
   await writeFile(mappingFilePath, JSON.stringify(mappingObject, null, 2), 'utf-8');
-  console.log(`marketMapping.json updated. Total markets in file: ${Object.keys(mappingObject).length}`);
+  console.log(`marketMappingNFL.json updated. Total markets in file: ${Object.keys(mappingObject).length}`);
 }
 
 //-------------------------------------
@@ -560,24 +560,23 @@ const createMarketsForFile = async (filename) => {
         local_date,
         start_time
       } = game;
-
-      // If start_time is invalid or game has started, skip
+    
+      // Validate `start_time`
       if (!start_time || isNaN(Date.parse(start_time))) {
-        console.log(`Skipping market for ${away_team} @ ${home_team}: Invalid start_time.`);
+        console.log(`Skipping game due to invalid start_time:`, game);
         continue;
       }
-
-      // Calculate duration from now until gameStart
+    
       const gameStart = new Date(start_time);
       const now = new Date();
       const duration = Math.floor((gameStart - now) / 1000);
-
+    
       if (duration <= 0) {
-        console.log(`Skipping market for ${away_team} @ ${home_team}: game already started or invalid duration.`);
+        console.log(`Skipping market for ${away_team} @ ${home_team}: game already started.`);
         continue;
       }
-
-      // Also skip if we already have a market for this game_id
+    
+      // Check for duplicate markets
       const alreadyCreated = Object.values(marketMapping).some(
         (entry) => entry.game_id === game_id
       );
@@ -585,30 +584,25 @@ const createMarketsForFile = async (filename) => {
         console.log(`Skipping game_id=${game_id}, market already exists.`);
         continue;
       }
-
-      // Construct question & options
+    
       const question = `${away_team} @ ${home_team} (${local_date})`;
-      // e.g., "Away" at index 0, "Home" at index 1 if your contract uses that pattern
       const options = [away_team, home_team];
-
-      // Create market on-chain
+    
       const marketId = await createMarketOnChain(question, options, duration);
-
+    
       if (marketId !== null) {
         console.log(`Market created for game_id=${game_id} | ID: ${marketId}`);
-
-        // Add to local mapping object
         marketMapping[marketId] = {
           game_id,
           away_team,
           home_team,
           local_date
         };
-
-        // Save the updated mapping
+    
         await saveMarketMapping(marketMapping);
       }
     }
+    
   } catch (error) {
     console.error(`Error processing file "${filename}":`, error);
   }
@@ -617,5 +611,5 @@ const createMarketsForFile = async (filename) => {
 //-------------------------------------
 // Execute script for specific game file(s)
 //-------------------------------------
-const filesToProcess = ["games-2025-01-04.json"];
+const filesToProcess = ["games-2025-01-05.json"];
 filesToProcess.forEach(createMarketsForFile);

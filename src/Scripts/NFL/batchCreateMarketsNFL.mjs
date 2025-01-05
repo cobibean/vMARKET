@@ -576,15 +576,6 @@ const createMarketsForFile = async (filename) => {
         continue;
       }
     
-      // Check for duplicate markets
-      const alreadyCreated = Object.values(marketMapping).some(
-        (entry) => entry.game_id === game_id
-      );
-      if (alreadyCreated) {
-        console.log(`Skipping game_id=${game_id}, market already exists.`);
-        continue;
-      }
-    
       const question = `${away_team} @ ${home_team} (${local_date})`;
       const options = [away_team, home_team];
     

@@ -2,12 +2,13 @@ import 'dotenv/config';
 import fetch from 'node-fetch';
 import { writeFile, mkdir } from 'fs/promises';
 import { resolve } from 'path';
+import { DateTime } from 'luxon';
 
-// Helper function to convert UTC to local date in YYYY-MM-DD format
-const convertToLocalDate = (utcDate, timeZone) => {
-  const date = new Date(utcDate);
-  const localDate = date.toLocaleDateString('en-CA', { timeZone }); // Returns "YYYY-MM-DD"
-  return localDate;
+// Function to convert UTC start time to local time zone and ISO string
+const convertToLocalTime = (utcDate, timeZone) => {
+  return DateTime.fromISO(utcDate, { zone: 'utc' })
+    .setZone(timeZone)
+    .toISO(); // Returns ISO string in the local time zone
 };
 
 // Function to calculate adjacent dates
@@ -25,14 +26,14 @@ const getAdjacentDates = (date) => {
 };
 
 const myHeaders = {
-  "x-rapidapi-key": process.env.RAPIDAPI_KEY, 
-  "x-rapidapi-host": "v1.american-football.api-sports.io"
+  "x-rapidapi-key": process.env.RAPIDAPI_KEY,
+  "x-rapidapi-host": "v1.american-football.api-sports.io",
 };
 
 const requestOptions = {
   method: 'GET',
   headers: myHeaders,
-  redirect: 'follow'
+  redirect: 'follow',
 };
 
 // Directory for saving the output
@@ -53,26 +54,47 @@ const fetchGameData = async (filterDate) => {
 
       console.log(`Raw API data for ${date}:`, JSON.stringify(data.response, null, 2));
 
-      const games = (data.response || []).filter(game => game.league.name === "NFL").map(game => {
-        const gameInfo = game.game;
-        const localDate = convertToLocalDate(gameInfo.date.timestamp * 1000, timeZone); // Convert timestamp to local date
+      const games = (data.response || [])
+          .filter(game => game.league.name === "NFL") // Filter for NFL games only
+          .map(game => {
+      const gameInfo = game.game;
+
+    try {
+      // Construct UTC start time
+      const rawDate = gameInfo.date.date || "Unknown";
+      const rawTime = gameInfo.date.time || "Unknown";
+
+      console.log(`Raw date: ${rawDate}, Raw time: ${rawTime}`);
+
+      const utcStartTime = `${rawDate}T${rawTime}:00Z`;
+      console.log(`Constructed utcStartTime: ${utcStartTime}`);
+
+      // Convert UTC start time to local date and time
+      const localStartTime = convertToLocalTime(utcStartTime, timeZone);
+      const localDate = localStartTime.split('T')[0]; // Extract local date from ISO string
       
-        return {
-          game_id: gameInfo.id,
-          stage: gameInfo.stage || "Unknown",
-          week: gameInfo.week || "Unknown",
-          home_team: game.teams.home.name || "Unknown",
-          away_team: game.teams.away.name || "Unknown",
-          local_date: localDate,
-          start_time: gameInfo.date.date + "T" + gameInfo.date.time, // Combine date and time for ISO format
-          venue: gameInfo.venue.name || "Unknown",
-          city: gameInfo.venue.city || "Unknown",
-          home_score: game.scores.home.total || null,
-          away_score: game.scores.away.total || null,
-          status_short: gameInfo.status.short || "Unknown",
-          status_long: gameInfo.status.long || "Unknown"
-        };
-      });
+
+      return {
+        game_id: gameInfo.id,
+        stage: gameInfo.stage || "Unknown",
+        week: gameInfo.week || "Unknown",
+        home_team: game.teams.home.name || "Unknown",
+        away_team: game.teams.away.name || "Unknown",
+        local_date: localDate,
+        start_time: localStartTime, // Localized start time
+        venue: gameInfo.venue.name || "Unknown",
+        city: gameInfo.venue.city || "Unknown",
+        home_score: game.scores.home.total || null,
+        away_score: game.scores.away.total || null,
+        status_short: gameInfo.status.short || "Unknown",
+        status_long: gameInfo.status.long || "Unknown",
+      };
+    } catch (error) {
+      console.error(`Error processing game ${gameInfo.id}:`, error);
+      return null; // Skip this game
+    }
+  })
+  .filter(game => game !== null); // Remove games that failed to process
 
       allGames = [...allGames, ...games];
     } catch (error) {
@@ -96,7 +118,7 @@ const fetchGameData = async (filterDate) => {
 };
 
 // Dates to fetch games for
-const dates = ["2025-01-04"]; // Local dates in YYYY-MM-DD format
+const dates = ["2025-01-05"]; // Local dates in YYYY-MM-DD format
 
 // Fetch game data for all dates and save to files
 dates.forEach(date => fetchGameData(date));

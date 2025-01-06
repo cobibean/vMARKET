@@ -36,11 +36,17 @@ export function Navbar() {
             <div className="items-center flex gap-4">
                 {/* Get VESTA Button */}
                 <a
-                    href="https://app.hercules.exchange/?outputCurrency=0x848E329d9C3FF5D3078C4670c773651155386C46"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-4 flex items-center justify-center bg-gradient-to-r from-black to-gray-800 text-white font-bold rounded hover:from-gray-700 hover:to-gray-900 transition-colors"
-                    style={{ height: '2.5rem', lineHeight: '2.5rem', padding: '0 1rem' }}
+                href="https://app.hercules.exchange/?outputCurrency=0x848E329d9C3FF5D3078C4670c773651155386C46"
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 flex items-center justify-center bg-gradient-to-r from-black to-gray-800 text-white font-bold rounded hover:from-gray-700 hover:to-gray-900 transition-colors"
+                style={{
+                    height: '2.5rem',
+                    lineHeight: '2.5rem',
+                    padding: '0 1rem',
+                    maxWidth: '100%', // Ensure it fits within the container on smaller screens
+                    whiteSpace: 'nowrap', // Prevent text wrapping
+                }}
                 >
                     Get VESTA
                 </a>

@@ -9,10 +9,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "Mercedes-Benz Stadium",
     "city": "Atlanta",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 38,
+    "away_score": 44,
+    "status_short": "AOT",
+    "status_long": "After Over Time"
   },
   {
     "game_id": 13443,
@@ -24,10 +24,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "AT&T Stadium",
     "city": "Arlington",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 19,
+    "away_score": 23,
+    "status_short": "FT",
+    "status_long": "Finished"
   },
   {
     "game_id": 13446,
@@ -39,10 +39,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "Lambeau Field",
     "city": "Green Bay",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 22,
+    "away_score": 24,
+    "status_short": "FT",
+    "status_long": "Finished"
   },
   {
     "game_id": 13447,
@@ -54,10 +54,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "Nissan Stadium",
     "city": "Nashville",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 14,
+    "away_score": 23,
+    "status_short": "FT",
+    "status_long": "Finished"
   },
   {
     "game_id": 13448,
@@ -69,10 +69,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "Lucas Oil Stadium",
     "city": "Indianapolis",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 26,
+    "away_score": 23,
+    "status_short": "AOT",
+    "status_long": "After Over Time"
   },
   {
     "game_id": 13451,
@@ -84,10 +84,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "Gillette Stadium",
     "city": "Foxborough",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 23,
+    "away_score": 16,
+    "status_short": "FT",
+    "status_long": "Finished"
   },
   {
     "game_id": 13453,
@@ -99,10 +99,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "Lincoln Financial Field",
     "city": "Philadelphia",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 20,
+    "away_score": 13,
+    "status_short": "FT",
+    "status_long": "Finished"
   },
   {
     "game_id": 13456,
@@ -114,10 +114,10 @@
     "start_time": "2025-01-05T12:00:00.000-06:00",
     "venue": "Raymond James Stadium",
     "city": "Tampa",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 27,
+    "away_score": 19,
+    "status_short": "FT",
+    "status_long": "Finished"
   },
   {
     "game_id": 13444,
@@ -129,10 +129,10 @@
     "start_time": "2025-01-05T15:25:00.000-06:00",
     "venue": "Empower Field at Mile High",
     "city": "Denver",
-    "home_score": null,
+    "home_score": 14,
     "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "status_short": "Q2",
+    "status_long": "Second Quarter"
   },
   {
     "game_id": 13449,
@@ -144,10 +144,10 @@
     "start_time": "2025-01-05T15:25:00.000-06:00",
     "venue": "Allegiant Stadium",
     "city": "Las Vegas",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 3,
+    "away_score": 3,
+    "status_short": "Unknown",
+    "status_long": "End of Period"
   },
   {
     "game_id": 13450,
@@ -159,10 +159,10 @@
     "start_time": "2025-01-05T15:25:00.000-06:00",
     "venue": "SoFi Stadium",
     "city": "Inglewood",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 3,
+    "away_score": 7,
+    "status_short": "Unknown",
+    "status_long": "End of Period"
   },
   {
     "game_id": 13452,
@@ -175,9 +175,9 @@
     "venue": "MetLife Stadium",
     "city": "East Rutherford",
     "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "away_score": 6,
+    "status_short": "Unknown",
+    "status_long": "End of Period"
   },
   {
     "game_id": 13454,
@@ -189,10 +189,10 @@
     "start_time": "2025-01-05T15:25:00.000-06:00",
     "venue": "State Farm Stadium",
     "city": "Glendale",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 3,
+    "away_score": 3,
+    "status_short": "Unknown",
+    "status_long": "End of Period"
   },
   {
     "game_id": 13445,

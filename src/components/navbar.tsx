@@ -1,6 +1,6 @@
 "use client";
 
-import { ConnectButton } from "thirdweb/react";
+import { ConnectButton, useConnect } from "thirdweb/react";
 import { client } from "@/app/client";
 import { chain } from "@/app/chain";
 import { tokenContractAddress } from "@/constants/contracts";
@@ -34,8 +34,8 @@ export function Navbar() {
                     }}
                     detailsButton={{
                         displayBalanceToken: {
-                            [chain.id]: tokenContractAddress,
-                        },
+                            [chain.id]: tokenContractAddress
+                        }
                     }}
                 />
             </div>

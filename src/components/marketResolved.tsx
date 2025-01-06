@@ -7,12 +7,12 @@ import { toast } from "./ui/useToast";
 interface MarketResolvedProps {
     marketId: number;
     outcome: number;
-    options: string[]; // Add this line
-  }
+    options: string[];
+}
 
-export function MarketResolved({ 
+export function MarketResolved({
     marketId,
-    outcome, 
+    outcome,
     options,
 }: MarketResolvedProps) {
     const { mutateAsync: mutateTransaction } = useSendAndConfirmTransaction();
@@ -20,10 +20,10 @@ export function MarketResolved({
     const handleClaimRewards = async () => {
         console.log("Claim Rewards clicked for Market ID:", marketId);
         try {
-            const tx = await prepareContractCall({
+            const tx = prepareContractCall({
                 contract,
                 method: "function claimWinnings(uint256 _marketId)",
-                params: [BigInt(marketId)]
+                params: [BigInt(marketId)],
             });
 
             await mutateTransaction(tx);
@@ -32,20 +32,39 @@ export function MarketResolved({
                 title: "Rewards Claimed",
                 description: `Your winnings for market ID ${marketId} have been successfully claimed.`,
             });
-
         } catch (error) {
-            console.error("Error caught in catch block:", error); // Log the entire error object
-            if (error instanceof Error) {
-                console.log("Error message from catch block:", error.message); // Log the error message specifically
-            }
-
-            console.error(error);
+            console.error("Error caught in catch block:", error);
 
             if (error instanceof Error) {
-            toast({
-                title: "Transaction Error",
-                description: error.message || "No winnings to claim.",
-                variant: "destructive",
+                console.log("Error message from catch block:", error.message);
+
+                const errorMessage = error.message.toLowerCase();
+
+                // Check for gas-related error messages
+                if (
+                    errorMessage.includes("out of gas") ||
+                    errorMessage.includes("insufficient funds")
+                ) {
+                    toast({
+                        title: "Transaction Error",
+                        description:
+                            "You don't have enough gas to complete this transaction. Please ensure your wallet has sufficient funds.",
+                        variant: "destructive",
+                    });
+                } else {
+                    toast({
+                        title: "Transaction Error",
+                        description:
+                            error.message || "An error occurred while claiming your rewards.",
+                        variant: "destructive",
+                    });
+                }
+            } else {
+                // Handle unknown errors
+                toast({
+                    title: "Unknown Error",
+                    description: "An unexpected error occurred. Please try again.",
+                    variant: "destructive",
                 });
             }
         }
@@ -54,15 +73,11 @@ export function MarketResolved({
     return (
         <div className="flex flex-col gap-2">
             <div className="mb-2 bg-green-200 p-2 rounded-md text-center text-xs">
-                {outcome >= 0 && outcome < options.length 
-                    ? `Resolved: ${options[outcome]}` 
+                {outcome >= 0 && outcome < options.length
+                    ? `Resolved: ${options[outcome]}`
                     : "Error: Invalid Outcome"}
             </div>
-            <Button 
-                variant="outline" 
-                className="w-full" 
-                onClick={handleClaimRewards}
-            >
+            <Button variant="outline" className="w-full" onClick={handleClaimRewards}>
                 Claim Rewards
             </Button>
         </div>

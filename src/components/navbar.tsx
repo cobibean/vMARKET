@@ -1,11 +1,35 @@
 "use client";
 
-import { ConnectButton, useConnect } from "thirdweb/react";
+import { ConnectButton, PayEmbed} from "thirdweb/react";
+import { inAppWallet, createWallet } from "thirdweb/wallets";
 import { client } from "@/app/client";
 import { chain } from "@/app/chain";
 import { tokenContractAddress } from "@/constants/contracts";
 
+
+
+
 export function Navbar() {
+    const wallets = [
+        inAppWallet({
+            auth: {
+                options: [
+                    "google",
+                    "discord",
+                    "telegram",
+                    "farcaster",
+                    "email",
+                    "x",
+                    "passkey",
+                    "phone",
+                ],
+            },
+        }),
+        createWallet("io.metamask"),
+        createWallet("io.rabby"),
+        createWallet("com.trustwallet.app"),
+    ];
+
     return (
         <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">vMARKET</h1>
@@ -24,6 +48,7 @@ export function Navbar() {
                 {/* Connect Wallet Button */}
                 <ConnectButton
                     client={client}
+                    wallets={wallets}
                     chain={chain}
                     connectButton={{
                         label: "Sign In",
@@ -32,6 +57,7 @@ export function Navbar() {
                             height: '2.5rem !important',
                         },
                     }}
+                    connectModal={{ size: "wide" }}
                     detailsButton={{
                         displayBalanceToken: {
                             [chain.id]: tokenContractAddress

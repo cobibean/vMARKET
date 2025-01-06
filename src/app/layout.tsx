@@ -24,7 +24,7 @@ export default function RootLayout({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [input, setInput] = useState("");
 
-  const correctPassword = "tester69420!"; // Replace with your desired password
+  const correctPassword = "Tester69420!"; // Replace with your desired password
 
   if (!isAuthenticated) {
     return (

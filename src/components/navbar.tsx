@@ -36,7 +36,7 @@ export function Navbar() {
             <div className="items-center flex gap-4">
                 {/* Get VESTA Button */}
                 <a
-                href="https://app.hercules.exchange/?outputCurrency=0x848E329d9C3FF5D3078C4670c773651155386C46"
+                href="https://app.hercules.exchange/?token2=0x848E329d9C3FF5D3078C4670c773651155386C46"
                 target="_blank"
                 rel="noreferrer"
                 className="px-4 flex items-center justify-center bg-gradient-to-r from-black to-gray-800 text-white font-bold rounded hover:from-gray-700 hover:to-gray-900 transition-colors"

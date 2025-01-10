@@ -251,7 +251,7 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                             // Amount input step
                             <div className="flex flex-col">
                                 <span className="text-xs text-gray-500 mb-1">
-                                    {`1 ${selectedOption !== null ? market.options[selectedOption] : ''} = 1 VESTA`}
+                                    {`1 ${selectedOption !== null ? market.options[selectedOption] : ''} = 1 USDC`}
                                 </span>
                                 <div className="flex flex-col gap-1 mb-4">
                                     <div className="flex items-center gap-2 overflow-visible">

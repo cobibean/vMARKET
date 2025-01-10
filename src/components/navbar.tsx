@@ -48,7 +48,7 @@ export function Navbar() {
                     whiteSpace: 'nowrap', // Prevent text wrapping
                 }}
                 >
-                    Get VESTA
+                   // Get USDC on Hercules
                 </a>
 
                 {/* Connect Wallet Button */}

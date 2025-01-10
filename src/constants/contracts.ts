@@ -2,8 +2,8 @@ import { client } from "@/app/client";
 import { getContract } from "thirdweb";
 import { defineChain } from "thirdweb"; 
 
-export const predictionMarketContractAddress = "0xf1f18D31841DdFBB254BA1F487619d7c9A9fA41e";
-export const tokenContractAddress = "0x848E329d9C3FF5D3078C4670c773651155386C46"; 
+export const predictionMarketContractAddress = "0x5B45E4C00B310f1E9C951e1169C9A60fD856d186";
+export const tokenContractAddress = "0xEA32A96608495e54156Ae48931A7c20f0dcc1a21"; 
 
 export const contract = getContract({
     client: client,

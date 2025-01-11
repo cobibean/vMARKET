@@ -11,12 +11,12 @@ import { MarketPending } from "./marketPending";
 
 interface MarketCardProps {
   index: number;
-  filter: 'active' | 'pending' | 'resolved';
+  filter: "active" | "pending" | "resolved";
 }
 
 interface Market {
   question: string;
-  options: string[]; // Updated to dynamically handle 2 or 3 options
+  options: string[];
   endTime: bigint;
   outcome: number;
   totalShares: readonly bigint[];
@@ -24,7 +24,7 @@ interface Market {
 }
 
 interface SharesBalance {
-    shares: readonly bigint[]; // Match the readonly type from the contract
+  shares: readonly bigint[];
 }
 
 export function MarketCard({ index, filter }: MarketCardProps) {
@@ -42,7 +42,7 @@ export function MarketCard({ index, filter }: MarketCardProps) {
   const market: Market | undefined = marketData
     ? {
         question: marketData[0],
-        options: marketData[1].filter((option: string) => option.length > 0), // Filter empty options
+        options: marketData[1].filter((option: string) => option.length > 0),
         endTime: marketData[2],
         outcome: marketData[3],
         totalShares: marketData[4],
@@ -62,9 +62,7 @@ export function MarketCard({ index, filter }: MarketCardProps) {
   console.log(`Shares Balance Data for index ${index}:`, sharesBalanceData);
 
   const sharesBalance: SharesBalance | undefined = sharesBalanceData
-    ? {
-        shares: sharesBalanceData,
-      }
+    ? { shares: sharesBalanceData }
     : undefined;
 
   const isExpired = new Date(Number(market?.endTime) * 1000) < new Date();
@@ -75,11 +73,11 @@ export function MarketCard({ index, filter }: MarketCardProps) {
     if (!market) return false;
 
     switch (filter) {
-      case 'active':
+      case "active":
         return !isExpired;
-      case 'pending':
+      case "pending":
         return isExpired && !isResolved;
-      case 'resolved':
+      case "resolved":
         return isExpired && isResolved;
       default:
         return true;
@@ -96,10 +94,18 @@ export function MarketCard({ index, filter }: MarketCardProps) {
         <MarketCardSkeleton />
       ) : (
         <>
-          <CardHeader>
-            {market && <MarketTime endTime={market.endTime} />}
-            <CardTitle>{market?.question}</CardTitle>
+          {/* 
+            Minimal change below: Add a flex container and
+            a small text in the top-right corner for the ID.
+          */}
+          <CardHeader className="flex justify-between items-start">
+            <div>
+              {market && <MarketTime endTime={market.endTime} />}
+              <CardTitle>{market?.question}</CardTitle>
+            </div>
+            <span className="text-xs text-gray-500">ID:{index}</span>
           </CardHeader>
+
           <CardContent>
             {market && (
               <>

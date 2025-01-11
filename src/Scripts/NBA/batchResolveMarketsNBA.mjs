@@ -6,9 +6,8 @@ import { DateTime } from 'luxon';
 // Contract setup
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const INFURA_URL = process.env.INFURA_URL;
-const CONTRACT_ADDRESS = "0x32ce242630c39A94EC24742025d2BE4D380DB8b5";
+const CONTRACT_ADDRESS = "0x5B45E4C00B310f1E9C951e1169C9A60fD856d186";
 const ABI = [
-  [
     {
       "inputs": [
         {
@@ -454,7 +453,6 @@ const ABI = [
       "stateMutability": "nonpayable",
       "type": "function"
     }
-  ]
 ];
 
 const provider = new ethers.JsonRpcProvider(INFURA_URL);
@@ -565,5 +563,5 @@ const resolveMarkets = async (filterDate) => {
 };
 
 // Execute script for specific local date
-const localDate = "2025-01-04"; // Replace with desired date
+const localDate = "2025-01-09"; // Replace with desired date
 resolveMarkets(localDate).catch((error) => console.error('Error resolving markets:', error));

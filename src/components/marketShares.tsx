@@ -1,5 +1,5 @@
 import { Badge } from "./ui/badge";
-import { toEther } from "thirdweb";
+// import { toEther } from "thirdweb"; // Remove or comment out
 import { useEffect, useState } from "react";
 import { toFixed } from "@/lib/utils";
 
@@ -12,12 +12,17 @@ interface MarketSharesDisplayProps {
     sharesBalance: readonly bigint[];
 }
 
+// 1) A helper to convert raw 6-decimal USDC shares to a human-readable number
+function toUsdc(value: bigint): number {
+    return Number(value) / 1_000_000; // divide by 1e6
+}
+
 export function MarketSharesDisplay({
     market,
     sharesBalance,
 }: MarketSharesDisplayProps) {
-    const [winnings, setWinnings] = useState<bigint[]>(() =>
-        Array(market.options.length).fill(BigInt(0))
+    const [winnings, setWinnings] = useState<bigint[]>(
+        () => Array(market.options.length).fill(BigInt(0))
     );
 
     const calculateWinnings = (optionIndex: number) => {
@@ -26,20 +31,20 @@ export function MarketSharesDisplay({
         const userShares = sharesBalance[optionIndex] || BigInt(0);
         const totalSharesForOption = market.totalShares[optionIndex] || BigInt(0);
         const totalLosingShares = market.totalShares.reduce(
-            (sum, shares, index) =>
-                index !== optionIndex ? sum + shares : sum,
+            (sum, shares, index) => (index !== optionIndex ? sum + shares : sum),
             BigInt(0)
         );
 
         if (totalSharesForOption === BigInt(0)) return BigInt(0);
 
-        // Calculate user's proportion of the winning side
-        const userProportion = (userShares * BigInt(1000000)) / totalSharesForOption; // Multiply by 1M for precision
+        // userProportion in "parts per 1M" to handle 6 decimals
+        const userProportion =
+            (userShares * BigInt(1_000_000)) / totalSharesForOption;
 
-        // Calculate their share of the losing side's shares
-        const winningsFromLosingShares = (totalLosingShares * userProportion) / BigInt(1000000);
+        // winningsFromLosingShares
+        const winningsFromLosingShares =
+            (totalLosingShares * userProportion) / BigInt(1_000_000);
 
-        // Total winnings is their original shares plus their proportion of losing shares
         return userShares + winningsFromLosingShares;
     };
 
@@ -56,21 +61,35 @@ export function MarketSharesDisplay({
     return (
         <div className="flex flex-col gap-2">
             <div className="w-full text-sm text-muted-foreground">
-                Your shares: {market.options.map((option, index) => (
-                    <span key={index} className="block">
-                        {option} - {Math.floor(parseInt(toEther(sharesBalance[index] || BigInt(0))))}
-                    </span>
-                ))}
+                Your shares:{" "}
+                {market.options.map((option, index) => {
+                    // 2) Convert raw 6-decimal shares to a readable number
+                    const rawShares = sharesBalance[index] || BigInt(0);
+                    const displayShares = toUsdc(rawShares);
+
+                    return (
+                        <span key={index} className="block">
+                            {option} - {toFixed(displayShares, 2)}
+                        </span>
+                    );
+                })}
             </div>
+
             {winnings.some((win) => win > 0) && (
                 <div className="flex flex-col gap-1">
                     <div className="text-xs text-muted-foreground">Winnings:</div>
                     <div className="flex gap-2">
-                        {market.options.map((option, index) => (
-                            <Badge key={index} variant="secondary">
-                                {option}: {toFixed(Number(toEther(winnings[index] || BigInt(0))), 2)} shares
-                            </Badge>
-                        ))}
+                        {market.options.map((option, index) => {
+                            // 3) Convert raw winnings to readable number
+                            const rawWin = winnings[index] || BigInt(0);
+                            const displayWin = toUsdc(rawWin);
+
+                            return (
+                                <Badge key={index} variant="secondary">
+                                    {option}: {toFixed(displayWin, 2)} shares
+                                </Badge>
+                            );
+                        })}
                     </div>
                 </div>
             )}

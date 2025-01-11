@@ -34,10 +34,3 @@ export function timeRemaining(endTime: number): string {
 
     return `${days > 0 ? days + "d " : ""}${hours > 0 ? hours + "h " : ""}${minutes > 0 ? minutes + "m " : ""}${seconds}s`;
 }
-
-// Exclude specific market IDs
-const excludedMarketIDs = ["23", "24", "25", "26", "27", "28"]; // Replace with the actual IDs to exclude
-
-export function filterExcludedMarkets(markets: Array<{ id: string }>) {
-    return markets.filter((market) => !excludedMarketIDs.includes(market.id));
-}

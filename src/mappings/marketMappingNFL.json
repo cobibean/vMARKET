@@ -1,0 +1,32 @@
+{
+  "7": {
+    "game_id": 17275,
+    "away_team": "Los Angeles Chargers",
+    "home_team": "Houston Texans",
+    "local_date": "2025-01-11"
+  },
+  "8": {
+    "game_id": 13458,
+    "away_team": "Pittsburgh Steelers",
+    "home_team": "Baltimore Ravens",
+    "local_date": "2025-01-11"
+  },
+  "9": {
+    "game_id": 17276,
+    "away_team": "Denver Broncos",
+    "home_team": "Buffalo Bills",
+    "local_date": "2025-01-12"
+  },
+  "10": {
+    "game_id": 17277,
+    "away_team": "Green Bay Packers",
+    "home_team": "Philadelphia Eagles",
+    "local_date": "2025-01-12"
+  },
+  "11": {
+    "game_id": 13459,
+    "away_team": "Washington Commanders",
+    "home_team": "Tampa Bay Buccaneers",
+    "local_date": "2025-01-12"
+  }
+}

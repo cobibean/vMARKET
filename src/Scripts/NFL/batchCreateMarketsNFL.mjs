@@ -11,7 +11,6 @@ const CONTRACT_ADDRESS = "0x5B45E4C00B310f1E9C951e1169C9A60fD856d186";
 
 // 2) Full ABI (Paste your entire contract ABI here)
 const FULL_ABI = [
-  [
     {
       "inputs": [
         {
@@ -457,7 +456,6 @@ const FULL_ABI = [
       "stateMutability": "nonpayable",
       "type": "function"
     }
-  ]
 ];
 
 // 3) Create provider & signer (Ethers v6)
@@ -604,5 +602,5 @@ const createMarketsForFile = async (filename) => {
 //-------------------------------------
 // Execute script for specific game file(s)
 //-------------------------------------
-const filesToProcess = ["games-2025-01-05.json"];
+const filesToProcess = ["games-2025-01-12.json"];
 filesToProcess.forEach(createMarketsForFile);

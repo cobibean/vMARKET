@@ -36,7 +36,7 @@ export default function PredictionMarketDashboard() {
                 <Tabs defaultValue="active" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="active">Active</TabsTrigger>
-                        <TabsTrigger value="pending">Pending Resolution</TabsTrigger>
+                        <TabsTrigger value="pending">Pending</TabsTrigger>
                         <TabsTrigger value="resolved">Resolved</TabsTrigger>
                     </TabsList>
                     {isLoadingMarketCount ? (

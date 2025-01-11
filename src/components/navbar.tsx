@@ -35,7 +35,7 @@ export function Navbar() {
     <h1 className="text-xl sm:text-2xl font-bold">vMARKET</h1>
     <div className="items-center flex flex-wrap sm:flex-row gap-2 sm:gap-4 mt-2 sm:mt-0">
         <a
-            href="https://app.hercules.exchange/?token2=0x848E329d9C3FF5D3078C4670c773651155386C46"
+            href="https://app.hercules.exchange/?token2=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21"
             target="_blank"
             rel="noreferrer"
             className="px-4 flex items-center justify-center bg-gradient-to-r from-black to-gray-800 text-white font-bold rounded hover:from-gray-700 hover:to-gray-900 transition-colors max-w-[10rem] truncate"

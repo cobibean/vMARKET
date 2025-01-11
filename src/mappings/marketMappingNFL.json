@@ -28,5 +28,11 @@
     "away_team": "Washington Commanders",
     "home_team": "Tampa Bay Buccaneers",
     "local_date": "2025-01-12"
+  },
+  "12": {
+    "game_id": 17278,
+    "away_team": "Minnesota Vikings",
+    "home_team": "Los Angeles Rams",
+    "local_date": "2025-01-13"
   }
 }

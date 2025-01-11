@@ -1,0 +1,17 @@
+[
+  {
+    "game_id": 17278,
+    "stage": "Post Season",
+    "week": "Wild Card",
+    "home_team": "Los Angeles Rams",
+    "away_team": "Minnesota Vikings",
+    "local_date": "2025-01-13",
+    "start_time": "2025-01-13T19:00:00.000-06:00",
+    "venue": "SoFi Stadium",
+    "city": "Inglewood",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  }
+]

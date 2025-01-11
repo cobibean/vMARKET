@@ -240,9 +240,9 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
                 <p className="mb-4">
                   You are about to buy{" "}
                   <span className="font-bold">
-                    {amount} "
+                    {amount} &quot;
                     {selectedOption !== null ? market.options[selectedOption] : ""}
-                    "
+                    &quot;
                   </span>{" "}
                   share(s).
                 </p>

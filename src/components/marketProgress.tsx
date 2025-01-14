@@ -35,10 +35,12 @@ export function MarketProgress({
               <span>
                 <span className="font-bold text-sm">
                   {option}:{" "}
-                  {Math.floor(toUsdc(optionShares)) /* <- changed here */}
+                  {toUsdc(optionShares).toFixed(2) /* Display USDC with 2 decimals */}
                 </span>
                 {total > 0 && (
-                  <span className="text-xs text-gray-500"> {Math.floor(percentage)}%</span>
+                  <span className="text-xs text-gray-500 ml-2">
+                    {percentage.toFixed(2)}% {/* Display percentage with 2 decimals */}
+                  </span>
                 )}
               </span>
             </div>

@@ -8,6 +8,9 @@ import { MarketCardSkeleton } from "./skeletonCard";
 import { MarketCard } from "./marketCard";
 import { Footer } from "./footer";
 
+// List of excluded market IDs
+const excludedMarketIds = [20, 21]; // Replace with actual market IDs to exclude
+
 export default function PredictionMarketDashboard() {
     const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
         contract: contract,
@@ -29,6 +32,15 @@ export default function PredictionMarketDashboard() {
         <MarketCardSkeleton key={index} />
     ));
 
+    // Filter out excluded market IDs
+    const getFilteredMarketIndexes = () => {
+        return Array.from({ length: Number(marketCount) }, (_, index) => 
+            Number(BigInt(marketCount) - BigInt(1) - BigInt(index))
+        ).filter(index => !excludedMarketIds.includes(index));
+    };
+
+    const filteredIndexes = getFilteredMarketIndexes();
+
     return (
         <div className="min-h-screen flex flex-col">
             <div className="flex-grow container mx-auto p-4">
@@ -48,48 +60,40 @@ export default function PredictionMarketDashboard() {
                     ) : (
                         <>
                         <TabsContent value="active">
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-    {Array.from({ length: Number(marketCount) }, (_, index) => (
-        <MarketCard
-            key={index}
-            index={Number(BigInt(marketCount) - BigInt(1) - BigInt(index))}
-            filter="active"
-        />
-    ))
-    .sort((a, b) => {
-        const now = new Date().getTime();
-        const aEndTime = Number(a.props.endTime) * 1000; // Convert bigint to milliseconds
-        const bEndTime = Number(b.props.endTime) * 1000;
-        const aRemainingTime = aEndTime - now; // Time until `a` ends
-        const bRemainingTime = bEndTime - now; // Time until `b` ends
-        return aRemainingTime - bRemainingTime; // Shortest time remaining first
-    })}
-    </div>
-</TabsContent>
-                            
-                            <TabsContent value="pending">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {Array.from({ length: Number(marketCount) }, (_, index) => (
+                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                {filteredIndexes.map(index => (
                                     <MarketCard
                                         key={index}
-                                        index={Number(BigInt(marketCount) - BigInt(1) - BigInt(index))} 
-                                        filter="pending"
-                                        />
-                                    ))}
-                                </div>
-                            </TabsContent>
+                                        index={index}
+                                        filter="active"
+                                    />
+                                ))}
+                            </div>
+                        </TabsContent>
                             
-                            <TabsContent value="resolved">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                    {Array.from({ length: Number(marketCount) }, (_, index) => ( 
-                                        <MarketCard 
-                                            key={index} 
-                                            index={Number (BigInt(marketCount) - 1n - BigInt(index))}
-                                            filter="resolved"
-                                        />
-                                    ))}
-                                </div>
-                            </TabsContent>
+                        <TabsContent value="pending">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                {filteredIndexes.map(index => (
+                                    <MarketCard
+                                        key={index}
+                                        index={index}
+                                        filter="pending"
+                                    />
+                                ))}
+                            </div>
+                        </TabsContent>
+                            
+                        <TabsContent value="resolved">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                {filteredIndexes.map(index => (
+                                    <MarketCard 
+                                        key={index} 
+                                        index={index}
+                                        filter="resolved"
+                                    />
+                                ))}
+                            </div>
+                        </TabsContent>
                         </>
                     )}
                 </Tabs>

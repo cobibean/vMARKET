@@ -126,5 +126,5 @@ const createMarketsForFile = async (filename) => {
 };
 
 // Execute script for specific EPL game files
-const filesToProcess = ["games-2025-01-06.json"];
+const filesToProcess = ["games-2025-01-14.json"];
 filesToProcess.forEach(createMarketsForFile);

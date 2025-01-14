@@ -1,0 +1,32 @@
+[
+  {
+    "game_id": 13462,
+    "stage": "Post Season",
+    "week": "Divisional Round",
+    "home_team": "Unknown",
+    "away_team": "Unknown",
+    "local_date": "2025-01-18",
+    "start_time": "2025-01-18T18:00:00.000-06:00",
+    "venue": "Unknown",
+    "city": "Unknown",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  },
+  {
+    "game_id": 13463,
+    "stage": "Post Season",
+    "week": "Divisional Round",
+    "home_team": "Unknown",
+    "away_team": "Unknown",
+    "local_date": "2025-01-18",
+    "start_time": "2025-01-18T18:00:00.000-06:00",
+    "venue": "Unknown",
+    "city": "Unknown",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  }
+]

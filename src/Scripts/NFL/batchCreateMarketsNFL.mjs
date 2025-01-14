@@ -602,5 +602,5 @@ const createMarketsForFile = async (filename) => {
 //-------------------------------------
 // Execute script for specific game file(s)
 //-------------------------------------
-const filesToProcess = ["games-2025-01-13.json"];
+const filesToProcess = ["games-2025-01-18.json"];
 filesToProcess.forEach(createMarketsForFile);

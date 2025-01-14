@@ -56,7 +56,7 @@ export function MarketTime({ endTime, className }: MarketTimeProps) {
                 "mb-2 w-fit px-2 py-1 rounded border text-xs",
                 isEnded 
                     ? "bg-red-200 border-red-300 text-red-800" 
-                    : "border-gray-300 text-orange",
+                    : "border-gray-300 text-gray-800",
                 className
             )}
         >

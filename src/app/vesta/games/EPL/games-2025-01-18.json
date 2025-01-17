@@ -1,0 +1,52 @@
+[
+  {
+    "game_id": 1208240,
+    "home_team": "Newcastle",
+    "away_team": "Bournemouth",
+    "local_date": "2025-01-18",
+    "start_time": "2025-01-18T12:30:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208238,
+    "home_team": "Leicester",
+    "away_team": "Fulham",
+    "local_date": "2025-01-18",
+    "start_time": "2025-01-18T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208242,
+    "home_team": "West Ham",
+    "away_team": "Crystal Palace",
+    "local_date": "2025-01-18",
+    "start_time": "2025-01-18T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208234,
+    "home_team": "Brentford",
+    "away_team": "Liverpool",
+    "local_date": "2025-01-18",
+    "start_time": "2025-01-18T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208233,
+    "home_team": "Arsenal",
+    "away_team": "Aston Villa",
+    "local_date": "2025-01-18",
+    "start_time": "2025-01-18T17:30:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  }
+]

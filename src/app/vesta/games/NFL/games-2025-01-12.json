@@ -1,0 +1,47 @@
+[
+  {
+    "game_id": 17276,
+    "stage": "Post Season",
+    "week": "Wild Card",
+    "home_team": "Buffalo Bills",
+    "away_team": "Denver Broncos",
+    "local_date": "2025-01-12",
+    "start_time": "2025-01-12T12:00:00.000-06:00",
+    "venue": "Highmark Stadium",
+    "city": "Orchard Park",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  },
+  {
+    "game_id": 17277,
+    "stage": "Post Season",
+    "week": "Wild Card",
+    "home_team": "Philadelphia Eagles",
+    "away_team": "Green Bay Packers",
+    "local_date": "2025-01-12",
+    "start_time": "2025-01-12T15:30:00.000-06:00",
+    "venue": "Lincoln Financial Field",
+    "city": "Philadelphia",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  },
+  {
+    "game_id": 13459,
+    "stage": "Post Season",
+    "week": "Wild Card",
+    "home_team": "Tampa Bay Buccaneers",
+    "away_team": "Washington Commanders",
+    "local_date": "2025-01-12",
+    "start_time": "2025-01-12T19:00:00.000-06:00",
+    "venue": "Raymond James Stadium",
+    "city": "Tampa",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  }
+]

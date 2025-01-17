@@ -1,0 +1,32 @@
+[
+  {
+    "game_id": 17275,
+    "stage": "Post Season",
+    "week": "Wild Card",
+    "home_team": "Houston Texans",
+    "away_team": "Los Angeles Chargers",
+    "local_date": "2025-01-11",
+    "start_time": "2025-01-11T15:30:00.000-06:00",
+    "venue": "NRG Stadium",
+    "city": "Houston",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  },
+  {
+    "game_id": 13458,
+    "stage": "Post Season",
+    "week": "Wild Card",
+    "home_team": "Baltimore Ravens",
+    "away_team": "Pittsburgh Steelers",
+    "local_date": "2025-01-11",
+    "start_time": "2025-01-11T19:00:00.000-06:00",
+    "venue": "M&T Bank Stadium",
+    "city": "Baltimore",
+    "home_score": null,
+    "away_score": null,
+    "status_short": "NS",
+    "status_long": "Not Started"
+  }
+]

@@ -6,7 +6,7 @@ import { contract } from "@/app/vesta/constants/contracts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/ui/tabs";
 import { MarketCardSkeleton } from "./skeletonCard";
 import { MarketCard } from "./marketCard";
-import { Footer } from "./footer";
+import { Footer } from "@/app/sharedComponents/footer";
 
 // List of excluded market IDs
 const excludedMarketIds = [-1]; // Replace with actual market IDs to exclude

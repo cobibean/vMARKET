@@ -1,40 +1,45 @@
+// app/page.tsx
+
 "use client";
 
-import Link from "next/link";
+import React from 'react';
+import RoomCard from '@/app/sharedComponents/roomCard';
+import { FaCoins, FaExchangeAlt } from 'react-icons/fa';
+import { ThemeProvider } from '@/app/context/themeContext'; // Ensure correct path
 
 export default function HomePage() {
   return (
-    <div className="space-y-8">
-      <h1 className="text-3xl font-bold">Welcome to vMARKET</h1>
-      <p>Select a prediction market room to get started:</p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* USDC Room */}
-        <div className="p-6 border rounded bg-gray-50">
-          <h2 className="text-2xl font-semibold mb-4">Stable Predictions Room</h2>
-          <p className="text-gray-600 mb-4">
-            Dive into markets using USDC for stable and secure predictions.
-          </p>
-          <Link href="/usdc">
-            <button className="bg-blue-500 text-white px-6 py-3 rounded">
-              Enter USDC Room
-            </button>
-          </Link>
+    <ThemeProvider>
+      <div className="min-h-screen bg-background text-foreground p-8">
+        {/* Dark Mode Toggle */}
+        <div className="fixed top-4 right-4 z-50">
         </div>
 
-        {/* VESTA Room */}
-        <div className="p-6 border rounded bg-gray-50">
-          <h2 className="text-2xl font-semibold mb-4">VESTA Predictions Room</h2>
-          <p className="text-gray-600 mb-4">
-            Explore the VESTA-powered prediction markets and take a chance.
-          </p>
-          <Link href="/vesta">
-            <button className="bg-green-500 text-white px-6 py-3 rounded">
-              Enter VESTA Room
-            </button>
-          </Link>
+        <div className="space-y-8">
+          <h1 className="text-4xl font-bold text-center">Welcome to vMARKET</h1>
+          <p className="text-center text-lg">Select a prediction market room to get started:</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* USDC Room */}
+            <RoomCard
+              title="Stable Room"
+              description="Dive into predictions using USDC for a stable experience."
+              href="/usdc"
+              icon={<FaCoins size={24} />} // Passing Icon
+              bgColor="bg-primary"
+            />
+
+            {/* VESTA Room */}
+            <RoomCard
+              title="Degen Room"
+              description="Explore the VESTA-powered prediction markets."
+              href="/vesta"
+              icon={<FaExchangeAlt size={24} />} // Passing Icon
+              bgColor="bg-accent"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }

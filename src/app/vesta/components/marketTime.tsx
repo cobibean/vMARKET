@@ -58,22 +58,25 @@ export function MarketTime({ endTime, className }: MarketTimeProps) {
     return () => clearInterval(interval);
   }, [endTime, isEnded]);
 
+  // State-specific styles
+  const stateStyles = isEnded
+    ? "bg-red-200 text-red-800 dark:bg-red-800 dark:text-red-200"
+    : "bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200";
+
   return (
     <div
-  className={cn(
-    "mb-2 w-fit px-2 py-1 rounded border text-xs",
-    isEnded
-      ? "bg-destructive/20 border-destructive text-destructive-foreground"
-      : "border-border text-foreground",
-    className
-  )}
->
-  {isEnded ? "Ended: " : "Ends: "} {formattedDate}
-  {!isEnded && (
-    <div className="mt-1 text-muted-foreground text-xs">
-      Time Remaining: {timeRemaining}
+      className={cn(
+        "mb-2 w-fit px-2 py-1 rounded border text-xs",
+        stateStyles,
+        className
+      )}
+    >
+      {isEnded ? "Ended: " : "Ends: "} {formattedDate}
+      {!isEnded && (
+        <div className="mt-1">
+          Time Remaining: {timeRemaining}
+        </div>
+      )}
     </div>
-  )}
-    </div>    
   );
 }

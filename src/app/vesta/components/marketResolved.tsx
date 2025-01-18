@@ -72,11 +72,13 @@ export function MarketResolved({
 
     return (
         <div className="flex flex-col gap-2">
-            <div className="mb-2 bg-green-200 p-2 rounded-md text-center text-xs">
+            {/* Theme-aware Resolved Container */}
+            <div className="mb-2 bg-green-200 dark:bg-green-800 p-2 rounded-md text-center text-xs text-green-800 dark:text-green-200">
                 {outcome >= 0 && outcome < options.length
                     ? `Resolved: ${options[outcome]}`
                     : "Error: Invalid Outcome"}
             </div>
+            {/* Claim Rewards Button */}
             <Button variant="outline" className="w-full" onClick={handleClaimRewards}>
                 Claim Rewards
             </Button>

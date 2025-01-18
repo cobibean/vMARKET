@@ -11,6 +11,17 @@ export default {
   ],
   theme: {
     extend: {
+      container: {  
+        center: true, // Center container
+        padding: "2rem", // Add padding
+        screens: {
+          sm: "100%",
+          md: "100%",
+          lg: "100%",
+          xl: "100%",
+          "2xl": "100%",
+        },
+      },
       colors: {
         background: 'hsl(var(--background))', // Primary background
         foreground: 'hsl(var(--foreground))', // Primary text

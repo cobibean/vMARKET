@@ -42,8 +42,8 @@ export default function PredictionMarketDashboard() {
     const filteredIndexes = getFilteredMarketIndexes();
 
     return (
-        <div className="min-h-screen flex flex-col">
-            <div className="flex-grow container mx-auto p-4">
+        <div className="max-h-screen flex flex-col">
+            <div className="flex-grow w-full p-4">
                 <Navbar />
                 <Tabs defaultValue="active" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">

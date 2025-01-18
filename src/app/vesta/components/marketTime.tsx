@@ -60,20 +60,20 @@ export function MarketTime({ endTime, className }: MarketTimeProps) {
 
   return (
     <div
-      className={cn(
-        "mb-2 w-fit px-2 py-1 rounded border text-xs",
-        isEnded
-          ? "bg-red-200 border-red-300 text-red-800"
-          : "border-gray-300 text-gray-800",
-        className
-      )}
-    >
-      {isEnded ? "Ended: " : "Ends: "} {formattedDate}
-      {!isEnded && (
-        <div className="mt-1 text-gray-600 text-xs">
-          Time Remaining: {timeRemaining}
-        </div>
-      )}
+  className={cn(
+    "mb-2 w-fit px-2 py-1 rounded border text-xs",
+    isEnded
+      ? "bg-destructive/20 border-destructive text-destructive-foreground"
+      : "border-border text-foreground",
+    className
+  )}
+>
+  {isEnded ? "Ended: " : "Ends: "} {formattedDate}
+  {!isEnded && (
+    <div className="mt-1 text-muted-foreground text-xs">
+      Time Remaining: {timeRemaining}
     </div>
+  )}
+    </div>    
   );
 }

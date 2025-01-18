@@ -1,8 +1,8 @@
-import { Button } from "../../ui/button";
+import { Button } from "@/app/ui/button";
 import { prepareContractCall } from "thirdweb";
 import { useSendAndConfirmTransaction } from "thirdweb/react";
-import { contract } from "@/app/usdc/constants/contracts";
-import { toast } from "../../ui/useToast";
+import { contract } from "@/app/vesta/constants/contracts";
+import { toast } from "@/app/ui/useToast";
 
 interface MarketResolvedProps {
     marketId: number;
@@ -72,11 +72,13 @@ export function MarketResolved({
 
     return (
         <div className="flex flex-col gap-2">
-            <div className="mb-2 bg-green-200 p-2 rounded-md text-center text-xs">
+            {/* Theme-aware Resolved Container */}
+            <div className="mb-2 bg-green-200 dark:bg-green-800 p-2 rounded-md text-center text-xs text-green-800 dark:text-green-200">
                 {outcome >= 0 && outcome < options.length
                     ? `Resolved: ${options[outcome]}`
                     : "Error: Invalid Outcome"}
             </div>
+            {/* Claim Rewards Button */}
             <Button variant="outline" className="w-full" onClick={handleClaimRewards}>
                 Claim Rewards
             </Button>

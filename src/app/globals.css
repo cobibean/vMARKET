@@ -41,12 +41,12 @@ h3, h4, h5, h6 {
     /* Secondary Colors */
     --secondary: 240 5% 70%; /* Neutral light gray */
     --secondary-foreground: 240 10% 30%; /* Darker gray text */
-    --muted: 0 0% 96.1%; /* Very Light Gray */
-    --muted-foreground: 0 0% 45.1%; /* Medium Gray */
+    --muted: 0 0% 92%; /* Slightly darker light gray for contrast */
+    --muted-foreground: 0 0% 30%; /* Slightly darker gray for better visibility */
 
     /* Destructive Colors */
     --destructive: 0 84.2% 60.2%; /* Vibrant Red */
-    --destructive-foreground: 0 0% 98%; /* Almost White */
+    --destructive-foreground: 0 0% 20%; /* Darker gray for better contrast */
 
     /* Other UI Colors */
     --border: 240 5% 60%; /* Neutral gray for borders */

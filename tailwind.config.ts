@@ -69,9 +69,6 @@ export default {
         xl: '1rem', // Extra-large corners
         none: '0', // No radius
       },
-      boxShadow: {
-        glow: '0 0 15px rgba(102, 252, 241, 0.6)', // Glow effect for accents
-      },
     },
   },
   plugins: [require("tailwindcss-animate")], // Add tailwind animation plugin

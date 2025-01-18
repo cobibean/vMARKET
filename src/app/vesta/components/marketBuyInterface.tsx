@@ -193,14 +193,14 @@ export function MarketBuyInterface({ marketId, market }: MarketBuyInterfaceProps
           <div className="flex flex-wrap gap-4 mb-4">
             {market.options.map((option, index) => (
               <Button
-                key={index}
-                className="flex-1"
-                onClick={() => handleBuy(index)}
-                aria-label={`Vote ${option} for "${market.question}"`}
-                disabled={!account}
-              >
-                {option}
-              </Button>
+              key={index}
+              className="flex-1 text-foreground dark:text-card-foreground bg-secondary/10 dark:bg-secondary/20 hover:bg-secondary/30 dark:hover:bg-secondary/40 border-2 border-primary rounded-lg transition-shadow relative"
+              onClick={() => handleBuy(index)}
+              aria-label={`Vote ${option} for "${market.question}"`}
+              disabled={!account}
+            >
+              {option}
+            </Button>
             ))}
           </div>
         ) : (

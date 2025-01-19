@@ -1,7 +1,7 @@
 import { Button } from "@/app/ui/button";
 import { prepareContractCall } from "thirdweb";
 import { useSendAndConfirmTransaction } from "thirdweb/react";
-import { contract } from "@/app/vesta/constants/contracts";
+import { contract } from "@/app/usdc/constants/contracts";
 import { toast } from "@/app/ui/useToast";
 
 interface MarketResolvedProps {

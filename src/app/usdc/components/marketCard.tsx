@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/app/ui/c
 import { useActiveAccount, useReadContract } from "thirdweb/react";
 import { contract } from "@/app/usdc/constants/contracts";
 import { MarketProgress } from "./marketProgress";
-import { MarketTime } from "@/app/usdc/components/marketTime";
+import { MarketTime } from "./marketTime";
 import { MarketCardSkeleton } from "./skeletonCard";
 import { MarketSharesDisplay } from "./marketSharesDisplay";
 import { MarketBuyInterface } from "./marketBuyInterface";
@@ -16,6 +16,8 @@ import { useState, useMemo } from "react";
 interface MarketCardProps {
   index: number;
   filter: "active" | "pending" | "resolved";
+  rulesMap: Record<number, string>; // Map of marketId to rules
+  
 }
 
 interface Market {
@@ -31,9 +33,13 @@ interface SharesBalance {
   shares: readonly bigint[];
 }
 
-export function MarketCard({ index, filter }: MarketCardProps) {
+
+export function MarketCard({ index, filter, rulesMap }: MarketCardProps) {
   const account = useActiveAccount();
   const [isInfoOpen, setIsInfoOpen] = useState(false); // State for modal visibility
+  const marketRule = rulesMap[index] || "No rule available for this market.";
+  console.log("MarketCard props:", { index, filter, rulesMap });
+  console.log("Resolved rule for market:", rulesMap[index]);
 
   // --- 1. Fetch Market Data ---
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
@@ -42,10 +48,10 @@ export function MarketCard({ index, filter }: MarketCardProps) {
     params: [BigInt(index)],
   });
 
-  const market: Market | undefined = marketData
+  const market = marketData
     ? {
         question: marketData[0],
-        options: marketData[1].filter((option: string) => option.length > 0),
+        options: marketData[1].filter((o: string) => o.length > 0),
         endTime: marketData[2],
         outcome: marketData[3],
         totalShares: marketData[4],
@@ -61,9 +67,8 @@ export function MarketCard({ index, filter }: MarketCardProps) {
   });
 
   const sharesBalance: SharesBalance | undefined = sharesBalanceData
-    ? { shares: sharesBalanceData }
-    : undefined;
-
+  ? { shares: sharesBalanceData }
+  : undefined;
   // --- 3. Status Logic ---
   const isExpired = useMemo(() => {
     if (!market) return false;
@@ -90,7 +95,8 @@ export function MarketCard({ index, filter }: MarketCardProps) {
     return null;
   }
 
-  // --- 4. Render ---
+
+  // --- 5. Render ---
   return (
     <Card key={index} className="flex flex-col">
       {isLoadingMarketData ? (
@@ -133,7 +139,6 @@ export function MarketCard({ index, filter }: MarketCardProps) {
                 )}
               </>
             )}
-            {/* Add "View Market Info" Button */}
             <button
               className="mt-2 text-sm text-primary underline hover:text-primary/80"
               onClick={() => setIsInfoOpen(true)}
@@ -151,11 +156,10 @@ export function MarketCard({ index, filter }: MarketCardProps) {
             )}
           </CardFooter>
 
-          {/* Market Info Modal */}
           <MarketInfoModal
             isOpen={isInfoOpen}
             onClose={() => setIsInfoOpen(false)}
-            marketRules="The outcome of this market will be determined based on official results published by the NFL. In case of a tie, the 'Draw' option will be resolved."
+            marketRules={marketRule} // Pass dynamic rule to modal
           />
         </>
       )}

@@ -1,6 +1,7 @@
 "use client";
 
-import { Navbar } from "./navbar"; 
+import { useState, useEffect } from "react";
+import { Navbar } from "./navbar";
 import { useReadContract } from "thirdweb/react";
 import { contract } from "@/app/vesta/constants/contracts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/ui/tabs";
@@ -8,19 +9,51 @@ import { MarketCardSkeleton } from "./skeletonCard";
 import { MarketCard } from "./marketCard";
 import { Footer } from "@/app/sharedComponents/footer";
 
-// List of excluded market IDs
 const excludedMarketIds = [9, 10, 11, 12]; // Replace with actual market IDs to exclude
 
 export default function PredictionMarketDashboard() {
+    // Fetch the total market count from the contract
     const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
         contract: contract,
         method: "function marketCount() view returns (uint256)",
-        params: []
+        params: [],
     });
 
-    console.log("Market Count:", marketCount);
+    // State for rulesMap
+    const [rulesMap, setRulesMap] = useState<Record<number, string>>({});
+
+    // Fetch rules.json from the public folder
+    useEffect(() => {
+        const fetchRules = async () => {
+            try {
+                const response = await fetch("/rules.json"); // Ensure the path is correct
+                if (!response.ok) throw new Error("Failed to fetch rules.json");
+                const data = await response.json();
+
+                console.log("Fetched rules.json data:", data); // Debug the raw rules.json data
+
+                const map = data.reduce(
+                    (acc: Record<number, string>, rule: { marketId: number; rule: string }) => {
+                        acc[rule.marketId] = rule.rule;
+                        return acc;
+                    },
+                    {}
+                );
+
+                console.log("Generated rulesMap:", map); // Debug the rulesMap
+                setRulesMap(map);
+            } catch (error) {
+                console.error("Error fetching rules.json:", error);
+            }
+        };
+        fetchRules();
+    }, []);
+
+    console.log("Market Count:", marketCount); // Debug market count
+    console.log("Rules Map:", rulesMap); // Debug rulesMap
 
     if (isLoadingMarketCount || marketCount === undefined) {
+        console.log("Market count is loading or undefined."); // Debug loading state
         return (
             <div className="flex justify-center items-center min-h-screen">
                 <p>Loading markets...</p>
@@ -28,22 +61,29 @@ export default function PredictionMarketDashboard() {
         );
     }
 
+    // Generate skeleton cards while data loads
     const skeletonCards = Array.from({ length: 6 }, (_, index) => (
         <MarketCardSkeleton key={index} />
     ));
 
-    // Filter out excluded market IDs
+    // Generate market indexes, excluding the ones in excludedMarketIds
     const getFilteredMarketIndexes = () => {
-        return Array.from({ length: Number(marketCount) }, (_, index) => 
-            Number(BigInt(marketCount) - BigInt(1) - BigInt(index))
-        ).filter(index => !excludedMarketIds.includes(index));
+        const indexes = Array.from(
+            { length: Number(marketCount) },
+            (_, index) => Number(BigInt(marketCount) - BigInt(1) - BigInt(index))
+        ).filter((index) => !excludedMarketIds.includes(index));
+
+        console.log("Filtered Market Indexes:", indexes); // Debug filtered indexes
+        return indexes;
     };
 
     const filteredIndexes = getFilteredMarketIndexes();
 
+    console.log("Filtered Indexes to Render:", filteredIndexes); // Debug filtered indexes
+
     return (
-        <div className="min-h-screen flex flex-col">
-            <div className="flex-grow container mx-auto p-4">
+        <div className="max-h-screen flex flex-col">
+            <div className="flex-grow w-full p-4">
                 <Navbar />
                 <Tabs defaultValue="active" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">
@@ -59,41 +99,44 @@ export default function PredictionMarketDashboard() {
                         </TabsContent>
                     ) : (
                         <>
-                        <TabsContent value="active">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {filteredIndexes.map(index => (
-                                    <MarketCard
-                                        key={index}
-                                        index={index}
-                                        filter="active"
-                                    />
-                                ))}
-                            </div>
-                        </TabsContent>
-                            
-                        <TabsContent value="pending">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {filteredIndexes.map(index => (
-                                    <MarketCard
-                                        key={index}
-                                        index={index}
-                                        filter="pending"
-                                    />
-                                ))}
-                            </div>
-                        </TabsContent>
-                            
-                        <TabsContent value="resolved">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {filteredIndexes.map(index => (
-                                    <MarketCard 
-                                        key={index} 
-                                        index={index}
-                                        filter="resolved"
-                                    />
-                                ))}
-                            </div>
-                        </TabsContent>
+                            <TabsContent value="active">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {filteredIndexes.map((index) => (
+                                        <MarketCard
+                                            key={index}
+                                            index={index}
+                                            filter="active"
+                                            rulesMap={rulesMap} // Pass rulesMap
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value="pending">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {filteredIndexes.map((index) => (
+                                        <MarketCard
+                                            key={index}
+                                            index={index}
+                                            filter="pending"
+                                            rulesMap={rulesMap} // Pass rulesMap
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value="resolved">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {filteredIndexes.map((index) => (
+                                        <MarketCard
+                                            key={index}
+                                            index={index}
+                                            filter="resolved"
+                                            rulesMap={rulesMap} // Pass rulesMap
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
                         </>
                     )}
                 </Tabs>

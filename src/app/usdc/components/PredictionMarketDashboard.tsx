@@ -1,6 +1,7 @@
 "use client";
 
-import { Navbar } from "./navbar"; 
+import { useState, useEffect } from "react";
+import { Navbar } from "./navbar";
 import { useReadContract } from "thirdweb/react";
 import { contract } from "@/app/usdc/constants/contracts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/ui/tabs";
@@ -8,19 +9,53 @@ import { MarketCardSkeleton } from "./skeletonCard";
 import { MarketCard } from "./marketCard";
 import { Footer } from "@/app/sharedComponents/footer";
 
-// List of excluded market IDs
-const excludedMarketIds = [666]; // Replace with actual market IDs to exclude
+interface PredictionMarketDashboardProps {
+    room: string; // Define room prop type
+  }
+  
 
-export default function PredictionMarketDashboard() {
+const excludedMarketIds = [0]; // Replace with actual market IDs to exclude
+
+export default function PredictionMarketDashboard( { room }: PredictionMarketDashboardProps) {
+    // Fetch the total market count from the contract
     const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
         contract: contract,
         method: "function marketCount() view returns (uint256)",
-        params: []
+        params: [],
     });
 
-    console.log("Market Count:", marketCount);
+    // State for rulesMap
+    const [rulesMap, setRulesMap] = useState<Record<number, string>>({});
+
+    // Fetch rules.json from the public folder
+    useEffect(() => {
+        const fetchRules = async () => {
+            try {
+              const response = await fetch("/rules.json");
+              if (!response.ok) throw new Error("Failed to fetch rules");
+              const data = await response.json();
+              const filteredRules = data
+                .filter((rule: { room: string }) => rule.room === room)
+                .reduce((acc: Record<number, string>, rule: { marketId: number; rule: string }) => {
+                  acc[rule.marketId] = rule.rule;
+                  return acc;
+                }, {});
+              setRulesMap(filteredRules);
+            } catch (error) {
+              console.error("Error fetching rules:", error);
+            }
+          };
+          fetchRules();
+        }, [room]);
+      
+        console.log("Rules Map:", rulesMap);
+      
+
+    console.log("Market Count:", marketCount); // Debug market count
+    console.log("Rules Map:", rulesMap); // Debug rulesMap
 
     if (isLoadingMarketCount || marketCount === undefined) {
+        console.log("Market count is loading or undefined."); // Debug loading state
         return (
             <div className="flex justify-center items-center min-h-screen">
                 <p>Loading markets...</p>
@@ -28,18 +63,25 @@ export default function PredictionMarketDashboard() {
         );
     }
 
+    // Generate skeleton cards while data loads
     const skeletonCards = Array.from({ length: 6 }, (_, index) => (
         <MarketCardSkeleton key={index} />
     ));
 
-    // Filter out excluded market IDs
+    // Generate market indexes, excluding the ones in excludedMarketIds
     const getFilteredMarketIndexes = () => {
-        return Array.from({ length: Number(marketCount) }, (_, index) => 
-            Number(BigInt(marketCount) - BigInt(1) - BigInt(index))
-        ).filter(index => !excludedMarketIds.includes(index));
+        const indexes = Array.from(
+            { length: Number(marketCount) },
+            (_, index) => Number(BigInt(marketCount) - BigInt(1) - BigInt(index))
+        ).filter((index) => !excludedMarketIds.includes(index));
+
+        console.log("Filtered Market Indexes:", indexes); // Debug filtered indexes
+        return indexes;
     };
 
     const filteredIndexes = getFilteredMarketIndexes();
+
+    console.log("Filtered Indexes to Render:", filteredIndexes); // Debug filtered indexes
 
     return (
         <div className="max-h-screen flex flex-col">
@@ -59,41 +101,44 @@ export default function PredictionMarketDashboard() {
                         </TabsContent>
                     ) : (
                         <>
-                        <TabsContent value="active">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {filteredIndexes.map(index => (
-                                    <MarketCard
-                                        key={index}
-                                        index={index}
-                                        filter="active"
-                                    />
-                                ))}
-                            </div>
-                        </TabsContent>
-                            
-                        <TabsContent value="pending">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {filteredIndexes.map(index => (
-                                    <MarketCard
-                                        key={index}
-                                        index={index}
-                                        filter="pending"
-                                    />
-                                ))}
-                            </div>
-                        </TabsContent>
-                            
-                        <TabsContent value="resolved">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {filteredIndexes.map(index => (
-                                    <MarketCard 
-                                        key={index} 
-                                        index={index}
-                                        filter="resolved"
-                                    />
-                                ))}
-                            </div>
-                        </TabsContent>
+                            <TabsContent value="active">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {filteredIndexes.map((index) => (
+                                        <MarketCard
+                                            key={index}
+                                            index={index}
+                                            filter="active"
+                                            rulesMap={rulesMap} // Pass rulesMap
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value="pending">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {filteredIndexes.map((index) => (
+                                        <MarketCard
+                                            key={index}
+                                            index={index}
+                                            filter="pending"
+                                            rulesMap={rulesMap} // Pass rulesMap
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value="resolved">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    {filteredIndexes.map((index) => (
+                                        <MarketCard
+                                            key={index}
+                                            index={index}
+                                            filter="resolved"
+                                            rulesMap={rulesMap} // Pass rulesMap
+                                        />
+                                    ))}
+                                </div>
+                            </TabsContent>
                         </>
                     )}
                 </Tabs>

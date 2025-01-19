@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/app/ui/card";
 import { useActiveAccount, useReadContract } from "thirdweb/react";
 import { contract } from "@/app/usdc/constants/contracts";

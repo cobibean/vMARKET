@@ -1,8 +1,9 @@
-require("dotenv").config();
-const { ethers, JsonRpcProvider, Wallet } = require("ethers");
-const fs = require("fs");
-const path = require("path");
-const moment = require("moment-timezone");
+// New (ES module style)
+import "dotenv/config";
+import { ethers } from "ethers";
+import { promises as fs } from "fs";
+import path from "path";
+import moment from "moment-timezone";
 
 // 1) Environment & Contract Setup
 const PRIVATE_KEY = process.env.PRIVATE_KEY;

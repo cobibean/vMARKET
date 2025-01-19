@@ -10,7 +10,8 @@ import { MarketSharesDisplay } from "./marketSharesDisplay";
 import { MarketBuyInterface } from "./marketBuyInterface";
 import { MarketResolved } from "./marketResolved";
 import { MarketPending } from "./marketPending";
-import { useMemo } from "react";
+import { MarketInfoModal } from "@/app/sharedComponents/MarketInfoModal";
+import { useMemo, useState } from "react";
 
 interface MarketCardProps {
   index: number;
@@ -32,6 +33,7 @@ interface SharesBalance {
 
 export function MarketCard({ index, filter }: MarketCardProps) {
   const account = useActiveAccount();
+  const [isInfoOpen, setIsInfoOpen] = useState(false); // State for modal visibility
 
   // --- 1. Fetch Market Data ---
   const { data: marketData, isLoading: isLoadingMarketData } = useReadContract({
@@ -111,7 +113,7 @@ export function MarketCard({ index, filter }: MarketCardProps) {
                   options={market.options}
                   totalShares={market.totalShares}
                 />
-                
+
                 {/* Conditionally show "Buy" or "Pending"/"Resolved" states */}
                 {isExpired ? (
                   market.resolved ? (
@@ -134,6 +136,13 @@ export function MarketCard({ index, filter }: MarketCardProps) {
                 )}
               </>
             )}
+            {/* Add "View Market Info" Button */}
+            <button
+              className="mt-2 text-sm text-primary underline hover:text-primary/80"
+              onClick={() => setIsInfoOpen(true)}
+            >
+              View Market Info
+            </button>
           </CardContent>
 
           <CardFooter>
@@ -144,6 +153,13 @@ export function MarketCard({ index, filter }: MarketCardProps) {
               />
             )}
           </CardFooter>
+
+          {/* Market Info Modal */}
+          <MarketInfoModal
+            isOpen={isInfoOpen}
+            onClose={() => setIsInfoOpen(false)}
+            marketRules="The outcome of this market will be determined based on official results published by the NBA. In case of a tie, the 'Draw' option will be resolved."
+          />
         </>
       )}
     </Card>

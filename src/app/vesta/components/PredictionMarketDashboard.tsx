@@ -9,7 +9,7 @@ import { MarketCard } from "./marketCard";
 import { Footer } from "@/app/sharedComponents/footer";
 
 // List of excluded market IDs
-const excludedMarketIds = [-1]; // Replace with actual market IDs to exclude
+const excludedMarketIds = [9, 10, 11, 12]; // Replace with actual market IDs to exclude
 
 export default function PredictionMarketDashboard() {
     const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({

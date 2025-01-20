@@ -1,0 +1,62 @@
+[
+  {
+    "game_id": 1208243,
+    "home_team": "Bournemouth",
+    "away_team": "Nottingham Forest",
+    "local_date": "2025-01-25",
+    "start_time": "2025-01-25T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208252,
+    "home_team": "Wolves",
+    "away_team": "Arsenal",
+    "local_date": "2025-01-25",
+    "start_time": "2025-01-25T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208248,
+    "home_team": "Liverpool",
+    "away_team": "Ipswich",
+    "local_date": "2025-01-25",
+    "start_time": "2025-01-25T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208250,
+    "home_team": "Southampton",
+    "away_team": "Newcastle",
+    "local_date": "2025-01-25",
+    "start_time": "2025-01-25T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208245,
+    "home_team": "Brighton",
+    "away_team": "Everton",
+    "local_date": "2025-01-25",
+    "start_time": "2025-01-25T15:00:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  },
+  {
+    "game_id": 1208249,
+    "home_team": "Manchester City",
+    "away_team": "Chelsea",
+    "local_date": "2025-01-25",
+    "start_time": "2025-01-25T17:30:00+00:00",
+    "home_score": null,
+    "away_score": null,
+    "status": "NS"
+  }
+]

@@ -739,7 +739,7 @@ const contract = new ethers.Contract(CONTRACT_ADDRESS, FULL_ABI, wallet);
 // File paths
 const gamesDir = resolve('./src/app/vesta/games/EPL');
 const mappingFilePath = resolve('./src/app/vesta/mappings/marketMappingEPL.json');
-
+const rulesFilePath = resolve("/Users/cobibean/DEV/vMARKET/vMARKETbuild/vmarket/public/rules.json");
 // Utility: Load and save market mapping
 async function loadMarketMapping() {
   try {
@@ -755,6 +755,21 @@ async function saveMarketMapping(mappingObject) {
   console.log(
     `marketMappingEPL.json updated. Total markets in file: ${Object.keys(mappingObject).length}`
   );
+}
+
+// Utility: Load and save rules
+async function loadRules() {
+  try {
+    const raw = await readFile(rulesFilePath, 'utf-8');
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+async function saveRules(rulesArray) {
+  await writeFile(rulesFilePath, JSON.stringify(rulesArray, null, 2), 'utf-8');
+  console.log(`rules.json updated. Total rules in file: ${rulesArray.length}`);
 }
 
 // Helper: Create a market on-chain
@@ -786,10 +801,16 @@ const createMarketOnChain = async (question, options, duration) => {
   }
 };
 
+// Function to generate a default rule
+const generateRule = (question) => {
+  return `### Market Rule\nThis market resolves based on the outcome of the event: **${question}**.\n\n- The resolution source will be official match results from the governing body.\n- If the event is postponed or canceled, the market will be voided.`;
+};
+
 // Main function: Create markets for EPL games
 const createMarketsForFile = async (filename) => {
   try {
     const marketMapping = await loadMarketMapping();
+    const rules = await loadRules();
     const filePath = resolve(gamesDir, filename);
     const rawData = await readFile(filePath, 'utf-8');
     const games = JSON.parse(rawData);
@@ -819,8 +840,20 @@ const createMarketsForFile = async (filename) => {
       const marketId = await createMarketOnChain(question, options, duration);
       if (marketId !== null) {
         console.log(`Market created for game_id=${game_id} | ID: ${marketId}`);
+
+        // Update market mapping
         marketMapping[marketId] = { game_id, away_team, home_team, local_date };
         await saveMarketMapping(marketMapping);
+
+        // Add to rules.json
+        const ruleEntry = {
+          marketId,
+          room: "vesta", // Add room
+          question,
+          rule: generateRule(question), // Generate default rule
+        };
+        rules.push(ruleEntry);
+        await saveRules(rules);
       }
     }
   } catch (error) {
@@ -829,5 +862,5 @@ const createMarketsForFile = async (filename) => {
 };
 
 // Execute script for specific EPL game files
-const filesToProcess = ["games-2025-01-18.json"];
+const filesToProcess = ["games-2025-01-25.json"];
 filesToProcess.forEach(createMarketsForFile);

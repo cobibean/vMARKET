@@ -57,5 +57,5 @@ const fetchEPLGames = async (filterDate) => {
 };
 
 // Specify the date you want to filter games for
-const filterDate = "2025-01-18"; // Replace with your desired date
+const filterDate = "2025-01-25"; // Replace with your desired date
 fetchEPLGames(filterDate);

@@ -9,7 +9,7 @@ import { MarketCardSkeleton } from "./skeletonCard";
 import { MarketCard } from "./marketCard";
 import { Footer } from "@/app/sharedComponents/footer";
 
-const excludedMarketIds = [9, 10, 11, 12]; // Replace with actual market IDs to exclude
+const excludedMarketIds = [9, 10, 11, 12, 14]; // Replace with actual market IDs to exclude
 
 export default function PredictionMarketDashboard() {
     // Fetch the total market count from the contract

@@ -118,7 +118,7 @@ const fetchGameData = async (filterDate) => {
 };
 
 // Dates to fetch games for
-const dates = ["2025-01-19"]; // Local dates in YYYY-MM-DD format
+const dates = ["2025-01-26"]; // Local dates in YYYY-MM-DD format
 
 // Fetch game data for all dates and save to files
 dates.forEach(date => fetchGameData(date));

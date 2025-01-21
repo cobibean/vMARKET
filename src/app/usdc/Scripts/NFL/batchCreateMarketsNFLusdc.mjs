@@ -464,30 +464,40 @@ const wallet = new Wallet(PRIVATE_KEY, provider);
 const contract = new ethers.Contract(CONTRACT_ADDRESS, FULL_ABI, wallet);
 
 // 4) File paths
-const gamesDir = resolve('./src/app/usdc/games/NFL');
-// Here's where we store Market <-> Game mapping
-const mappingFilePath = resolve('./src/app/usdc/mappings/marketMappingNFL.json');
+const gamesDir = resolve("./src/app/usdc/games/NFL");
+const mappingFilePath = resolve("./src/app/usdc/mappings/marketMappingNFL.json");
+const rulesPath = "/Users/cobibean/DEV/vMARKET/vMARKETbuild/vmarket/public/rules.json";
 
 //-------------------------------------
 // Utility: Load / Save Market Mapping
 //-------------------------------------
 async function loadMarketMapping() {
   try {
-    const raw = await readFile(mappingFilePath, 'utf-8');
+    const raw = await readFile(mappingFilePath, "utf-8");
     return JSON.parse(raw);
-  } catch (err) {
-    // If file doesn't exist or can't parse, return empty object
+  } catch {
     return {};
   }
 }
 
 async function saveMarketMapping(mappingObject) {
-  // Ensure the directory exists, if needed (optional)
-  // For example, if './src/mappings' might not exist, do:
-  // await mkdir(resolve('./src/mappings'), { recursive: true });
-
-  await writeFile(mappingFilePath, JSON.stringify(mappingObject, null, 2), 'utf-8');
+  await writeFile(mappingFilePath, JSON.stringify(mappingObject, null, 2), "utf-8");
   console.log(`marketMappingNFL.json updated. Total markets in file: ${Object.keys(mappingObject).length}`);
+}
+
+// Utility: Load / Save Rules
+async function loadRules() {
+  try {
+    const raw = await readFile(rulesPath, "utf-8");
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+async function saveRules(rules) {
+  await writeFile(rulesPath, JSON.stringify(rules, null, 2), "utf-8");
+  console.log(`rules.json updated. Total rules in file: ${rules.length}`);
 }
 
 //-------------------------------------
@@ -497,45 +507,28 @@ const createMarketOnChain = async (question, options, duration) => {
   try {
     console.log(`Creating market: "${question}"`);
     const tx = await contract.createMarket(question, options, duration);
-    console.log('Transaction submitted:', tx.hash); // Ethers v6 uses .hash
+    console.log("Transaction submitted:", tx.hash);
 
-    // Wait for confirmation
     const receipt = await tx.wait();
-    console.log('Transaction confirmed:', receipt.hash); // Ethers v6 uses .hash
+    console.log("Transaction confirmed:", receipt.hash);
 
-    // Debug: see what logs we actually got
-    console.log("Full logs:\n", JSON.stringify(receipt.logs, null, 2));
-
-    // Filter logs by the contract's address
     const relevantLogs = receipt.logs.filter(
       (log) => log.address?.toLowerCase() === contract.target.toLowerCase()
     );
 
-    let marketId = null;
-
-    // Try parsing each relevant log
     for (const log of relevantLogs) {
       try {
         const parsedLog = contract.interface.parseLog(log);
         if (parsedLog.name === "MarketCreated") {
-          // event MarketCreated(uint256 marketId, string question, string[] options, uint256 endTime)
-          marketId = Number(parsedLog.args.marketId);
-          console.log(`MarketCreated => marketId = ${marketId}`);
-          break;
+          return Number(parsedLog.args.marketId);
         }
-      } catch (err) {
-        // ignore if it's not a recognized event
+      } catch {
+        continue;
       }
     }
-
-    if (marketId === null) {
-      console.error("MarketCreated event not found in logs. Possibly reverted or event signature mismatch.");
-      return null;
-    }
-
-    return marketId;
+    return null;
   } catch (error) {
-    console.error('Error creating market:', error);
+    console.error("Error creating market:", error);
     return null;
   }
 };
@@ -545,55 +538,50 @@ const createMarketOnChain = async (question, options, duration) => {
 //-------------------------------------
 const createMarketsForFile = async (filename) => {
   try {
-    // Load existing mapping file so we can append new markets
     const marketMapping = await loadMarketMapping();
+    const rules = await loadRules();
 
     const filePath = resolve(gamesDir, filename);
-    const rawData = await readFile(filePath, 'utf-8');
+    const rawData = await readFile(filePath, "utf-8");
     const games = JSON.parse(rawData);
 
     for (const game of games) {
-      const {
-        game_id,
-        home_team,
-        away_team,
-        local_date,
-        start_time
-      } = game;
-    
-      // Validate `start_time`
+      const { game_id, home_team, away_team, local_date, start_time } = game;
+
       if (!start_time || isNaN(Date.parse(start_time))) {
         console.log(`Skipping game due to invalid start_time:`, game);
         continue;
       }
-    
+
       const gameStart = new Date(start_time);
       const now = new Date();
       const duration = Math.floor((gameStart - now) / 1000);
-    
+
       if (duration <= 0) {
         console.log(`Skipping market for ${away_team} @ ${home_team}: game already started.`);
         continue;
       }
-    
+
       const question = `${away_team} @ ${home_team} (${local_date})`;
-      const options = [away_team, home_team];
-    
+      const options = [away_team, home_team, "Draw"];
       const marketId = await createMarketOnChain(question, options, duration);
-    
+
       if (marketId !== null) {
         console.log(`Market created for game_id=${game_id} | ID: ${marketId}`);
-        marketMapping[marketId] = {
-          game_id,
-          away_team,
-          home_team,
-          local_date
+        marketMapping[marketId] = { game_id, away_team, home_team, local_date };
+
+        const rule = {
+          marketId,
+          room: "usdc",
+          question,
+          rule: `This market resolves based on the final score reported from SPORTS-API for the NFL game ${away_team} @ ${home_team} on ${local_date}. The official resolution source is SPORTS-API.`,
         };
-    
+        rules.push(rule);
+
         await saveMarketMapping(marketMapping);
+        await saveRules(rules);
       }
     }
-    
   } catch (error) {
     console.error(`Error processing file "${filename}":`, error);
   }
@@ -602,5 +590,5 @@ const createMarketsForFile = async (filename) => {
 //-------------------------------------
 // Execute script for specific game file(s)
 //-------------------------------------
-const filesToProcess = ["games-2025-01-19.json"];
+const filesToProcess = ["games-2025-01-26.json"];
 filesToProcess.forEach(createMarketsForFile);

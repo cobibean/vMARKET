@@ -64,5 +64,17 @@
     "away_team": "Baltimore Ravens",
     "home_team": "Buffalo Bills",
     "local_date": "2025-01-19"
+  },
+  "27": {
+    "game_id": 13465,
+    "away_team": "Washington Commanders",
+    "home_team": "Philadelphia Eagles",
+    "local_date": "2025-01-26"
+  },
+  "28": {
+    "game_id": 13464,
+    "away_team": "Buffalo Bills",
+    "home_team": "Kansas City Chiefs",
+    "local_date": "2025-01-26"
   }
 }

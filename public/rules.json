@@ -52,5 +52,17 @@
     "room": "usdc",
     "question": "Will Trump create Bitcoin reserve in first 100 days?",
     "rule": "This market will resolve to \"Yes\" if the US government holds any amount of Bitcoin in its reserves at any point between January 20, 2025, ET and April 29, 2025, 11:59 PM ET. Otherwise, this market will resolve to \"No\". \\n\\n Note that the US government confiscating Bitcoin does not count as holding Bitcoin reserves. \\n\\n The primary resolution source for this market will be official information from the US government and/or the US federal reserve, however a consensus of credible reporting will also be used."
+  },
+  {
+    "marketId": 27,
+    "room": "usdc",
+    "question": "Washington Commanders @ Philadelphia Eagles (2025-01-26)",
+    "rule": "This market resolves based on the final score reported from SPORTS-API for the NFL game Washington Commanders @ Philadelphia Eagles on 2025-01-26. The official resolution source is SPORTS-API."
+  },
+  {
+    "marketId": 28,
+    "room": "usdc",
+    "question": "Buffalo Bills @ Kansas City Chiefs (2025-01-26)",
+    "rule": "This market resolves based on the final score reported from SPORTS-API for the NFL game Buffalo Bills @ Kansas City Chiefs on 2025-01-26. The official resolution source is SPORTS-API."
   }
 ]

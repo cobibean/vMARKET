@@ -1,5 +1,5 @@
 import PredictionMarketDashboard from "@/app/vesta/components/PredictionMarketDashboard";
 
-export default function Home() {
-  return <PredictionMarketDashboard />;
+export default function VestaRoomPage() {
+  return <PredictionMarketDashboard room="vesta" />;
 }

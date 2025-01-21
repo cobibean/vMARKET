@@ -9,45 +9,50 @@ import { MarketCardSkeleton } from "./skeletonCard";
 import { MarketCard } from "./marketCard";
 import { Footer } from "@/app/sharedComponents/footer";
 
+interface PredictionMarketDashboardProps {
+    room: string;
+  }
+  
+
 const excludedMarketIds = [9, 10, 11, 12, 14]; // Replace with actual market IDs to exclude
 
-export default function PredictionMarketDashboard() {
-    // Fetch the total market count from the contract
+export default function PredictionMarketDashboard({ room }: PredictionMarketDashboardProps) {
     const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({
-        contract: contract,
-        method: "function marketCount() view returns (uint256)",
-        params: [],
+      contract: contract,
+      method: "function marketCount() view returns (uint256)",
+      params: [],
     });
+  
 
     // State for rulesMap
-    const [rulesMap, setRulesMap] = useState<Record<number, string>>({});
+    const [rulesMap, setRulesMap] = useState<Record<string, string>>({});
 
     // Fetch rules.json from the public folder
     useEffect(() => {
         const fetchRules = async () => {
-            try {
-                const response = await fetch("/rules.json"); // Ensure the path is correct
-                if (!response.ok) throw new Error("Failed to fetch rules.json");
-                const data = await response.json();
-
-                console.log("Fetched rules.json data:", data); // Debug the raw rules.json data
-
-                const map = data.reduce(
-                    (acc: Record<number, string>, rule: { marketId: number; rule: string }) => {
-                        acc[rule.marketId] = rule.rule;
-                        return acc;
-                    },
-                    {}
-                );
-
-                console.log("Generated rulesMap:", map); // Debug the rulesMap
-                setRulesMap(map);
-            } catch (error) {
-                console.error("Error fetching rules.json:", error);
-            }
+          try {
+            const response = await fetch("/rules.json");
+            if (!response.ok) throw new Error("Failed to fetch rules");
+            const data = await response.json();
+    
+            const filteredRules = data.reduce(
+              (acc: Record<string, string>, rule: { marketId: number; room: string; rule: string }) => {
+                if (rule.room === room) {
+                  const key = `${rule.room}_${rule.marketId}`; // Create a unique key
+                  acc[key] = rule.rule;
+                }
+                return acc;
+              },
+              {}
+            );
+    
+            setRulesMap(filteredRules);
+          } catch (error) {
+            console.error("Error fetching rules:", error);
+          }
         };
         fetchRules();
-    }, []);
+      }, [room]);
 
     console.log("Market Count:", marketCount); // Debug market count
     console.log("Rules Map:", rulesMap); // Debug rulesMap
@@ -107,6 +112,7 @@ export default function PredictionMarketDashboard() {
                                             index={index}
                                             filter="active"
                                             rulesMap={rulesMap} // Pass rulesMap
+                                            room={room} // Pass room to MarketCard
                                         />
                                     ))}
                                 </div>
@@ -120,6 +126,7 @@ export default function PredictionMarketDashboard() {
                                             index={index}
                                             filter="pending"
                                             rulesMap={rulesMap} // Pass rulesMap
+                                            room={room} // Pass room to MarketCard
                                         />
                                     ))}
                                 </div>
@@ -133,6 +140,7 @@ export default function PredictionMarketDashboard() {
                                             index={index}
                                             filter="resolved"
                                             rulesMap={rulesMap} // Pass rulesMap
+                                            room={room} // Pass room to MarketCard
                                         />
                                     ))}
                                 </div>

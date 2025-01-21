@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/app/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, Description } from "@/app/ui/dialog";
 import { Button } from "@/app/ui/button";
 import ReactMarkdown from "react-markdown";
 
@@ -28,9 +28,11 @@ export const MarketInfoModal: React.FC<MarketInfoModalProps> = ({
           <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             Market Info
           </DialogTitle>
+          <Description>
+            This modal contains detailed information and rules for the selected market.
+          </Description>
         </DialogHeader>
         <div className="p-4 text-sm text-gray-800 dark:text-gray-300">
-          {/* Render Markdown Content */}
           <ReactMarkdown>{marketRules}</ReactMarkdown>
         </div>
         <DialogFooter className="mt-4">

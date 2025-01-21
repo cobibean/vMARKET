@@ -8,7 +8,7 @@
   {
     "marketId": 13,
     "room": "usdc",
-    "question": "Fed decision in January?",
+    "question": "Bitcoin Price: OVER/UNDER $100K after Trumps inauguration day?",
     "rule": "Using Coinbase Spot price for BTC/USD"
   },
   {

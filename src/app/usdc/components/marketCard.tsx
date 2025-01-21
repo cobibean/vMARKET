@@ -16,7 +16,8 @@ import { useState, useMemo } from "react";
 interface MarketCardProps {
   index: number;
   filter: "active" | "pending" | "resolved";
-  rulesMap: Record<number, string>; // Map of marketId to rules
+  rulesMap: Record<string, string>; // Map of marketId to rules
+  room: string; // Define room prop type
   
 }
 
@@ -34,10 +35,11 @@ interface SharesBalance {
 }
 
 
-export function MarketCard({ index, filter, rulesMap }: MarketCardProps) {
+export function MarketCard({ index, filter, rulesMap, room }: MarketCardProps) {
   const account = useActiveAccount();
   const [isInfoOpen, setIsInfoOpen] = useState(false); // State for modal visibility
-  const marketRule = rulesMap[index] || "No rule available for this market.";
+  const marketKey = `${room}_${index}`; // Combine room and marketId
+  const marketRule = rulesMap[marketKey] || "No rule available for this market.";
   console.log("MarketCard props:", { index, filter, rulesMap });
   console.log("Resolved rule for market:", rulesMap[index]);
 

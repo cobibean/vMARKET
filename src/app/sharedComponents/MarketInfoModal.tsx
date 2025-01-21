@@ -29,7 +29,7 @@ export const MarketInfoModal: React.FC<MarketInfoModalProps> = ({
             Market Info
           </DialogTitle>
           <Description>
-            This modal contains detailed information and rules for the selected market.
+            This modal contains information and rules for the selected market. Please read carefully. 
           </Description>
         </DialogHeader>
         <div className="p-4 text-sm text-gray-800 dark:text-gray-300">

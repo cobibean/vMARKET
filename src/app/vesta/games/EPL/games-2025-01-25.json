@@ -5,9 +5,9 @@
     "away_team": "Nottingham Forest",
     "local_date": "2025-01-25",
     "start_time": "2025-01-25T15:00:00+00:00",
-    "home_score": null,
-    "away_score": null,
-    "status": "NS"
+    "home_score": 5,
+    "away_score": 0,
+    "status": "FT"
   },
   {
     "game_id": 1208252,
@@ -15,9 +15,9 @@
     "away_team": "Arsenal",
     "local_date": "2025-01-25",
     "start_time": "2025-01-25T15:00:00+00:00",
-    "home_score": null,
-    "away_score": null,
-    "status": "NS"
+    "home_score": 0,
+    "away_score": 1,
+    "status": "FT"
   },
   {
     "game_id": 1208248,
@@ -25,9 +25,9 @@
     "away_team": "Ipswich",
     "local_date": "2025-01-25",
     "start_time": "2025-01-25T15:00:00+00:00",
-    "home_score": null,
-    "away_score": null,
-    "status": "NS"
+    "home_score": 4,
+    "away_score": 1,
+    "status": "FT"
   },
   {
     "game_id": 1208250,
@@ -35,9 +35,9 @@
     "away_team": "Newcastle",
     "local_date": "2025-01-25",
     "start_time": "2025-01-25T15:00:00+00:00",
-    "home_score": null,
-    "away_score": null,
-    "status": "NS"
+    "home_score": 1,
+    "away_score": 3,
+    "status": "FT"
   },
   {
     "game_id": 1208245,
@@ -45,9 +45,9 @@
     "away_team": "Everton",
     "local_date": "2025-01-25",
     "start_time": "2025-01-25T15:00:00+00:00",
-    "home_score": null,
-    "away_score": null,
-    "status": "NS"
+    "home_score": 0,
+    "away_score": 1,
+    "status": "FT"
   },
   {
     "game_id": 1208249,
@@ -55,8 +55,8 @@
     "away_team": "Chelsea",
     "local_date": "2025-01-25",
     "start_time": "2025-01-25T17:30:00+00:00",
-    "home_score": null,
-    "away_score": null,
-    "status": "NS"
+    "home_score": 3,
+    "away_score": 1,
+    "status": "FT"
   }
 ]

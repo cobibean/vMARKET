@@ -851,7 +851,7 @@ const resolveMarkets = async (filterDate) => {
 };
 
 // Execute script for specific EPL game date
-const localDate = "2025-01-18"; // Replace with desired date
+const localDate = "2025-01-25"; // Replace with desired date
 resolveMarkets(localDate).catch((error) =>
   console.error('Error resolving markets:', error)
 );

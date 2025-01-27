@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://your-xano-instance.com/api';
+const API_BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io/api:fZMXiu9H';
 
 // Fetch all markets for a specific user
 export async function fetchUserMarkets(userId: string) {

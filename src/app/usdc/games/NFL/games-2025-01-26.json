@@ -9,10 +9,10 @@
     "start_time": "2025-01-26T14:00:00.000-06:00",
     "venue": "Lincoln Financial Field",
     "city": "Philadelphia",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 55,
+    "away_score": 23,
+    "status_short": "FT",
+    "status_long": "Finished"
   },
   {
     "game_id": 13464,
@@ -24,9 +24,9 @@
     "start_time": "2025-01-26T17:30:00.000-06:00",
     "venue": "GEHA Field at Arrowhead Stadium",
     "city": "Kansas City",
-    "home_score": null,
-    "away_score": null,
-    "status_short": "NS",
-    "status_long": "Not Started"
+    "home_score": 32,
+    "away_score": 29,
+    "status_short": "FT",
+    "status_long": "Finished"
   }
 ]

@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { ethers } from 'ethers';
 import { readFile } from 'fs/promises';
 import { DateTime } from 'luxon';
-import fetch from 'node-fetch'; // Ensure you have node-fetch installed
+import fetch from 'node-fetch'; // Ensure node-fetch is installed
 
 // Contract setup
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
@@ -28,7 +28,7 @@ const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, wallet);
 // File paths
 const mappingFilePath = './src/app/usdc/mappings/marketMappingNFL.json';
 
-// Helper: Convert UTC to Chicago local date
+// Helper: Convert UTC date/time to Chicago date (YYYY-MM-DD)
 const convertToLocalDate = (utcDate) => {
   if (!utcDate) {
     console.error("Invalid UTC date provided:", utcDate);
@@ -37,17 +37,6 @@ const convertToLocalDate = (utcDate) => {
   return DateTime.fromISO(utcDate, { zone: 'utc' })
     .setZone('America/Chicago')
     .toISODate(); // Returns YYYY-MM-DD
-};
-
-// Helper: Load mapping file
-const loadMappingFile = async () => {
-  try {
-    const rawData = await readFile(mappingFilePath, 'utf-8');
-    return JSON.parse(rawData);
-  } catch (error) {
-    console.error('Error loading mapping file:', error);
-    return {};
-  }
 };
 
 // Helper: Map NFL-specific status codes to universal labels
@@ -68,93 +57,128 @@ const mapNFLStatus = (status) => {
   }
 };
 
-// Fetch game details from the NFL API
-const fetchGameDetails = async (gameId) => {
-    const url = `https://v1.american-football.api-sports.io/games?id=${gameId}`; 
-    const headers = {
-      "x-rapidapi-key": process.env.RAPIDAPI_KEY,
-      "x-rapidapi-host": "v1.american-football.api-sports.io"
-    };
-  
-    try {
-      const response = await fetch(url, { headers });
-      const data = await response.json();
-  
-      // Get the first game from the response (assuming a single game per ID)
-      const game = data.response[0]?.game;
-      const scores = data.response[0]?.scores;
-  
-      if (!game || !scores) {
-        console.error(`No game or scores data found for gameId=${gameId}`);
-        return null;
-      }
-  
-      return {
-        homeScore: scores.home.total, // Total home score
-        awayScore: scores.away.total, // Total away score
-        status: mapNFLStatus(game.status.short), // Mapped status
-        startTime: new Date(game.date.timestamp * 1000).toISOString() // Convert UNIX to ISO string
-      };
-    } catch (error) {
-      console.error(`Error fetching details for game ${gameId}:`, error);
-      return null;
-    }
+// 1) Fetch all NFL games for the specified date, build a map of gameId -> data
+const fetchGamesForDate = async (dateString) => {
+  const url = `https://v1.american-football.api-sports.io/games?date=${dateString}`;
+  const headers = {
+    "x-rapidapi-key": process.env.RAPIDAPI_KEY,
+    "x-rapidapi-host": "v1.american-football.api-sports.io"
   };
 
-// Main: Resolve markets
-const resolveMarkets = async (filterDate) => {
-    const marketMapping = await loadMappingFile();
-  
-    for (const [marketId, game] of Object.entries(marketMapping)) {
-      if (!game || !game.game_id) {
-        console.error(`Invalid game mapping for marketId ${marketId}`);
-        continue;
-      }
-  
-      // Fetch game details
-      const gameDetails = await fetchGameDetails(game.game_id);
-      if (!gameDetails) {
-        console.error(`Skipping marketId ${marketId}: Unable to fetch game details.`);
-        continue;
-      }
-  
-      const { homeScore, awayScore, status, startTime } = gameDetails;
-  
-      // Calculate local date from startTime
-      const localDate = convertToLocalDate(startTime);
-  
-      // Skip games that don't match the filter date
-      if (localDate !== filterDate) {
-        console.log(`Skipping marketId ${marketId}: Local date (${localDate}) does not match filter (${filterDate}).`);
-        continue;
-      }
-  
-      // Ensure the game is completed
-      if (status !== "finished") {
-        console.log(`Skipping marketId ${marketId}: Game not completed. Status: ${status}`);
-        continue;
-      }
-  
-      // Determine outcome
-      let outcome;
-      if (awayScore > homeScore) outcome = 0; // Away win
-      else if (homeScore > awayScore) outcome = 1; // Home win
-      else outcome = 2; // Draw
-  
-      console.log(`Resolving marketId ${marketId} with outcome ${outcome}`);
-  
-      try {
-        // Call resolveMarket on-chain
-        const tx = await contract.resolveMarket(marketId, outcome);
-        console.log(`Transaction submitted: ${tx.hash}`);
-        await tx.wait();
-        console.log(`Market ${marketId} resolved successfully.`);
-      } catch (error) {
-        console.error(`Error resolving marketId ${marketId}:`, error);
+  try {
+    const response = await fetch(url, { headers });
+    const data = await response.json();
+
+    console.log(`Fetched ${data.results} games for date=${dateString}`);
+
+    // Build a lookup map: gameId -> full game object
+    const gamesMap = {};
+    for (const g of data.response) {
+      const gameId = g.game?.id;
+      if (gameId) {
+        gamesMap[gameId] = g;
       }
     }
-  };
-  
-  // Execute script for specific local date
-  const localDate = "2025-01-19"; // Replace with desired date
-  resolveMarkets(localDate).catch((error) => console.error('Error resolving markets:', error));
+
+    return gamesMap;
+  } catch (error) {
+    console.error(`Error fetching all games for date=${dateString}:`, error);
+    return {};
+  }
+};
+
+// 2) Load your local market mapping
+const loadMappingFile = async () => {
+  try {
+    const rawData = await readFile(mappingFilePath, 'utf-8');
+    return JSON.parse(rawData);
+  } catch (error) {
+    console.error('Error loading mapping file:', error);
+    return {};
+  }
+};
+
+// 3) Main: Resolve markets only for games on "filterDate"
+const resolveMarkets = async (filterDate) => {
+  // fetch all NFL games for the target date
+  const gamesOnDate = await fetchGamesForDate(filterDate);
+
+  // load local market mapping
+  const marketMapping = await loadMappingFile();
+
+  // iterate over markets in the local mapping
+  for (const [marketId, game] of Object.entries(marketMapping)) {
+    // must have a valid game_id
+    if (!game || !game.game_id) {
+      console.error(`Invalid game mapping for marketId ${marketId}`);
+      continue;
+    }
+
+    const gameId = game.game_id;
+
+    // check if that gameId is in the map of "games on this date"
+    const gameData = gamesOnDate[gameId];
+    if (!gameData) {
+      // This means the gameId does not belong to a game on filterDate,
+      // or the API didn't return it for some reason (not found, etc.)
+      console.log(`Skipping marketId ${marketId}: gameId=${gameId} is not on date ${filterDate}`);
+      continue;
+    }
+
+    // parse the relevant data from gameData
+    const statusShort = gameData.game?.status?.short; 
+    const homeTotal = gameData.scores?.home?.total;
+    const awayTotal = gameData.scores?.away?.total;
+    const dateObj = gameData.game?.date;
+
+    if (!statusShort || homeTotal == null || awayTotal == null || !dateObj) {
+      console.error(`Skipping marketId ${marketId}: incomplete data from API for gameId=${gameId}`);
+      continue;
+    }
+
+    // Convert from the "short" code to our universal label
+    const status = mapNFLStatus(statusShort);
+
+    // Construct an ISO datetime from the date + time
+    // (the API's "date" object has date.timestamp or we can build from date + time)
+    // We'll use date.timestamp if available:
+    const timestamp = dateObj?.timestamp;
+    const startTime = timestamp ? new Date(timestamp * 1000).toISOString() : null;
+
+    // Double check the local date is indeed filterDate
+    // (this should be true if the API returned it in that single-date query)
+    const localDate = convertToLocalDate(startTime);
+    if (localDate !== filterDate) {
+      console.log(`Skipping marketId ${marketId}: local date (${localDate}) != filter date (${filterDate}).`);
+      continue;
+    }
+
+    // Ensure game is completed
+    if (status !== "finished") {
+      console.log(`Skipping marketId ${marketId}: Game not completed. Status: ${status}`);
+      continue;
+    }
+
+    // Determine outcome: 0 => away, 1 => home, 2 => draw
+    let outcome;
+    if (awayTotal > homeTotal) outcome = 0;
+    else if (homeTotal > awayTotal) outcome = 1;
+    else outcome = 2; // draw
+
+    console.log(`Resolving marketId ${marketId} with outcome ${outcome}`);
+
+    try {
+      // call resolveMarket on-chain
+      const tx = await contract.resolveMarket(marketId, outcome);
+      console.log(`Transaction submitted: ${tx.hash}`);
+      await tx.wait();
+      console.log(`Market ${marketId} resolved successfully.`);
+    } catch (error) {
+      console.error(`Error resolving marketId ${marketId}:`, error);
+    }
+  }
+};
+
+// 4) Execute script for a specific local date (e.g. two playoff games on 2025-01-26)
+const localDate = "2025-01-26";
+resolveMarkets(localDate).catch((error) => console.error('Error resolving markets:', error));

@@ -116,37 +116,39 @@ export function MarketCard({ index, filter, rulesMap, room }: MarketCardProps) {
           <CardContent>
             {market && (
               <>
-                <MarketProgress
-                  options={market.options}
-                  totalShares={market.totalShares}
-                />
-                {isExpired ? (
-                  market.resolved ? (
-                    <MarketResolved
-                      marketId={index}
-                      outcome={market.outcome}
-                      options={market.options}
-                    />
-                  ) : (
-                    <MarketPending />
-                  )
-                ) : (
-                  <MarketBuyInterface
-                    marketId={index}
-                    market={{
-                      question: market.question,
-                      options: market.options,
-                    }}
+                <div className={market.options.length >= 4 ? "max-h-[200px] overflow-y-auto pb-4" : ""}>
+                  <MarketProgress
+                    options={market.options}
+                    totalShares={market.totalShares}
                   />
-                )}
+                  {isExpired ? (
+                    market.resolved ? (
+                      <MarketResolved
+                        marketId={index}
+                        outcome={market.outcome}
+                        options={market.options}
+                      />
+                    ) : (
+                      <MarketPending />
+                    )
+                  ) : (
+                    <MarketBuyInterface
+                      marketId={index}
+                      market={{
+                        question: market.question,
+                        options: market.options,
+                      }}
+                    />
+                  )}
+                </div>
+                <button
+                  className="mt-2 text-sm text-primary underline hover:text-primary/80"
+                  onClick={() => setIsInfoOpen(true)}
+                >
+                  View Market Info
+                </button>
               </>
             )}
-            <button
-              className="mt-2 text-sm text-primary underline hover:text-primary/80"
-              onClick={() => setIsInfoOpen(true)}
-            >
-              View Market Info
-            </button>
           </CardContent>
 
           <CardFooter>

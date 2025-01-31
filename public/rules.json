@@ -68,7 +68,7 @@
   {
     "marketId": 22,
     "room": "vesta",
-    "question": "Buffalo Bills @ Kansas City Chiefs (2025-01-26)",
+    "question": "How many times will Taylor Swift be shown on broadcast at Super Bowl LIX?",
     "rule": "This market will resolve to the number of times Taylor Swift is shown on-screen, between the start of the National Anthem and the final whistle, during the official broadcast of Super Bowl LIX on Fox. n/n/ Times refers to discrete instances where Taylor Swift is clearly visible. These instances must be separated by shots where Taylor Swift is not clearly visible on screen."
   }
 ]

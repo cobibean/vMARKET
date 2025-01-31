@@ -1,5 +1,5 @@
 import { Badge } from "@/app/ui/badge";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { toFixed } from "@/app/lib/utils";
 
 interface MarketSharesDisplayProps {
@@ -57,22 +57,27 @@ export function MarketSharesDisplay({
     }
   }, [sharesBalance, market.totalShares]);
 
+  const hasShares = useMemo(() => 
+    sharesBalance.some(share => share > BigInt(0)),
+    [sharesBalance]
+  );
+
   return (
     <div className="flex flex-col gap-2">
-      <div className="w-full text-sm text-muted-foreground">
-        Your shares:
-        {market.options.map((option, index) => {
-          // 2) Convert user shares from raw to USDC-based decimal
-          const rawBalance = sharesBalance[index] || BigInt(0);
-          const userFriendly = toUsdc(rawBalance);
-
-          return (
-            <span key={index} className="block">
-              {option}: {toFixed(userFriendly, 2)}
-            </span>
-          );
-        })}
-      </div>
+      {hasShares && (
+        <div className="w-full text-sm text-muted-foreground">
+          Your shares:
+          {market.options.map((option, index) => {
+            const rawBalance = sharesBalance[index] || BigInt(0);
+            const userFriendly = toUsdc(rawBalance);
+            return rawBalance > BigInt(0) ? (
+              <span key={index} className="block">
+                {option}: {toFixed(userFriendly, 2)}
+              </span>
+            ) : null;
+          }).filter(Boolean)}
+        </div>
+      )}
 
       {winnings.some((win) => win > 0) && (
         <div className="flex flex-col gap-1">

@@ -13,7 +13,7 @@ interface PredictionMarketDashboardProps {
   room: string; // Define room prop type
 }
 
-const excludedMarketIds = [0]; // Replace with actual market IDs to exclude
+const excludedMarketIds = [30, 31, 32, 33]; // Replace with actual market IDs to exclude
 
 export default function PredictionMarketDashboard({ room }: PredictionMarketDashboardProps) {
   const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({

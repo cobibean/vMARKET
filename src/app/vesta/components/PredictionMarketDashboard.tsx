@@ -14,7 +14,7 @@ interface PredictionMarketDashboardProps {
   }
   
 
-const excludedMarketIds = [9, 10, 11, 12, 14]; // Replace with actual market IDs to exclude
+const excludedMarketIds = [9, 10, 11, 12, 14, 57, 58]; // Replace with actual market IDs to exclude
 
 export default function PredictionMarketDashboard({ room }: PredictionMarketDashboardProps) {
     const { data: marketCount, isLoading: isLoadingMarketCount } = useReadContract({

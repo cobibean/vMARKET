@@ -10,6 +10,19 @@ const CONTRACT_ADDRESS = "0x949865114535dA93823bf5515608406325b40Fc5";
 const PRIVATE_KEY = process.env.MARKET_CREATOR_PRIVATE_KEY || '';
 const INFURA_URL = process.env.INFURA_URL || '';
 
+interface Game {
+  game_id: string | number;
+  start_time: string;
+  local_date: string;
+  home_team: {
+    name: string;
+  };
+  away_team: {
+    name: string;
+  };
+  [key: string]: unknown; // For other properties we might need
+}
+
 // Function to verify if user has the required role
 async function verifyRole(address: string, requiredRole: string) {
   try {
@@ -27,7 +40,7 @@ async function verifyRole(address: string, requiredRole: string) {
     
     const hasRole = await contract.hasRole(roleBytes32, address);
     return hasRole;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error verifying role:', error);
     return false;
   }
@@ -62,9 +75,9 @@ async function marketExistsForGame(gameId: string) {
     `;
     
     return result.rows.length > 0;
-  } catch (error) {
+  } catch (error: unknown) {
     // If markets table doesn't exist yet, create it
-    if (error.message && error.message.includes('does not exist')) {
+    if (error instanceof Error && error.message.includes('does not exist')) {
       await sql`
         CREATE TABLE IF NOT EXISTS markets (
           id SERIAL PRIMARY KEY,
@@ -86,7 +99,7 @@ async function marketExistsForGame(gameId: string) {
 }
 
 // Create a market for a game and store mapping
-async function createMarketForGame(game: any, league: string) {
+async function createMarketForGame(game: Game, league: string) {
   try {
     // Skip if market already exists for this game
     const exists = await marketExistsForGame(game.game_id.toString());
@@ -132,7 +145,7 @@ async function createMarketForGame(game: any, league: string) {
     // Extract the marketId from the logs
     let marketId = null;
     const relevantLogs = receipt.logs.filter(
-      (log: any) => log.address?.toLowerCase() === CONTRACT_ADDRESS.toLowerCase()
+      (log: { address?: string }) => log.address?.toLowerCase() === CONTRACT_ADDRESS.toLowerCase()
     );
     
     for (const log of relevantLogs) {
@@ -224,8 +237,9 @@ export async function POST(req: NextRequest) {
       count: createdMarkets.length,
       markets: createdMarkets
     });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error in create-markets API route:', error);
-    return NextResponse.json({ error: error.message || 'Failed to create markets' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create markets';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 } 

@@ -103,11 +103,11 @@ export async function GET(req: NextRequest) {
       },
       leagueDistribution
     });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error fetching analytics:', error);
     
     // If the error is likely due to tables not existing yet, return mock data
-    if (error.message && error.message.includes('does not exist')) {
+    if (error instanceof Error && error.message.includes('does not exist')) {
       return NextResponse.json({
         stats: {
           totalMarkets: 0,
@@ -120,7 +120,8 @@ export async function GET(req: NextRequest) {
       });
     }
     
-    return NextResponse.json({ error: error.message || 'Failed to fetch analytics' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch analytics';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 

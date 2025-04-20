@@ -34,11 +34,12 @@ export async function GET() {
       success: true,
       message: 'Database tables created successfully'
     });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error setting up database:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to set up database';
     return NextResponse.json({ 
       success: false, 
-      error: error.message || 'Failed to set up database'
+      error: errorMessage
     }, { status: 500 });
   }
 } 

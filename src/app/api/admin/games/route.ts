@@ -29,10 +29,11 @@ export async function GET(req: NextRequest) {
       // If file doesn't exist, return empty array
       return NextResponse.json({ games: [] });
     }
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error fetching games:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch games';
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch games' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

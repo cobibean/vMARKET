@@ -14,6 +14,14 @@ const INFURA_URL = process.env.INFURA_URL || 'https://andromeda.metis.io/?owner=
 const API_TOKEN = process.env.SPORTMONKS_API_TOKEN || '';
 const SPORTMONKS_API_BASE = 'https://api.sportmonks.com/v3/football/fixtures/';
 
+interface Score {
+  description: string;
+  score: {
+    participant: string;
+    goals: number;
+  };
+}
+
 // Function to verify if user has the required role
 async function verifyRole(address: string, requiredRole: string) {
   try {
@@ -104,14 +112,14 @@ async function fetchGameResult(gameId: string) {
     const fixture = data.data;
     
     // Use the "CURRENT" scores as they appear to represent the final score
-    const currentScores = fixture.scores.filter((score: any) => score.description === "CURRENT");
+    const currentScores = fixture.scores.filter((score: Score) => score.description === "CURRENT");
     
     if (currentScores.length === 0) {
       throw new Error('No "CURRENT" scores found. The game might not be finished.');
     }
     
-    const homeScoreObj = currentScores.find((s: any) => s.score.participant.toLowerCase() === "home");
-    const awayScoreObj = currentScores.find((s: any) => s.score.participant.toLowerCase() === "away");
+    const homeScoreObj = currentScores.find((s: Score) => s.score.participant.toLowerCase() === "home");
+    const awayScoreObj = currentScores.find((s: Score) => s.score.participant.toLowerCase() === "away");
     
     if (!homeScoreObj || !awayScoreObj) {
       throw new Error('Incomplete score data');
@@ -232,8 +240,9 @@ export async function POST(req: NextRequest) {
       count: resolvedMarkets.length,
       resolvedMarkets
     });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error in resolve-markets API route:', error);
-    return NextResponse.json({ error: error.message || 'Failed to resolve markets' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Failed to resolve markets';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 } 

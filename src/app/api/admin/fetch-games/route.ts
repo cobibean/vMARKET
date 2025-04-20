@@ -28,10 +28,28 @@ async function verifyRole(address: string, requiredRole: string) {
     
     const hasRole = await contract.hasRole(roleBytes32, address);
     return hasRole;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error verifying role:', error);
     return false;
   }
+}
+
+interface SportMonksGame {
+  id: string | number;
+  starting_at: string;
+  league_id: string | number;
+  participants: Array<{
+    id: string | number;
+    name: string;
+    short_code?: string;
+    image_path?: string;
+    meta?: {
+      location?: string;
+    };
+  }>;
+  events?: Array<{
+    [key: string]: unknown;
+  }>;
 }
 
 // Fetch games from SportMonks API for a given league and date
@@ -55,10 +73,10 @@ async function fetchGamesFromAPI(league: string, date: string) {
     // Filter games by league if needed
     // For example, CL games might have specific league_id
     // This is a simplified example - you'll need to adjust based on the actual data structure
-    let filteredGames = data.data;
+    const filteredGames = data.data as SportMonksGame[];
     
     // Map each game to include separate team objects for home and away
-    const mappedGames = filteredGames.map((game) => {
+    const mappedGames = filteredGames.map((game: SportMonksGame) => {
       // Extract local date from the starting_at string (assumes "YYYY-MM-DD HH:MM:SS" format)
       const local_date = game.starting_at.split(" ")[0];
       const start_time = game.starting_at;
@@ -102,8 +120,13 @@ async function fetchGamesFromAPI(league: string, date: string) {
   }
 }
 
+interface Game {
+  game_id: string | number;
+  [key: string]: unknown;
+}
+
 // Store fetched games in the Vercel Postgres database
-async function storeGamesInDatabase(league: string, date: string, games: any[]) {
+async function storeGamesInDatabase(league: string, date: string, games: Game[]) {
   try {
     // First, ensure we have a games table
     await sql`
@@ -160,8 +183,9 @@ export async function POST(req: NextRequest) {
       count: games.length,
       games 
     });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error in fetch-games API route:', error);
-    return NextResponse.json({ error: error.message || 'Failed to fetch games' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch games';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 } 

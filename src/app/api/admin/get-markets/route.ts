@@ -32,7 +32,7 @@ async function fetchMarketOnChain(marketId: string) {
 // Get all markets from the database and chain
 export async function GET(req: NextRequest) {
   try {
-    let query = `
+    const query = `
       CREATE TABLE IF NOT EXISTS markets (
         id SERIAL PRIMARY KEY,
         market_id VARCHAR(255) NOT NULL,
@@ -77,8 +77,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ 
       markets: marketsWithDetails
     });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error fetching markets:', error);
-    return NextResponse.json({ error: error.message || 'Failed to fetch markets' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch markets';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 } 

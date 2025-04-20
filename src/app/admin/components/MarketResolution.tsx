@@ -45,9 +45,10 @@ export default function MarketResolution({ address }: MarketResolutionProps) {
       }
       
       setMarkets(data.markets);
-    } catch (err: any) {
+    } catch (err: Error | unknown) {
       console.error('Error fetching markets:', err);
-      setError(err.message || 'Error fetching markets. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Error fetching markets. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -69,54 +70,6 @@ export default function MarketResolution({ address }: MarketResolutionProps) {
   const handleOutcomeSelect = (outcomeIndex: number) => {
     setSelectedOutcome(outcomeIndex);
     setSuccess('');
-  };
-
-  // Resolve market manually
-  const resolveMarketManually = async () => {
-    if (!selectedMarket || selectedOutcome === null) {
-      setError('Please select a market and outcome');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    setSuccess('');
-
-    try {
-      // Connect to wallet and contract
-      const provider = new ethers.BrowserProvider(window.ethereum as any);
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, marketVestaABI, signer);
-
-      // Check if address has resolver role
-      const resolverRole = await contract.MARKET_RESOLVER_ROLE();
-      const hasRole = await contract.hasRole(resolverRole, address);
-
-      if (!hasRole) {
-        throw new Error('Your wallet does not have permission to resolve markets');
-      }
-
-      // Resolve the market
-      const tx = await contract.resolveMarket(selectedMarket.id, selectedOutcome);
-      setSuccess('Transaction submitted. Waiting for confirmation...');
-      
-      // Wait for the transaction to be confirmed
-      await tx.wait();
-      
-      setSuccess(`Market resolved successfully with outcome: ${selectedMarket.options[selectedOutcome]}`);
-      
-      // Refetch markets to update the list
-      fetchMarkets();
-      
-      // Reset selection
-      setSelectedMarket(null);
-      setSelectedOutcome(null);
-    } catch (err: any) {
-      console.error('Error resolving market:', err);
-      setError(err.message || 'Error resolving market. Please try again.');
-    } finally {
-      setLoading(false);
-    }
   };
 
   // Resolve markets via API
@@ -153,9 +106,59 @@ export default function MarketResolution({ address }: MarketResolutionProps) {
       
       // Refetch markets to update the list
       fetchMarkets();
-    } catch (err: any) {
+    } catch (err: Error | unknown) {
       console.error('Error resolving markets:', err);
-      setError(err.message || 'Error resolving markets. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Error resolving markets. Please try again.';
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Resolve market manually
+  const resolveMarketManually = async () => {
+    if (!selectedMarket || selectedOutcome === null) {
+      setError('Please select a market and outcome');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      // Connect to wallet and contract
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, marketVestaABI, signer);
+
+      // Check if address has resolver role
+      const resolverRole = await contract.MARKET_RESOLVER_ROLE();
+      const hasRole = await contract.hasRole(resolverRole, address);
+
+      if (!hasRole) {
+        throw new Error('Your wallet does not have permission to resolve markets');
+      }
+
+      // Resolve the market
+      const tx = await contract.resolveMarket(selectedMarket.id, selectedOutcome);
+      setSuccess('Transaction submitted. Waiting for confirmation...');
+      
+      // Wait for the transaction to be confirmed
+      await tx.wait();
+      
+      setSuccess(`Market resolved successfully with outcome: ${selectedMarket.options[selectedOutcome]}`);
+      
+      // Refetch markets to update the list
+      fetchMarkets();
+      
+      // Reset selection
+      setSelectedMarket(null);
+      setSelectedOutcome(null);
+    } catch (err: Error | unknown) {
+      console.error('Error resolving market:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Error resolving market. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -199,7 +202,7 @@ export default function MarketResolution({ address }: MarketResolutionProps) {
           <div className="bg-gray-50 p-4 rounded-md mb-6">
             <p className="text-sm text-gray-600">
               This method resolves all markets for a specific date using our sports data API. 
-              Select a date and click "Resolve Markets" to automatically resolve all markets 
+              Select a date and click &quot;Resolve Markets&quot; to automatically resolve all markets 
               for games that occurred on that date.
             </p>
           </div>

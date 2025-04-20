@@ -50,9 +50,10 @@ export default function Analytics() {
         const data = await response.json();
         setStats(data.stats);
         setLeagueDistribution(data.leagueDistribution);
-      } catch (err: any) {
+      } catch (err: Error | unknown) {
         console.error('Error fetching analytics:', err);
-        setError(err.message || 'Error fetching analytics data. Please try again.');
+        const errorMessage = err instanceof Error ? err.message : 'Error fetching analytics data. Please try again.';
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -318,7 +319,7 @@ export default function Analytics() {
           </div>
           
           <p className="text-center text-gray-500 text-sm italic">
-            Social share feature coming in a future update. You'll be able to customize and 
+            Social share feature coming in a future update. You&apos;ll be able to customize and 
             generate cards for any market.
           </p>
         </div>

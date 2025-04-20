@@ -30,7 +30,7 @@ export default function RoleManagement({ address }: RoleManagementProps) {
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
-        const provider = new ethers.BrowserProvider(window.ethereum as any);
+        const provider = new ethers.BrowserProvider(window.ethereum);
         const contract = new ethers.Contract(CONTRACT_ADDRESS, marketVestaABI, provider);
         
         const adminRole = await contract.DEFAULT_ADMIN_ROLE();
@@ -56,7 +56,7 @@ export default function RoleManagement({ address }: RoleManagementProps) {
     setError('');
     
     try {
-      const provider = new ethers.BrowserProvider(window.ethereum as any);
+      const provider = new ethers.BrowserProvider(window.ethereum);
       const contract = new ethers.Contract(CONTRACT_ADDRESS, marketVestaABI, provider);
       
       // Define roles to fetch
@@ -82,9 +82,10 @@ export default function RoleManagement({ address }: RoleManagementProps) {
       );
       
       setRoles(rolesWithMembers);
-    } catch (err: any) {
+    } catch (err: Error | unknown) {
       console.error('Error fetching roles:', err);
-      setError(err.message || 'Error fetching roles. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Error fetching roles. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -107,7 +108,7 @@ export default function RoleManagement({ address }: RoleManagementProps) {
     setSuccess('');
     
     try {
-      const provider = new ethers.BrowserProvider(window.ethereum as any);
+      const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, marketVestaABI, signer);
       
@@ -138,9 +139,10 @@ export default function RoleManagement({ address }: RoleManagementProps) {
       // Reset form
       setNewMemberAddress('');
       setSelectedRole(null);
-    } catch (err: any) {
+    } catch (err: Error | unknown) {
       console.error('Error granting role:', err);
-      setError(err.message || 'Error granting role. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Error granting role. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -153,7 +155,7 @@ export default function RoleManagement({ address }: RoleManagementProps) {
     setSuccess('');
     
     try {
-      const provider = new ethers.BrowserProvider(window.ethereum as any);
+      const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, marketVestaABI, signer);
       
@@ -180,9 +182,10 @@ export default function RoleManagement({ address }: RoleManagementProps) {
       
       // Refresh roles
       fetchRoles();
-    } catch (err: any) {
+    } catch (err: Error | unknown) {
       console.error('Error revoking role:', err);
-      setError(err.message || 'Error revoking role. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Error revoking role. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

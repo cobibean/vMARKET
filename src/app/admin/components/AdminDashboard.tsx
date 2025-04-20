@@ -8,10 +8,20 @@ interface AdminDashboardProps {
   address: string;
 }
 
+interface Market {
+  id: number;
+  creator: string;
+  resolver: string;
+  question: string;
+  outcomes: string[];
+  endTime: bigint;
+  state: number;
+}
+
 const CONTRACT_ADDRESS = "0x949865114535dA93823bf5515608406325b40Fc5";
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ address }) => {
-  const [markets, setMarkets] = useState<any[]>([]);
+  const [markets, setMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   

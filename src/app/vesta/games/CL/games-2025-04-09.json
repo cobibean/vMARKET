@@ -1,0 +1,97 @@
+[
+  {
+    "game_id": 19391314,
+    "local_date": "2025-04-09",
+    "start_time": "2025-04-09 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 591,
+      "name": "Paris Saint Germain",
+      "short_code": "PSG",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/591.png"
+    },
+    "away_team": {
+      "team_id": 15,
+      "name": "Aston Villa",
+      "short_code": "AVL",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/15.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391318,
+    "local_date": "2025-04-09",
+    "start_time": "2025-04-09 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 83,
+      "name": "FC Barcelona",
+      "short_code": "BAR",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/19/83.png"
+    },
+    "away_team": {
+      "team_id": 68,
+      "name": "Borussia Dortmund",
+      "short_code": "BVB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/4/68.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391329,
+    "local_date": "2025-04-09",
+    "start_time": "2025-04-09 22:00:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 6,
+      "name": "Tottenham Hotspur",
+      "short_code": "TOT",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/6/6.png"
+    },
+    "away_team": {
+      "team_id": 366,
+      "name": "Eintracht Frankfurt",
+      "short_code": "SGE",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/14/366.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391331,
+    "local_date": "2025-04-09",
+    "start_time": "2025-04-09 22:00:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 62,
+      "name": "Rangers",
+      "short_code": "RAN",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/30/62.png"
+    },
+    "away_team": {
+      "team_id": 13258,
+      "name": "Athletic Club",
+      "short_code": "ATH",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/10/13258.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391333,
+    "local_date": "2025-04-09",
+    "start_time": "2025-04-09 22:00:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 79,
+      "name": "Olympique Lyonnais",
+      "short_code": "LYO",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/79.png"
+    },
+    "away_team": {
+      "team_id": 14,
+      "name": "Manchester United",
+      "short_code": "MUN",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/14/14.png"
+    },
+    "events": []
+  }
+]

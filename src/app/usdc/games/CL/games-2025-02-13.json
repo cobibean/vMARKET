@@ -1,0 +1,306 @@
+[
+  {
+    "game_id": 19353167,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 1114,
+      "name": "Celje",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/26/1114.png"
+    },
+    "away_team": {
+      "team_id": 2604,
+      "name": "APOEL",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/12/2604.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19353173,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 28028,
+      "name": "Bačka Topola",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/28/28028.png"
+    },
+    "away_team": {
+      "team_id": 890,
+      "name": "Jagiellonia Białystok",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/26/890.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19353175,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 2688,
+      "name": "Víkingur Reykjavík",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/0/2688.png"
+    },
+    "away_team": {
+      "team_id": 57,
+      "name": "Panathinaikos",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/25/57.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19353177,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 290,
+      "name": "Molde",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/2/290.png"
+    },
+    "away_team": {
+      "team_id": 207,
+      "name": "Shamrock Rovers",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/207.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380889,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 112,
+      "name": "Ferencvárosi",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/16/112.png"
+    },
+    "away_team": {
+      "team_id": 3545,
+      "name": "Viktoria Plzeň",
+      "short_code": "VPL",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/25/3545.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380895,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 939,
+      "name": "FC Midtjylland",
+      "short_code": "FCM",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/11/939.png"
+    },
+    "away_team": {
+      "team_id": 594,
+      "name": "Real Sociedad",
+      "short_code": "RSO",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/18/594.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380897,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 3958,
+      "name": "Union Saint-Gilloise",
+      "short_code": "USG",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/22/3958.png"
+    },
+    "away_team": {
+      "team_id": 629,
+      "name": "Ajax",
+      "short_code": "AJA",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/21/629.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380903,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 17:45:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 88,
+      "name": "Fenerbahçe",
+      "short_code": "FEN",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/24/88.png"
+    },
+    "away_team": {
+      "team_id": 2555,
+      "name": "Anderlecht",
+      "short_code": "ADL",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/27/2555.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19353165,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 2402,
+      "name": "Gent",
+      "short_code": "GNT",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/2/2402.png"
+    },
+    "away_team": {
+      "team_id": 485,
+      "name": "Real Betis",
+      "short_code": "BET",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/5/485.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19353169,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 85,
+      "name": "FC København",
+      "short_code": "COP",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/21/85.png"
+    },
+    "away_team": {
+      "team_id": 2831,
+      "name": "Heidenheim",
+      "short_code": "HDH",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/2831.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19353171,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 368,
+      "name": "Omonia Nicosia",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/16/368.png"
+    },
+    "away_team": {
+      "team_id": 8119,
+      "name": "Paphos",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/23/8119.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19353179,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 3877,
+      "name": "Borac Banja Luka",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/5/3877.png"
+    },
+    "away_team": {
+      "team_id": 1453,
+      "name": "Olimpija",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/13/1453.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380891,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 652,
+      "name": "Porto",
+      "short_code": "POR",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/12/652.png"
+    },
+    "away_team": {
+      "team_id": 37,
+      "name": "Roma",
+      "short_code": "ROM",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/5/37.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380893,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 61,
+      "name": "AZ",
+      "short_code": "AZ",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/29/61.png"
+    },
+    "away_team": {
+      "team_id": 34,
+      "name": "Galatasaray",
+      "short_code": "GAL",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/2/34.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380899,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 649,
+      "name": "PAOK",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/9/649.png"
+    },
+    "away_team": {
+      "team_id": 3444,
+      "name": "FCSB",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/20/3444.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380901,
+    "local_date": "2025-02-13",
+    "start_time": "2025-02-13 20:00:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 593,
+      "name": "FC Twente",
+      "short_code": "TWE",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/17/593.png"
+    },
+    "away_team": {
+      "team_id": 1668,
+      "name": "Bodø / Glimt",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/4/1668.png"
+    },
+    "events": []
+  }
+]

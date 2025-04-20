@@ -1,0 +1,78 @@
+[
+  {
+    "game_id": 19380935,
+    "local_date": "2025-03-05",
+    "start_time": "2025-03-05 17:45:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 73,
+      "name": "Feyenoord",
+      "short_code": "FEY",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/9/73.png"
+    },
+    "away_team": {
+      "team_id": 2930,
+      "name": "Inter",
+      "short_code": "INT",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/18/2930.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380923,
+    "local_date": "2025-03-05",
+    "start_time": "2025-03-05 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 591,
+      "name": "Paris Saint Germain",
+      "short_code": "PSG",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/591.png"
+    },
+    "away_team": {
+      "team_id": 8,
+      "name": "Liverpool",
+      "short_code": "LIV",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/8/8.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380933,
+    "local_date": "2025-03-05",
+    "start_time": "2025-03-05 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 503,
+      "name": "FC Bayern München",
+      "short_code": "FCB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/23/503.png"
+    },
+    "away_team": {
+      "team_id": 3321,
+      "name": "Bayer 04 Leverkusen",
+      "short_code": "B04",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/25/3321.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380937,
+    "local_date": "2025-03-05",
+    "start_time": "2025-03-05 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 605,
+      "name": "Benfica",
+      "short_code": "SLB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/29/605.png"
+    },
+    "away_team": {
+      "team_id": 83,
+      "name": "FC Barcelona",
+      "short_code": "BAR",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/19/83.png"
+    },
+    "events": []
+  }
+]

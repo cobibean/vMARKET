@@ -1,0 +1,40 @@
+[
+  {
+    "game_id": 19391315,
+    "local_date": "2025-04-15",
+    "start_time": "2025-04-15 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 15,
+      "name": "Aston Villa",
+      "short_code": "AVL",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/15.png"
+    },
+    "away_team": {
+      "team_id": 591,
+      "name": "Paris Saint Germain",
+      "short_code": "PSG",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/591.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391319,
+    "local_date": "2025-04-15",
+    "start_time": "2025-04-15 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 68,
+      "name": "Borussia Dortmund",
+      "short_code": "BVB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/4/68.png"
+    },
+    "away_team": {
+      "team_id": 83,
+      "name": "FC Barcelona",
+      "short_code": "BAR",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/19/83.png"
+    },
+    "events": []
+  }
+]

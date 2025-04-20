@@ -1,61 +1,84 @@
 import 'dotenv/config';
-import fetch from 'node-fetch'; // Ensure you have node-fetch installed
+import fetch from 'node-fetch';
 import { writeFile, mkdir } from 'fs/promises';
 import { resolve } from 'path';
+import { DateTime } from 'luxon';
 
-// API setup
-const API_URL = `https://api-football-v1.p.rapidapi.com/v3/fixtures?league=39&season=2024`; // EPL league ID (39) and season
-const API_HEADERS = {
-  "x-rapidapi-key": process.env.RAPIDAPI_EPL_KEY, // Replace with your key
-  "x-rapidapi-host": "api-football-v1.p.rapidapi.com"
-};
+// Configuration
+const RAPIDAPI_KEY = process.env.RAPIDAPI_EPL_KEY;
+const API_HOST = "api-football-v1.p.rapidapi.com";
 
-// Directory for saving the output
+// Get the target date from command line or use current date
+const targetDate = process.argv[2] || DateTime.now().toISODate();
+
+// Directory for saving the output file
 const outputDir = resolve('./src/app/vesta/games/EPL');
 
-// Fetch EPL game data
-const fetchEPLGames = async (filterDate) => {
+// Format the date for the API (if needed)
+const apiDateFormat = targetDate; // Use YYYY-MM-DD format
+
+// Function to fetch EPL games for a specific date
+async function fetchEPLGames(date) {
+  const url = `https://${API_HOST}/v3/fixtures?date=${date}&league=39`; // EPL is league 39
+  
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': RAPIDAPI_KEY,
+      'X-RapidAPI-Host': API_HOST
+    }
+  };
+
   try {
-    // Fetch games from the API
-    const response = await fetch(API_URL, { headers: API_HEADERS });
+    console.log(`Fetching EPL games for date: ${date}`);
+    const response = await fetch(url, options);
+    
+    if (!response.ok) {
+      throw new Error(`API responded with status: ${response.status}`);
+    }
+    
     const data = await response.json();
-
-    // Log raw API data for debugging
-    console.log("Raw API Data:", JSON.stringify(data, null, 2));
-
-    // Map games into a usable format
-    const allGames = data.response.map((fixture) => {
-      const homeTeam = fixture.teams.home.name || "Unknown";
-      const awayTeam = fixture.teams.away.name || "Unknown";
-
+    
+    if (!data.response || !Array.isArray(data.response)) {
+      console.log(`No fixtures found for date ${date}`);
+      return [];
+    }
+    
+    // Process the games data
+    const games = data.response.map(fixture => {
+      // Convert UTC to local date
+      const utcDateTime = fixture.fixture.date;
+      const localDateTime = DateTime.fromISO(utcDateTime, { zone: 'utc' })
+                              .setZone('America/Chicago');
+      
       return {
         game_id: fixture.fixture.id,
-        home_team: homeTeam,
-        away_team: awayTeam,
-        local_date: fixture.fixture.date.split("T")[0], // Extract YYYY-MM-DD
-        start_time: fixture.fixture.date, // Full ISO datetime
-        home_score: fixture.goals.home,
-        away_score: fixture.goals.away,
-        status: fixture.fixture.status.short // Status code (e.g., NS, LIVE, FT)
+        local_date: localDateTime.toISODate(),
+        start_time: utcDateTime, // Keep original UTC time for duration calculations
+        home_team: fixture.teams.home.name,
+        away_team: fixture.teams.away.name,
+        home_logo: fixture.teams.home.logo,
+        away_logo: fixture.teams.away.logo,
+        league_id: fixture.league.id
       };
     });
-
-    // Filter games by the specified local date
-    const filteredGames = allGames.filter((game) => game.local_date === filterDate);
-    console.log(`Filtered games for ${filterDate}:`, filteredGames);
-
-    // Ensure output directory exists
+    
+    // Ensure the output directory exists
     await mkdir(outputDir, { recursive: true });
-
-    // Write filtered games to a file
-    const filePath = `${outputDir}/games-${filterDate}.json`;
-    await writeFile(filePath, JSON.stringify(filteredGames, null, 2), 'utf-8');
+    
+    // Save the data to a JSON file
+    const filePath = resolve(outputDir, `games-${date}.json`);
+    await writeFile(filePath, JSON.stringify(games, null, 2), 'utf-8');
+    
+    console.log(`Found ${games.length} EPL games for ${date}`);
     console.log(`Data saved to ${filePath}`);
+    
+    return games;
   } catch (error) {
-    console.error("Error fetching or processing EPL games:", error);
+    console.error(`Error fetching EPL games for ${date}:`, error);
+    throw error;
   }
-};
+}
 
-// Specify the date you want to filter games for
-const filterDate = "2025-01-25"; // Replace with your desired date
-fetchEPLGames(filterDate);
+// Execute the function
+fetchEPLGames(apiDateFormat).catch(console.error);

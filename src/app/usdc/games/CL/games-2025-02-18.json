@@ -1,0 +1,78 @@
+[
+  {
+    "game_id": 19380882,
+    "local_date": "2025-02-18",
+    "start_time": "2025-02-18 17:45:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 113,
+      "name": "Milan",
+      "short_code": "MIL",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/17/113.png"
+    },
+    "away_team": {
+      "team_id": 73,
+      "name": "Feyenoord",
+      "short_code": "FEY",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/9/73.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380876,
+    "local_date": "2025-02-18",
+    "start_time": "2025-02-18 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 605,
+      "name": "Benfica",
+      "short_code": "SLB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/29/605.png"
+    },
+    "away_team": {
+      "team_id": 6789,
+      "name": "Monaco",
+      "short_code": "ASM",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/5/6789.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380884,
+    "local_date": "2025-02-18",
+    "start_time": "2025-02-18 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 503,
+      "name": "FC Bayern München",
+      "short_code": "FCB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/23/503.png"
+    },
+    "away_team": {
+      "team_id": 53,
+      "name": "Celtic",
+      "short_code": "CEL",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/21/53.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380888,
+    "local_date": "2025-02-18",
+    "start_time": "2025-02-18 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 708,
+      "name": "Atalanta",
+      "short_code": "ATA",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/4/708.png"
+    },
+    "away_team": {
+      "team_id": 340,
+      "name": "Club Brugge",
+      "short_code": "BRU",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/20/340.png"
+    },
+    "events": []
+  }
+]

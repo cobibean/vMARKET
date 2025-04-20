@@ -3,10 +3,14 @@ import { ethers } from 'ethers';
 import { writeFile, readFile } from 'fs/promises';
 import { resolve } from 'path';
 
-// Contract setup
+// ================================
+// Contract Setup
+// ================================
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const INFURA_URL = process.env.INFURA_URL;
-const CONTRACT_ADDRESS = "0x5B45E4C00B310f1E9C951e1169C9A60fD856d186"; // Update this if different for EPL
+const CONTRACT_ADDRESS = "0x5B45E4C00B310f1E9C951e1169C9A60fD856d186"; // Update if needed
+
+// ABI for the createMarket function and MarketCreated event.
 const FULL_ABI = [
   {
     "inputs": [
@@ -34,16 +38,20 @@ const FULL_ABI = [
   }
 ];
 
-// Create provider & signer
+// Create provider, wallet, and contract instance.
 const provider = new ethers.JsonRpcProvider(INFURA_URL);
 const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 const contract = new ethers.Contract(CONTRACT_ADDRESS, FULL_ABI, wallet);
 
-// File paths
-const gamesDir = resolve('./src/app/usdc/games/EPL');
-const mappingFilePath = resolve('./src/app/usdc/marketMappingEPL.json');
+// ================================
+// File Paths
+// ================================
+const gamesDir = resolve('./src/app/usdc/games/CL');
+const mappingFilePath = resolve('./src/app/usdc/mappings/marketMappingsCL.json');
 
-// Utility: Load and save market mapping
+// ================================
+// Utility: Load and Save Market Mapping
+// ================================
 async function loadMarketMapping() {
   try {
     const raw = await readFile(mappingFilePath, 'utf-8');
@@ -55,10 +63,12 @@ async function loadMarketMapping() {
 
 async function saveMarketMapping(mappingObject) {
   await writeFile(mappingFilePath, JSON.stringify(mappingObject, null, 2), 'utf-8');
-  console.log(`marketMappingEPL.json updated. Total markets in file: ${Object.keys(mappingObject).length}`);
+  console.log(`marketMappingsCL.json updated. Total markets in file: ${Object.keys(mappingObject).length}`);
 }
 
-// Helper: Create a market on-chain
+// ================================
+// Helper: Create a Market On-Chain
+// ================================
 const createMarketOnChain = async (question, options, duration) => {
   try {
     console.log(`Creating market: "${question}"`);
@@ -68,15 +78,19 @@ const createMarketOnChain = async (question, options, duration) => {
     const receipt = await tx.wait();
     console.log('Transaction confirmed:', receipt.hash);
 
-    // Extract marketId from logs
-    const relevantLogs = receipt.logs.filter((log) => log.address?.toLowerCase() === contract.target.toLowerCase());
+    // Extract the marketId from the logs.
+    const relevantLogs = receipt.logs.filter(
+      (log) => log.address?.toLowerCase() === contract.target.toLowerCase()
+    );
     for (const log of relevantLogs) {
       try {
         const parsedLog = contract.interface.parseLog(log);
         if (parsedLog.name === "MarketCreated") {
           return Number(parsedLog.args.marketId);
         }
-      } catch {}
+      } catch {
+        // Ignore logs that can't be parsed.
+      }
     }
     return null;
   } catch (error) {
@@ -85,7 +99,9 @@ const createMarketOnChain = async (question, options, duration) => {
   }
 };
 
-// Main function: Create markets for EPL games
+// ================================
+// Main Function: Create Markets for CL Games
+// ================================
 const createMarketsForFile = async (filename) => {
   try {
     const marketMapping = await loadMarketMapping();
@@ -94,29 +110,49 @@ const createMarketsForFile = async (filename) => {
     const games = JSON.parse(rawData);
 
     for (const game of games) {
-      const { game_id, home_team, away_team, local_date, start_time } = game;
+      const { game_id, local_date, start_time } = game;
+      const homeTeamName = game.home_team.name;
+      const awayTeamName = game.away_team.name;
+
+      // Check if a market for this game already exists.
+      const existingMarket = Object.values(marketMapping).find(
+        (mapping) => mapping.game_id === game_id
+      );
+      if (existingMarket) {
+        console.log(`Market already exists for game_id ${game_id} (${awayTeamName} @ ${homeTeamName}). Skipping.`);
+        continue;
+      }
 
       if (!start_time || isNaN(Date.parse(start_time))) {
         console.log(`Skipping game due to invalid start_time:`, game);
         continue;
       }
 
-      const gameStart = new Date(start_time);
+      // Convert "2025-02-11 17:45:00" to "2025-02-11T17:45:00Z" so it's correctly parsed as UTC.
+      const gameStart = new Date(start_time.replace(' ', 'T') + 'Z');
       const now = new Date();
       const duration = Math.floor((gameStart - now) / 1000);
 
       if (duration <= 0) {
-        console.log(`Skipping market for ${away_team} @ ${home_team}: game already started.`);
+        console.log(`Skipping market for ${awayTeamName} @ ${homeTeamName}: game already started.`);
         continue;
       }
 
-      const question = `${away_team} @ ${home_team} (${local_date})`;
-      const options = [away_team, home_team];
+      // Build the market question.
+      const question = `${awayTeamName} @ ${homeTeamName} (${local_date})`;
+      // Define options: away team (option 0), home team (option 1), and "Draw in regular time" (option 2).
+      const options = [awayTeamName, homeTeamName, "Draw in regular time"];
 
       const marketId = await createMarketOnChain(question, options, duration);
       if (marketId !== null) {
-        console.log(`Market created for game_id=${game_id} | ID: ${marketId}`);
-        marketMapping[marketId] = { game_id, away_team, home_team, local_date };
+        console.log(`Market created for game_id=${game_id} | Market ID: ${marketId}`);
+        // Update the mapping with the new market.
+        marketMapping[marketId] = {
+          game_id,
+          away_team: awayTeamName,
+          home_team: homeTeamName,
+          local_date
+        };
         await saveMarketMapping(marketMapping);
       }
     }
@@ -125,6 +161,8 @@ const createMarketsForFile = async (filename) => {
   }
 };
 
-// Execute script for specific EPL game files
-const filesToProcess = ["games-2025-02-11.json"];
+// ================================
+// Execute Script for Specific CL Game Files
+// ================================
+const filesToProcess = ["games-2025-02-18.json"];
 filesToProcess.forEach(createMarketsForFile);

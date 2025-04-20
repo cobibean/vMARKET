@@ -1,0 +1,97 @@
+[
+  {
+    "game_id": 19391327,
+    "local_date": "2025-04-10",
+    "start_time": "2025-04-10 16:45:00",
+    "league_id": 5,
+    "home_team": {
+      "team_id": 1668,
+      "name": "Bodø / Glimt",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/4/1668.png"
+    },
+    "away_team": {
+      "team_id": 43,
+      "name": "Lazio",
+      "short_code": "LAZ",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/11/43.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391488,
+    "local_date": "2025-04-10",
+    "start_time": "2025-04-10 16:45:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 349,
+      "name": "Legia Warszawa",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/29/349.png"
+    },
+    "away_team": {
+      "team_id": 18,
+      "name": "Chelsea",
+      "short_code": "CHE",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/18/18.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391484,
+    "local_date": "2025-04-10",
+    "start_time": "2025-04-10 19:00:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 485,
+      "name": "Real Betis",
+      "short_code": "BET",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/5/485.png"
+    },
+    "away_team": {
+      "team_id": 890,
+      "name": "Jagiellonia Białystok",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/26/890.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391486,
+    "local_date": "2025-04-10",
+    "start_time": "2025-04-10 19:00:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 1114,
+      "name": "Celje",
+      "short_code": null,
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/26/1114.png"
+    },
+    "away_team": {
+      "team_id": 109,
+      "name": "Fiorentina",
+      "short_code": "FIO",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/13/109.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391490,
+    "local_date": "2025-04-10",
+    "start_time": "2025-04-10 19:00:00",
+    "league_id": 2286,
+    "home_team": {
+      "team_id": 443,
+      "name": "Djurgården",
+      "short_code": "DJU",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/27/443.png"
+    },
+    "away_team": {
+      "team_id": 3678,
+      "name": "SK Rapid",
+      "short_code": "SCR",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/30/3678.png"
+    },
+    "events": []
+  }
+]

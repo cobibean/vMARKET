@@ -1,0 +1,40 @@
+[
+  {
+    "game_id": 19391317,
+    "local_date": "2025-04-16",
+    "start_time": "2025-04-16 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 3468,
+      "name": "Real Madrid",
+      "short_code": "RMA",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/12/3468.png"
+    },
+    "away_team": {
+      "team_id": 19,
+      "name": "Arsenal",
+      "short_code": "ARS",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/19/19.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19391321,
+    "local_date": "2025-04-16",
+    "start_time": "2025-04-16 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 2930,
+      "name": "Inter",
+      "short_code": "INT",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/18/2930.png"
+    },
+    "away_team": {
+      "team_id": 503,
+      "name": "FC Bayern München",
+      "short_code": "FCB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/23/503.png"
+    },
+    "events": []
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "game_id": 19391311,
+    "local_date": "2025-05-07",
+    "start_time": "2025-05-07 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 591,
+      "name": "Paris Saint Germain",
+      "short_code": "PSG",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/591.png"
+    },
+    "away_team": {
+      "team_id": 19,
+      "name": "Arsenal",
+      "short_code": "ARS",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/19/19.png"
+    },
+    "events": []
+  }
+]

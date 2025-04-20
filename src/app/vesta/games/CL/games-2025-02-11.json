@@ -1,0 +1,78 @@
+[
+  {
+    "game_id": 19380873,
+    "local_date": "2025-02-11",
+    "start_time": "2025-02-11 17:45:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 266,
+      "name": "Brest",
+      "short_code": "B29",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/10/266.png"
+    },
+    "away_team": {
+      "team_id": 591,
+      "name": "Paris Saint Germain",
+      "short_code": "PSG",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/591.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380877,
+    "local_date": "2025-02-11",
+    "start_time": "2025-02-11 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 625,
+      "name": "Juventus",
+      "short_code": "JUV",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/17/625.png"
+    },
+    "away_team": {
+      "team_id": 682,
+      "name": "PSV",
+      "short_code": "PSV",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/10/682.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380879,
+    "local_date": "2025-02-11",
+    "start_time": "2025-02-11 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 9,
+      "name": "Manchester City",
+      "short_code": "MCI",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/9/9.png"
+    },
+    "away_team": {
+      "team_id": 3468,
+      "name": "Real Madrid",
+      "short_code": "RMA",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/12/3468.png"
+    },
+    "events": []
+  },
+  {
+    "game_id": 19380885,
+    "local_date": "2025-02-11",
+    "start_time": "2025-02-11 20:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 58,
+      "name": "Sporting CP",
+      "short_code": "SCP",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/26/58.png"
+    },
+    "away_team": {
+      "team_id": 68,
+      "name": "Borussia Dortmund",
+      "short_code": "BVB",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/4/68.png"
+    },
+    "events": []
+  }
+]

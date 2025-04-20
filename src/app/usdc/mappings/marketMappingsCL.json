@@ -1,0 +1,170 @@
+{
+  "34": {
+    "game_id": 19380877,
+    "away_team": "PSV",
+    "home_team": "Juventus",
+    "local_date": "2025-02-11"
+  },
+  "35": {
+    "game_id": 19380879,
+    "away_team": "Real Madrid",
+    "home_team": "Manchester City",
+    "local_date": "2025-02-11"
+  },
+  "36": {
+    "game_id": 19380885,
+    "away_team": "Borussia Dortmund",
+    "home_team": "Sporting CP",
+    "local_date": "2025-02-11"
+  },
+  "37": {
+    "game_id": 19380873,
+    "away_team": "Paris Saint Germain",
+    "home_team": "Brest",
+    "local_date": "2025-02-11"
+  },
+  "38": {
+    "game_id": 19380887,
+    "away_team": "Atalanta",
+    "home_team": "Club Brugge",
+    "local_date": "2025-02-12"
+  },
+  "39": {
+    "game_id": 19380875,
+    "away_team": "Benfica",
+    "home_team": "Monaco",
+    "local_date": "2025-02-12"
+  },
+  "40": {
+    "game_id": 19380881,
+    "away_team": "Milan",
+    "home_team": "Feyenoord",
+    "local_date": "2025-02-12"
+  },
+  "41": {
+    "game_id": 19380883,
+    "away_team": "FC Bayern München",
+    "home_team": "Celtic",
+    "local_date": "2025-02-12"
+  },
+  "42": {
+    "game_id": 19353167,
+    "away_team": "APOEL",
+    "home_team": "Celje",
+    "local_date": "2025-02-13"
+  },
+  "43": {
+    "game_id": 19353173,
+    "away_team": "Jagiellonia Białystok",
+    "home_team": "Bačka Topola",
+    "local_date": "2025-02-13"
+  },
+  "44": {
+    "game_id": 19353175,
+    "away_team": "Panathinaikos",
+    "home_team": "Víkingur Reykjavík",
+    "local_date": "2025-02-13"
+  },
+  "45": {
+    "game_id": 19353177,
+    "away_team": "Shamrock Rovers",
+    "home_team": "Molde",
+    "local_date": "2025-02-13"
+  },
+  "46": {
+    "game_id": 19380889,
+    "away_team": "Viktoria Plzeň",
+    "home_team": "Ferencvárosi",
+    "local_date": "2025-02-13"
+  },
+  "47": {
+    "game_id": 19380895,
+    "away_team": "Real Sociedad",
+    "home_team": "FC Midtjylland",
+    "local_date": "2025-02-13"
+  },
+  "48": {
+    "game_id": 19380897,
+    "away_team": "Ajax",
+    "home_team": "Union Saint-Gilloise",
+    "local_date": "2025-02-13"
+  },
+  "49": {
+    "game_id": 19380903,
+    "away_team": "Anderlecht",
+    "home_team": "Fenerbahçe",
+    "local_date": "2025-02-13"
+  },
+  "50": {
+    "game_id": 19353165,
+    "away_team": "Real Betis",
+    "home_team": "Gent",
+    "local_date": "2025-02-13"
+  },
+  "51": {
+    "game_id": 19353169,
+    "away_team": "Heidenheim",
+    "home_team": "FC København",
+    "local_date": "2025-02-13"
+  },
+  "52": {
+    "game_id": 19353171,
+    "away_team": "Paphos",
+    "home_team": "Omonia Nicosia",
+    "local_date": "2025-02-13"
+  },
+  "53": {
+    "game_id": 19353179,
+    "away_team": "Olimpija",
+    "home_team": "Borac Banja Luka",
+    "local_date": "2025-02-13"
+  },
+  "54": {
+    "game_id": 19380891,
+    "away_team": "Roma",
+    "home_team": "Porto",
+    "local_date": "2025-02-13"
+  },
+  "55": {
+    "game_id": 19380893,
+    "away_team": "Galatasaray",
+    "home_team": "AZ",
+    "local_date": "2025-02-13"
+  },
+  "56": {
+    "game_id": 19380899,
+    "away_team": "FCSB",
+    "home_team": "PAOK",
+    "local_date": "2025-02-13"
+  },
+  "57": {
+    "game_id": 19380901,
+    "away_team": "Bodø / Glimt",
+    "home_team": "FC Twente",
+    "local_date": "2025-02-13"
+  },
+  "58": {
+    "game_id": 19380882,
+    "away_team": "Feyenoord",
+    "home_team": "Milan",
+    "local_date": "2025-02-18"
+  },
+  "59": {
+    "game_id": 19380876,
+    "away_team": "Monaco",
+    "home_team": "Benfica",
+    "local_date": "2025-02-18"
+  },
+  "60": {
+    "game_id": 19380884,
+    "away_team": "Celtic",
+    "home_team": "FC Bayern München",
+    "local_date": "2025-02-18"
+  },
+  "61": {
+    "game_id": 19380888,
+    "away_team": "Club Brugge",
+    "home_team": "Atalanta",
+    "local_date": "2025-02-18"
+  }
+}

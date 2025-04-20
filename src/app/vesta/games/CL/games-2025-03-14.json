@@ -1,0 +1,21 @@
+[
+  {
+    "game_id": 19380999,
+    "local_date": "2025-03-14",
+    "start_time": "2025-03-14 19:45:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 1,
+      "name": "Test Home Team",
+      "short_code": "THT",
+      "image_path": "https://example.com/home.png"
+    },
+    "away_team": {
+      "team_id": 2,
+      "name": "Test Away Team",
+      "short_code": "TAT",
+      "image_path": "https://example.com/away.png"
+    },
+    "events": []
+  }
+] 

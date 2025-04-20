@@ -1,0 +1,21 @@
+[
+  {
+    "game_id": 19391313,
+    "local_date": "2025-05-06",
+    "start_time": "2025-05-06 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 2930,
+      "name": "Inter",
+      "short_code": "INT",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/18/2930.png"
+    },
+    "away_team": {
+      "team_id": 83,
+      "name": "FC Barcelona",
+      "short_code": "BAR",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/19/83.png"
+    },
+    "events": []
+  }
+]

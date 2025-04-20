@@ -65,7 +65,8 @@ export default function APIBasedCreation({ address }: APIBasedCreationProps) {
       setStatus(`Successfully fetched ${data.count} games for ${selectedLeague} on ${date}`);
     } catch (err: any) {
       console.error('Error fetching games:', err);
-      setError(err.message || 'Error fetching games. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Error fetching games. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -107,7 +108,8 @@ export default function APIBasedCreation({ address }: APIBasedCreationProps) {
       setStatus(`Successfully created ${data.count} markets for ${selectedLeague} on ${date}`);
     } catch (err: any) {
       console.error('Error creating markets:', err);
-      setError(err.message || 'Error creating markets. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Error creating markets. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -118,8 +120,8 @@ export default function APIBasedCreation({ address }: APIBasedCreationProps) {
       <div className="bg-gray-50 p-4 rounded-md mb-6">
         <p className="text-sm text-gray-600">
           This method creates markets by fetching games from our sports data API. 
-          Select a league, enter a date, and click "Fetch Games" to retrieve available games. 
-          Then click "Create Markets" to create markets for those games.
+          Select a league, enter a date, and click &quot;Fetch Games&quot; to retrieve available games. 
+          Then click &quot;Create Markets&quot; to create markets for those games.
         </p>
       </div>
 

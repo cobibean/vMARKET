@@ -1,71 +1,156 @@
 "use client";
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+import { isAdmin } from '@/app/vesta/utils/contract';
 
 interface WalletLoginProps {
   onConnect: (address: string) => void;
+  onDisconnect: () => void;
+  onAuthChange: (isAuthorized: boolean) => void;
 }
 
-export default function WalletLogin({ onConnect }: WalletLoginProps) {
-  const [connecting, setConnecting] = useState(false);
-  const [error, setError] = useState('');
+const WalletLogin: React.FC<WalletLoginProps> = ({ onConnect, onDisconnect, onAuthChange }) => {
+  const [account, setAccount] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const connectWallet = async () => {
-    setConnecting(true);
-    setError('');
+  // Check if we have a stored account on component mount
+  useEffect(() => {
+    const storedAccount = localStorage.getItem('walletAccount');
+    if (storedAccount) {
+      setAccount(storedAccount);
+      onConnect(storedAccount);
+      checkAdminStatus(storedAccount);
+    }
+  }, [onConnect]);
 
-    try {
-      // Check if MetaMask is installed
-      if (!window.ethereum) {
-        throw new Error("MetaMask is not installed. Please install MetaMask to use this feature.");
+  // Listen for account changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.ethereum) {
+      const ethereum = window.ethereum as any;
+      ethereum.on('accountsChanged', (accounts: string[]) => {
+        if (accounts.length === 0) {
+          // User disconnected their wallet
+          handleDisconnect();
+        } else {
+          // Account changed
+          const newAccount = accounts[0];
+          setAccount(newAccount);
+          localStorage.setItem('walletAccount', newAccount);
+          onConnect(newAccount);
+          checkAdminStatus(newAccount);
+        }
+      });
+    }
+
+    return () => {
+      if (typeof window !== 'undefined' && window.ethereum) {
+        const ethereum = window.ethereum as any;
+        ethereum.removeListener('accountsChanged', () => {});
       }
-      
-      // Request account access
-      const provider = new ethers.BrowserProvider(window.ethereum as any);
-      await provider.send("eth_requestAccounts", []);
-      const signer = await provider.getSigner();
-      const address = await signer.getAddress();
-      
-      onConnect(address);
-    } catch (err: any) {
-      console.error("Error connecting wallet:", err);
-      setError(err.message || "Failed to connect wallet. Please try again.");
-    } finally {
-      setConnecting(false);
+    };
+  }, [onConnect]);
+
+  const checkAdminStatus = async (address: string) => {
+    try {
+      const isAuthorized = await isAdmin(address);
+      onAuthChange(isAuthorized);
+      if (!isAuthorized) {
+        setError('You do not have admin privileges');
+      } else {
+        setError(null);
+      }
+    } catch (err) {
+      console.error('Error checking admin status:', err);
+      setError('Error checking admin status');
+      onAuthChange(false);
     }
   };
 
+  const handleConnect = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      if (typeof window === 'undefined' || !window.ethereum) {
+        throw new Error('MetaMask is not installed');
+      }
+
+      const ethereum = window.ethereum as any;
+      const provider = new ethers.BrowserProvider(ethereum);
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      
+      if (accounts.length === 0) {
+        throw new Error('No accounts found');
+      }
+
+      const connectedAccount = accounts[0];
+      setAccount(connectedAccount);
+      localStorage.setItem('walletAccount', connectedAccount);
+      onConnect(connectedAccount);
+      
+      // Check if the connected account has admin privileges
+      await checkAdminStatus(connectedAccount);
+    } catch (err) {
+      console.error('Error connecting wallet:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error occurred');
+      onAuthChange(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDisconnect = () => {
+    localStorage.removeItem('walletAccount');
+    setAccount(null);
+    setError(null);
+    onDisconnect();
+    onAuthChange(false);
+  };
+
   return (
-    <div className="bg-white shadow sm:rounded-lg p-6 max-w-lg mx-auto">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Admin Login</h2>
-      <p className="text-gray-600 mb-6">
-        Connect your wallet to access the admin dashboard. You must have admin privileges to proceed.
-      </p>
-      
-      <button
-        onClick={connectWallet}
-        disabled={connecting}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md flex items-center justify-center disabled:bg-blue-400"
-      >
-        {connecting ? (
-          <>
-            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Connecting...
-          </>
-        ) : (
-          <>Connect Wallet</>
-        )}
-      </button>
-      
-      {error && (
-        <div className="mt-4 bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-red-700">{error}</p>
+    <div className="w-full max-w-md mx-auto">
+      {account ? (
+        <div className="bg-white shadow-md rounded-lg p-6 mt-4">
+          <p className="text-gray-700 mb-2">
+            Connected: <span className="font-mono text-sm break-all">{account}</span>
+          </p>
+          <button
+            onClick={handleDisconnect}
+            className="w-full mt-2 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors"
+          >
+            Disconnect Wallet
+          </button>
+          
+          {error && (
+            <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+              {error}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="bg-white shadow-md rounded-lg p-6 mt-4">
+          <p className="text-gray-700 mb-4">
+            Connect your wallet to access admin features
+          </p>
+          <button
+            onClick={handleConnect}
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors disabled:bg-blue-400"
+          >
+            {loading ? 'Connecting...' : 'Connect MetaMask'}
+          </button>
+          
+          {error && (
+            <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+              {error}
+            </div>
+          )}
         </div>
       )}
     </div>
   );
-} 
+};
+
+export default WalletLogin; 

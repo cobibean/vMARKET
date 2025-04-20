@@ -7,7 +7,13 @@ import Link from 'next/link';
 
 declare global {
   interface Window {
-    ethereum: any;
+    ethereum: {
+      request: (args: {method: string, params?: any[]}) => Promise<any>;
+      on: (eventName: string, callback: (...args: any[]) => void) => void;
+      removeListener: (eventName: string, callback: (...args: any[]) => void) => void;
+      isMetaMask?: boolean;
+      [key: string]: any;
+    };
   }
 }
 
@@ -37,15 +43,15 @@ export default function AdminPage() {
             console.log('Admin status result:', adminStatus);
             setIsAuthorized(adminStatus);
             setErrorMessage(null);
-          } catch (err: any) {
+          } catch (err: Error | unknown) {
             console.error('Error checking admin status:', err);
             setIsAuthorized(false);
-            setErrorMessage(`Error checking admin privileges: ${err?.message || 'Unknown error'}`);
+            setErrorMessage(`Error checking admin privileges: ${err instanceof Error ? err.message : 'Unknown error'}`);
           }
         }
-      } catch (err: any) {
+      } catch (err: Error | unknown) {
         console.error('Error checking connection:', err);
-        setErrorMessage(`Connection error: ${err?.message || 'Unknown error'}`);
+        setErrorMessage(`Connection error: ${err instanceof Error ? err.message : 'Unknown error'}`);
       } finally {
         setLoading(false);
       }
@@ -69,14 +75,14 @@ export default function AdminPage() {
           console.log('Admin status result after connect:', adminStatus);
           setIsAuthorized(adminStatus);
           setErrorMessage(null);
-        } catch (err: any) {
+        } catch (err: Error | unknown) {
           console.error('Error checking admin status after connect:', err);
           setIsAuthorized(false);
-          setErrorMessage(`Error checking admin privileges: ${err?.message || 'Unknown error'}`);
+          setErrorMessage(`Error checking admin privileges: ${err instanceof Error ? err.message : 'Unknown error'}`);
         }
-      } catch (err: any) {
+      } catch (err: Error | unknown) {
         console.error('Error connecting wallet:', err);
-        setErrorMessage(`Wallet connection error: ${err?.message || 'Unknown error'}`);
+        setErrorMessage(`Wallet connection error: ${err instanceof Error ? err.message : 'Unknown error'}`);
       }
     } else {
       alert('Please install MetaMask to use this feature!');
@@ -168,7 +174,7 @@ export default function AdminPage() {
             <p className="mt-2 text-sm">
               Contract address being used: 
               <code className="ml-1 bg-gray-200 text-red-800 px-1 rounded">
-                0x8A791620dd6260079BF849Dc5567aDC3F2FdC318
+                0x949865114535dA93823bf5515608406325b40Fc5
               </code>
             </p>
           </div>

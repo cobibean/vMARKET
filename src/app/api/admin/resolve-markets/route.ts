@@ -7,8 +7,8 @@ import marketVestaABI from '../../../vesta/constants/marketVestaABI';
 const CONTRACT_ADDRESS = "0x949865114535dA93823bf5515608406325b40Fc5";
 
 // Market resolution requires private key
-const PRIVATE_KEY = process.env.MARKET_RESOLVER_PRIVATE_KEY || '';
-const INFURA_URL = process.env.INFURA_URL || '';
+const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
+const INFURA_URL = process.env.INFURA_URL || 'https://andromeda.metis.io/?owner=1088';
 
 // SportMonks API configuration
 const API_TOKEN = process.env.SPORTMONKS_API_TOKEN || '';

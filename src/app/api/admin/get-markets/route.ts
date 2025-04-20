@@ -5,7 +5,7 @@ import marketVestaABI from '../../../vesta/constants/marketVestaABI';
 
 // Contract address
 const CONTRACT_ADDRESS = "0x949865114535dA93823bf5515608406325b40Fc5";
-const INFURA_URL = process.env.INFURA_URL || '';
+const INFURA_URL = process.env.INFURA_URL || 'https://andromeda.metis.io/?owner=1088';
 
 // Fetch market details from on-chain
 async function fetchMarketOnChain(marketId: string) {

@@ -92,7 +92,7 @@ export function ConstructionLanding() {
               }}
               className="text-sm"
             >
-              Powered by blockchain magic ✨ Built for pure awesome 🚀
+              Built by Vesta. Backed by Fraxion Labs
             </p>
           </div>
         </div>

@@ -9,7 +9,7 @@ import { resolve } from 'path';
 const API_BASE_URL = 'https://api.sportmonks.com/v3/football/fixtures/date/';
 const API_TOKEN = 'YTTir99m6yR9GVRoC8AXsjs1m4UxrAkVzrwWUlZ0rBljLX0r1b9yeksCzTfj';
 // Check for command line argument or use default
-const TARGET_DATE = process.argv[2] || '2025-05-07';
+const TARGET_DATE = process.argv[2] || '2025-06-01';
 // Use both "participants" and "events" in the include parameter:
 const INCLUDE_PARAMS = 'participants;events';
 

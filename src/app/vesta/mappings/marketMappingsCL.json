@@ -406,5 +406,11 @@
     "away_team": "Arsenal",
     "home_team": "Paris Saint Germain",
     "local_date": "2025-05-07"
+  },
+  "98": {
+    "game_id": 19391309,
+    "away_team": "Inter",
+    "home_team": "Paris Saint Germain",
+    "local_date": "2025-05-31"
   }
 }

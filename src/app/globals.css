@@ -23,81 +23,71 @@ h3, h4, h5, h6 {
 
 @layer base {
   :root {
-    /* Light Theme Variables */
-    --background: 0 0% 97%; /* Off-white */
-    --foreground: 0 0% 5%; /* Almost Black */
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 0 0% 5%; /* Almost Black */
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 0 0% 5%; /* Almost Black */
-    --radius: 1rem;
+    --background: 0 0% 97%;
+    --foreground: 0 0% 5%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+    
+    --primary: 174 71% 56%;
+    --primary-foreground: 0 0% 5%;
+    
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 10%;
+    
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
+    
+    --accent: 39 100% 50%;
+    --accent-foreground: 0 0% 10%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+    
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 174 71% 56%;
 
-    /* Primary and Accent Colors */
-    --primary: 174 71% 56%; /* Turquoise (#40e0d0) */
-    --primary-foreground: 0 0% 5%; /* Almost Black */
-    --accent: 39 100% 50%; /* Orange (#ff8c00) */
-    --accent-foreground: 0 0% 5%; /* Almost Black */
-
-    /* Secondary Colors */
-    --secondary: 240 5% 70%; /* Neutral light gray */
-    --secondary-foreground: 240 10% 30%; /* Darker gray text */
-    --muted: 0 0% 92%; /* Slightly darker light gray for contrast */
-    --muted-foreground: 0 0% 30%; /* Slightly darker gray for better visibility */
-
-    /* Destructive Colors */
-    --destructive: 0 84.2% 60.2%; /* Vibrant Red */
-    --destructive-foreground: 0 0% 20%; /* Darker gray for better contrast */
-
-    /* Other UI Colors */
-    --border: 240 5% 60%; /* Neutral gray for borders */
-    --input: 240 5% 70%; /* Neutral gray for inputs */
-    --ring: 240 5% 50%; /* Neutral gray for focus rings */
-
-    /* Chart Colors */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 174 71% 56%;
+    --chart-2: 39 100% 50%;
+    --chart-3: 260 60% 60%;
+    --chart-4: 120 70% 50%;
+    --chart-5: 0 84% 60%;
+    
+    --radius: 0.5rem;
   }
 
   .dark {
-    /* Dark Theme Variables */
-    --background: 0 0% 10%; /* Very Dark */
-    --foreground: 0 0% 95%; /* Off-white */
-    --card: 0 0% 15%; /* Dark Gray */
-    --card-foreground: 0 0% 95%; /* Off-white */
-    --popover: 0 0% 15%; /* Dark Gray */
-    --popover-foreground: 0 0% 95%; /* Off-white */
-    --radius: 1rem;
-
-    /* Primary and Accent Colors */
-    --primary: 174 71% 56%; /* Turquoise (#40e0d0) */
-    --primary-foreground: 0 0% 95%; /* Off-white */
-    --accent: 39 100% 50%; /* Orange (#ff8c00) */
-    --accent-foreground: 0 0% 95%; /* Off-white */
-
-    /* Secondary Colors */
-    --secondary: 240 5% 25%; /* Darker gray */
-    --secondary-foreground: 240 10% 80%; /* Light gray text */
-    --muted: 0 0% 14.9%; /* Dark Gray */
-    --muted-foreground: 0 0% 63.9%; /* Medium Gray */
-
-    /* Destructive Colors */
-    --destructive: 0 62.8% 30.6%; /* Dark Red */
-    --destructive-foreground: 0 0% 95%; /* Off-white */
-
-    /* Other UI Colors */
-    --border: 240 10% 40%; /* Darker gray for borders */
-    --input: 240 10% 30%; /* Darker gray for inputs */
-    --ring: 240 10% 30%; /* Dark gray for focus rings */
-
-    /* Chart Colors */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 0 0% 10%;
+    --foreground: 0 0% 95%;
+    
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 95%;
+    
+    --primary: 174 71% 56%;
+    --primary-foreground: 0 0% 10%;
+    
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 95%;
+    
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    
+    --accent: 39 100% 50%;
+    --accent-foreground: 0 0% 10%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 95%;
+    
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 174 71% 56%;
   }
 
   @layer base {
@@ -107,5 +97,26 @@ h3, h4, h5, h6 {
     body {
       @apply bg-background text-foreground;
     }
+    h1, h2, h3, h4, h5, h6 {
+      @apply font-heading;
+    }
   }
+}
+
+@font-face {
+  font-family: 'Exo 2';
+  src: url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Orbitron';
+  src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Share Tech Mono';
+  src: url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  font-display: swap;
 }

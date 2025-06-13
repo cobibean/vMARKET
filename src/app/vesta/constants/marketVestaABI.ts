@@ -2,7 +2,7 @@ const marketVestaABI = [
   // Market functions
   "function createMarket(string calldata question, string[] calldata outcomes, uint256 endTime) external returns (uint256)",
   "function resolveMarket(uint256 marketId, uint8 winningOutcome) external",
-  "function getMarketCount() external view returns (uint256)",
+  "function marketCount() external view returns (uint256)",
   "function markets(uint256 marketId) external view returns (address creator, address resolver, string question, string[] outcomes, uint256 endTime, uint8 state)",
   
   // Role management functions

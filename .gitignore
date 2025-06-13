@@ -20,6 +20,7 @@
 # production
 /build
 /Users/cobibean/DEV/vMARKET/vMARKETbuild/vmarket/src/app/backend
+/Users/cobibean/DEV/vMARKET/vMARKETbuild/vmarket/src/app/admin/emails
 
 # misc
 .DS_Store

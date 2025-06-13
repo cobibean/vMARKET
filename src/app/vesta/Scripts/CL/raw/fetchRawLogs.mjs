@@ -53,5 +53,5 @@ async function fetchRawCLData(dateString) {
 
 // 1. Provide a default date or
 // 2. Accept a command-line argument for the date
-const targetDate = process.argv[2] || '2025-02-11'; // fallback date if none provided
+const targetDate = process.argv[2] || '2025-05-30'; // fallback date if none provided
 fetchRawCLData(targetDate);

@@ -1,31 +1,32 @@
 // app/layout.tsx
 
-"use client";
-
 import "./globals.css";
-import { ThirdwebProvider } from "thirdweb/react";
-import { Toaster } from "@/app/ui/toaster";
-import { ThemeProvider } from "@/app/context/themeContext"; // Adjust the path if necessary
-import Header from "@/app/sharedComponents/header"; // Import the Header component
+import { Layout } from "@/components/layout/Layout";
+import { ConstructionLayout } from "@/components/layout/ConstructionLayout";
+import { isConstructionMode } from "@/lib/construction-mode";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+
+export const metadata: Metadata = {
+  title: "vMARKET - Prediction Markets Platform",
+  description: "A decentralized prediction markets platform",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <ThemeProvider>
-          <ThirdwebProvider>
-            {/* Header Component */}
-            <Header /> {/* Added Header here */}
+  // Use construction layout when in construction mode
+  const LayoutComponent = isConstructionMode() ? ConstructionLayout : Layout;
 
-            {/* Main Content */}
-            <main className="container mx-auto p-4">{children}</main>
-          </ThirdwebProvider>
-          <Toaster />
-        </ThemeProvider>
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <LayoutComponent>{children}</LayoutComponent>
       </body>
     </html>
   );

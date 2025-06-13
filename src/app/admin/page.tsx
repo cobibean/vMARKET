@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import AdminDashboard from '../components/AdminDashboard';
+import React, { useState, useEffect } from 'react';
 import { isAdmin } from '../vesta/utils/contract';
 import Link from 'next/link';
+import { Dashboard } from './components/Dashboard';
 
 declare global {
   interface Window {
@@ -193,7 +193,7 @@ export default function AdminPage() {
     <div className="min-h-screen bg-gray-100">
       <AdminNavbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AdminDashboard address={connectedAddress} />
+        <Dashboard address={connectedAddress} />
       </div>
     </div>
   );

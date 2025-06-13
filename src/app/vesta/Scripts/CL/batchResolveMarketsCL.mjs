@@ -885,6 +885,6 @@ const resolveMarkets = async (filterDate) => {
 // ================================
 
 // Get date from command line argument or use default
-const filterDate = process.argv[2] || "2025-04-16";
+const filterDate = process.argv[2] || "2025-05-31";
 console.log(`Resolving markets for date: ${filterDate}`);
 resolveMarkets(filterDate).catch((error) => console.error('Error resolving markets:', error));

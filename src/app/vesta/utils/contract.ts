@@ -37,7 +37,7 @@ export const getSignedContract = async () => {
 export const getAllMarkets = async () => {
   try {
     const contract = getContract();
-    const marketCount = await contract.getMarketCount();
+    const marketCount = await contract.marketCount();
     
     const markets = [];
     for (let i = 0; i < marketCount; i++) {

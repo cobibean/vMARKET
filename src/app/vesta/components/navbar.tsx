@@ -134,6 +134,11 @@ export function Navbar() {
             },
           }}
         />
+
+        {/* Add My Predictions link */}
+        <Link href="/user" className="ml-4 px-4 py-2 text-sm hover:bg-accent rounded-lg">
+          My Predictions
+        </Link>
       </div>
     </div>
   );

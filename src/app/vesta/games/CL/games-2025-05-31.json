@@ -1,0 +1,21 @@
+[
+  {
+    "game_id": 19391309,
+    "local_date": "2025-05-31",
+    "start_time": "2025-05-31 19:00:00",
+    "league_id": 2,
+    "home_team": {
+      "team_id": 591,
+      "name": "Paris Saint Germain",
+      "short_code": "PSG",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/15/591.png"
+    },
+    "away_team": {
+      "team_id": 2930,
+      "name": "Inter",
+      "short_code": "INT",
+      "image_path": "https://cdn.sportmonks.com/images/soccer/teams/18/2930.png"
+    },
+    "events": []
+  }
+]

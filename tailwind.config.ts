@@ -69,6 +69,11 @@ export default {
         xl: '1rem', // Extra-large corners
         none: '0', // No radius
       },
+      fontFamily: {
+        sans: ["'Exo 2'", 'system-ui', 'sans-serif'],
+        heading: ["'Orbitron'", 'sans-serif'],
+        mono: ["'Share Tech Mono'", 'monospace'],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")], // Add tailwind animation plugin

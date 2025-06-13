@@ -165,7 +165,7 @@ const createMarketsForFile = async (filename) => {
 // Execute Script for Specific CL Game Files
 // ================================
 // Get the date from command line arguments or use a default
-const targetDate = process.argv[2] || "2025-05-07";
+const targetDate = process.argv[2] || "2025-05-31";
 console.log(`Processing games for date: ${targetDate}`);
 
 // The file name can be either directly provided (for backward compatibility)

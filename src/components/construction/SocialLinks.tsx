@@ -17,7 +17,7 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     name: 'Twitter',
-    url: '#', // TODO: Add actual Twitter URL
+    url: 'https://x.com/vMARKET___', // TODO: Add actual Twitter URL
     icon: <FaTwitter className="w-6 h-6" />,
     color: '#4ECDC4',
   },

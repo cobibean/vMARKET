@@ -13,7 +13,8 @@ import { truncateAddress, formatPrice } from '@/lib/utils';
 // Disable static generation to prevent ThirdwebProvider errors during build
 export const dynamic = 'force-dynamic';
 
-export default function UserProfilePage() {
+// Client-side only wrapper component
+function UserProfileContent() {
   const { toast } = useToast();
   const account = useActiveAccount();
   const [userMarkets, setUserMarkets] = useState<UserMarket[]>([]);
@@ -205,4 +206,23 @@ export default function UserProfilePage() {
       </div>
     </div>
   );
+}
+
+// Main page component that only renders on client-side
+export default function UserProfilePage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  return <UserProfileContent />;
 }

@@ -10,6 +10,9 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/shared/Card';
 import { truncateAddress, formatPrice } from '@/lib/utils';
 
+// Disable static generation to prevent ThirdwebProvider errors during build
+export const dynamic = 'force-dynamic';
+
 export default function UserProfilePage() {
   const { toast } = useToast();
   const account = useActiveAccount();

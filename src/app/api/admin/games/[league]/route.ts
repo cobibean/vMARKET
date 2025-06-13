@@ -7,10 +7,10 @@ import { sql } from '@vercel/postgres';
  */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { league: string } }
+  { params }: { params: Promise<{ league: string }> }
 ) {
+  const { league } = await params;
   try {
-    const league = params.league;
     
     // Get query parameters
     const searchParams = req.nextUrl.searchParams;
@@ -51,7 +51,7 @@ export async function GET(
     });
     
   } catch (error: Error | unknown) {
-    console.error(`Error fetching games for league ${params.league}:`, error);
+    console.error(`Error fetching games for league ${league}:`, error);
     const errorMessage = error instanceof Error ? error.message : 'Failed to fetch games';
     return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
@@ -63,10 +63,10 @@ export async function GET(
  */
 export async function POST(
   req: NextRequest,
-  { params }: { params: { league: string } }
+  { params }: { params: Promise<{ league: string }> }
 ) {
+  const { league } = await params;
   try {
-    const league = params.league;
     
     // Parse request body
     const body = await req.json();
@@ -134,7 +134,7 @@ export async function POST(
     }
     
   } catch (error: Error | unknown) {
-    console.error(`Error performing action on games for league ${params.league}:`, error);
+    console.error(`Error performing action on games for league ${league}:`, error);
     const errorMessage = error instanceof Error ? error.message : 'Failed to perform action';
     return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }

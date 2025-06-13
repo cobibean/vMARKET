@@ -42,10 +42,10 @@ async function verifyRole(address: string, requiredRole: string) {
  */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id: marketId } = await params;
   try {
-    const marketId = params.id;
     
     if (!marketId || isNaN(Number(marketId))) {
       return NextResponse.json({
@@ -88,7 +88,7 @@ export async function GET(
     });
     
   } catch (error: Error | unknown) {
-    console.error(`Error fetching market ${params.id}:`, error);
+    console.error(`Error fetching market ${marketId}:`, error);
     const errorMessage = error instanceof Error ? error.message : 'Failed to fetch market';
     return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
@@ -100,10 +100,10 @@ export async function GET(
  */
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id: marketId } = await params;
   try {
-    const marketId = params.id;
     
     if (!marketId || isNaN(Number(marketId))) {
       return NextResponse.json({
@@ -146,7 +146,7 @@ export async function PUT(
     return NextResponse.json(result);
     
   } catch (error: Error | unknown) {
-    console.error(`Error resolving market ${params.id}:`, error);
+    console.error(`Error resolving market ${marketId}:`, error);
     const errorMessage = error instanceof Error ? error.message : 'Failed to resolve market';
     return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
